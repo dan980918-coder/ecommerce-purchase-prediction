@@ -409,38 +409,14 @@ streamlit run app/Home.py
 
 ### LLM CRM 리포트
 
-```
-DuckDB SQL → Python 검증 → Pydantic JSON → LLM → CRM 리포트
-```
-
-LLM은 숫자를 계산하지 않는다. **Data Facts**와 **Model Predictions**는
-Python이 SQL/모델에서 이미 계산·검증한 값을 그대로 통과시킨다. LLM이 만드는
-건 **Recommended Actions**와 **Testable Hypotheses** 두 영역뿐이다. 출력에
+DuckDB SQL과 모델 예측 결과를 Pydantic JSON으로 검증한 뒤 LLM이 자연어
+리포트로 변환한다. LLM은 숫자를 계산하지 않는다 — **Data Facts**와
+**Model Predictions**는 Python이 이미 계산·검증한 값을 그대로 통과시키고,
+LLM은 **Recommended Actions**와 **Testable Hypotheses**만 작성하며, 출력에
 "매출 개선" 같은 금지 표현이 감지되면 리포트 생성 자체를 예외로 중단시킨다
 (`src/llm/report_generator.py`).
 
-API 키가 없으면 mock(결정론적 대체) 백엔드로 동작한다. 아래는 mock 출력
-예시(`reports/phase9_ai_crm_report_sample.md`) 발췌 — `.env`에
-`ANTHROPIC_API_KEY`를 넣으면 코드 수정 없이 실제 LLM 호출로 전환되며, 실제
-출력은 세그먼트 간 우선순위 비교·채널/타이밍 제안까지 포함해 더 구체적이다.
-
-```text
-## 2. Model Predictions
-- Model_A_churn (churn_14d), 상위 10%: Recall 10.4%, Lift 1.04배, Precision 98.2%
-- Model_B_propensity (will_purchase_14d), 상위 10%: Recall 62.2%, Lift 6.23배, Precision 8.6%
-
-## 3. Recommended Actions
-- [장바구니_이탈형] (고객 365,487명, 접촉 우선순위 매우 높음) 목적: 장바구니
-  이탈 회수(Cart Recovery)에 맞는 CRM 액션을 검토해볼 수 있습니다.
-
-## 4. Testable Hypotheses
-- Model_B_propensity(will_purchase_14d) 모델의 상위 10% 타겟팅이 실제
-  캠페인에서도 시뮬레이션과 유사한 포착률을 보이는지는 실제 실험으로
-  확인이 필요합니다.
-```
-
-전체 예시: [`reports/phase9_ai_crm_report_sample.md`](reports/phase9_ai_crm_report_sample.md),
-파이프라인 상세: [`reports/phase9_llm_report_pipeline.md`](reports/phase9_llm_report_pipeline.md)
+상세: [`reports/phase9_ai_crm_report_sample.md`](reports/phase9_ai_crm_report_sample.md), [`reports/phase9_llm_report_pipeline.md`](reports/phase9_llm_report_pipeline.md)
 
 ---
 
