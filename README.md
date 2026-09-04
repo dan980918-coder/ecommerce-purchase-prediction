@@ -1,4 +1,5 @@
-# 이커머스 고객 행동 퍼널 분석 및 CRM 타기팅 전략 설계
+# 고객 라이프사이클 기반 CRM 타겟팅 전략 설계
+### Customer Lifecycle-Based CRM Targeting Strategy
 
 2.25억 건의 고객 행동 로그를 활용한 퍼널·라이프사이클·세그먼트 분석과
 CRM 실험 설계 프로젝트
