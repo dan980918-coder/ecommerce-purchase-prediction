@@ -1,0 +1,118 @@
+{
+  "extreme_counts": {
+    "product_buy": {
+      "p99": 18.0,
+      "p999": 50.0,
+      "n_over_p999": 865,
+      "n_over_10x_p99": 30,
+      "total_clients": 909210
+    },
+    "add_to_cart": {
+      "p99": 31.0,
+      "p999": 107.0,
+      "n_over_p999": 2290,
+      "n_over_10x_p99": 209,
+      "total_clients": 2333463
+    },
+    "remove_from_cart": {
+      "p99": 35.0,
+      "p999": 121.0,
+      "n_over_p999": 684,
+      "n_over_10x_p99": 64,
+      "total_clients": 694391
+    },
+    "page_visit": {
+      "p99": 110.0,
+      "p999": 442.0,
+      "n_over_p999": 21978,
+      "n_over_10x_p99": 3737,
+      "total_clients": 21993998
+    },
+    "search_query": {
+      "p99": 78.0,
+      "p999": 242.0,
+      "n_over_p999": 1622,
+      "n_over_10x_p99": 103,
+      "total_clients": 1629447
+    }
+  },
+  "event_concentration": {
+    "product_buy": {
+      "top0.01pct": {
+        "n_clients": 91,
+        "event_share_pct": 0.737
+      },
+      "top0.1pct": {
+        "n_clients": 909,
+        "event_share_pct": 3.136
+      },
+      "top1pct": {
+        "n_clients": 9092,
+        "event_share_pct": 12.313
+      }
+    },
+    "add_to_cart": {
+      "top0.01pct": {
+        "n_clients": 233,
+        "event_share_pct": 1.497
+      },
+      "top0.1pct": {
+        "n_clients": 2333,
+        "event_share_pct": 5.88
+      },
+      "top1pct": {
+        "n_clients": 23335,
+        "event_share_pct": 19.58
+      }
+    },
+    "remove_from_cart": {
+      "top0.01pct": {
+        "n_clients": 69,
+        "event_share_pct": 1.364
+      },
+      "top0.1pct": {
+        "n_clients": 694,
+        "event_share_pct": 5.386
+      },
+      "top1pct": {
+        "n_clients": 6944,
+        "event_share_pct": 18.313
+      }
+    },
+    "page_visit": {
+      "top0.01pct": {
+        "n_clients": 2199,
+        "event_share_pct": 3.039
+      },
+      "top0.1pct": {
+        "n_clients": 21994,
+        "event_share_pct": 9.834
+      },
+      "top1pct": {
+        "n_clients": 219940,
+        "event_share_pct": 28.623
+      }
+    },
+    "search_query": {
+      "top0.01pct": {
+        "n_clients": 163,
+        "event_share_pct": 1.264
+      },
+      "top0.1pct": {
+        "n_clients": 1629,
+        "event_share_pct": 5.123
+      },
+      "top1pct": {
+        "n_clients": 16294,
+        "event_share_pct": 18.45
+      }
+    }
+  },
+  "extreme_overlap_across_tables": {
+    "3": 757,
+    "1": 19460,
+    "2": 1947,
+    "4": 316,
+    "5": 110
+  }
+}

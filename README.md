@@ -1,454 +1,218 @@
-# 고객 라이프사이클 기반 CRM 타겟팅 전략 설계
-### Customer Lifecycle-Based CRM Targeting Strategy
+# 구매 신호 기반 CRM 발송 대상 선정 기준 설계
+CRM Targeting by Purchase Signals
 
-2.25억 건의 행동 로그로 고객 라이프사이클을 나누고, CRM 타겟팅 정책별 효율을 비교한 분석이다.
+> 발송량을 상위 10%로 제한할 때, 최근 활동 순으로 고르면 구매 고객의 35%를 잡는다. "장바구니·구매·검색 행동이 있는 고객 우선" 단순 규칙만으로 64%, 행동 신호 점수로는 76%를 잡아, 발송 1만 건당 구매 고객이 320명에서 691명으로 늘어난다. 현행 기준이 잡는 구매 고객 수를 발송량의 1.4%만으로 잡을 수 있어 발송량을 86% 줄일 수 있다.
 
-![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white) ![DuckDB](https://img.shields.io/badge/DuckDB-SQL-FFF000?logo=duckdb&logoColor=black) ![LightGBM](https://img.shields.io/badge/LightGBM-4.6-brightgreen) ![Streamlit](https://img.shields.io/badge/Streamlit-1.45-FF4B4B?logo=streamlit&logoColor=white) ![License](https://img.shields.io/badge/License-MIT-blue)
-
-![구매자 909,210명 경로 분해](reports/figures/12_buyer_path_breakdown.png)
-
-> **데이터 시점**: 2022-06-23 ~ 2022-12-08(6개월 스냅샷)이다. 최신 고객 행동이
-> 아니라 2022년 하반기 특정 시점의 행동 패턴 분석이며, 실제 CRM 캠페인을
-> 집행한 적은 없다. 과거 데이터로 대상 선정 효율을 검증한 방법론 시연이다.
+![누적 포착률 곡선](v2/docs/figures/capture_curve.png)
 
 ## 한눈에 보기
 
-| 문제 | 데이터 | 역할·기간 | 기술 |
-|---|---|---|---|
-| 고객마다 탐색·장바구니·구매 경로가 다른데 동일한 CRM 타기팅이 적절한가 | Synerise 이커머스 행동 로그(고객 2,230만 명, 이벤트 2.25억 건) | 개인 프로젝트, 2026년 8~9월 | DuckDB·SQL·LightGBM·Streamlit |
-
-**핵심 결과**
-
-- 구매 유도(전환) 타겟팅: 모델이 동일 Recall 기준 접촉 인원을 21.68~50.87%(접촉 5~30% 구간) 줄였다.
-- 재활성화(비활성 위험) 타겟팅: 모델이 규칙보다 통계적으로 우수(AUC 0.754 vs 0.669)하지만 실무 절감 효과는 1% 내외라 단순 규칙 유지가 합리적이다.
-- 장바구니 미구매 고객은 하나의 그룹이 아니라 보류형(79.38%)·빠른 이탈(72.0%, 약 16분)·고민 후 이탈(28.0%, 18.4일)로 나뉜다.
-- 구매자의 28.46%는 탐색·장바구니 기록 없이 구매만 기록돼 있다 — 앱 딥링크 등 로깅 범위 밖 유입일 가능성이 있으나 데이터로 확정할 수는 없다.
-
-**제안**: 구매 유도 타겟팅에는 모델 기반 접근을 단계적으로 도입하고, 재활성화 타겟팅은 운영 비용 대비 이득이 작아 단순 규칙을 유지한다.
-
-## 목차
-
-1. [문제 정의](#1-문제-정의)
-2. [데이터](#2-데이터)
-3. [분석 설계](#3-분석-설계)
-4. [SQL 하이라이트](#4-sql-하이라이트)
-5. [핵심 결과](#5-핵심-결과)
-6. [제안](#6-제안)
-7. [판단 기록](#7-판단-기록)
-8. [한계와 다음 단계](#8-한계와-다음-단계)
-9. [재현 방법](#9-재현-방법)
-10. [저장소 구조](#10-저장소-구조)
-11. [역할](#11-역할)
-12. [라이선스](#라이선스)
-
----
+| 항목 | 내용 |
+|---|---|
+| 문제 | 한정된 CRM 발송량을 누구에게 먼저 쓸지 근거가 없다 |
+| 데이터 | 실제 이커머스 행동 로그(Synerise RecSys Challenge 2025), 2022.06~12, 고객 약 2,230만 명 |
+| 역할·기간 | 개인 프로젝트 · 최초 분석 2026.08–09, 전 과정 재설계 2026.10 |
+| 기술 | SQL(DuckDB), Python, LightGBM, 로지스틱 회귀 |
 
 ## 1. 문제 정의
 
-모든 고객에게 똑같은 CRM 메시지를 보내는 게 맞는지를 묻는 프로젝트다. 예전엔
-샀지만 요즘 안 사는 고객과, 아직 안 샀지만 살 것 같은 고객은 다르다. 이 둘을
-구분해 제한된 CRM 접촉 자원 안에서 누구를 먼저 챙길지 우선순위를 정하는
-분석 시스템을 만들었다.
+| 구분 | 내용 |
+|---|---|
+| 현상 | 168일간 방문 고객 2,230만 명 중 구매 고객은 91만 명(4.1%)이고, 84%는 방문만 하고 다른 행동이 없다. |
+| 문제 | CRM 메시지는 보낼 수 있는 양이 한정돼 있다. 전체 발송은 비용과 수신 거부를 늘리고, 단순 기준(최근 방문 등)으로 보내면 구매 의사가 없는 고객에게 낭비된다. 누구에게 먼저 보낼지 근거가 없다. |
+| 목표 | 고객의 행동 신호로 가까운 시일 내 구매 가능성을 점수화해, 같은 발송량으로 더 많은 구매 고객에게 도달하는(또는 같은 도달 수를 더 적은 발송으로 달성하는) 발송 대상 선정 기준을 만든다. |
 
-핵심 질문은 하나다.
+## 2. 결과
 
-> 단순 규칙(최근성 등)이나 무작위 타기팅보다, 구매 비활성 위험 고객과 향후
-> 구매 고객을 더 효율적으로 선별할 수 있는가?
+최종평가 기준일(2022-11-23, 모집단 614만 명)에서 네 방법을 같은 조건으로 비교했다. 발송 비율은 전체 모집단 중 메시지를 보낼 고객의 비율이고, 포착률은 실제로 구매한 고객 중 그 발송 대상에 포함된 비율이다.
 
-## 2. 데이터
+| 방법 | 5% 포착률 | 10% 포착률 | 20% 포착률 | 10% 1만 건당 구매 고객 |
+|---|---|---|---|---|
+| 무작위 | 5.1% | 10.2% | 20.2% | 93명 |
+| 최근 활동 순(현행 기준) | 21.2% | 35.1% | 52.8% | 320명 |
+| 단순 2단계 규칙 | 44.9% | 63.6% | 79.4% | 581명 |
+| 행동 신호 모델(LightGBM) | 63.6% | 75.7% | 83.8% | 691명 |
 
-- **데이터셋**: Synerise RecSys Challenge 2025 원본 데이터(실제 온라인 리테일
-  서비스의 익명화 고객 행동 로그). 공식 출처:
-  https://recsys.synerise.com/data-set
-- **라이선스**: CC BY-NC 4.0(© 2025 Synerise SA). 원본 데이터는 라이선스상 이
-  저장소에 포함되지 않는다. 확보 절차는
-  [`reports/phase1_download_log.md`](reports/phase1_download_log.md) 참고.
-- **테이블**: `product_buy`, `add_to_cart`, `remove_from_cart`, `page_visit`,
-  `search_query`, `product_properties`
-- **규모**: 고객 22,298,361명, 행동 이벤트 225,224,262건 중 구매 경험이 있는
-  고유 고객은 909,210명이다. `product_properties`(상품 속성 참조 테이블)
-  1,534,050행은 이벤트가 아니므로 집계에서 제외했다.
-- 상품 페이지와 `sku`가 연결되지 않아(`page_visit.url`이 익명 숫자 ID)
-  **상품 단위 분석은 구조적으로 불가능**하고, 이 프로젝트는 고객 단위 분석만
-  다룬다.
+무작위의 포착률이 발송 비율과 거의 정확히 같다(5.1%/10.2%/20.2%) — 평가 절차 자체가 올바르다는 검증이다.
 
-## 3. 분석 설계
+가설 7(H7): 모델이 현행 기준보다 같은 발송량에서 더 많은 구매 고객을 포착하는가. 발송 5·10·20% 모두에서 모델이 더 많이 포착했고, 고객을 무작위로 복원추출해 같은 계산을 1,000번 반복하는 부트스트랩으로 구한 95% 신뢰구간 하한이 세 발송량 모두 0보다 컸다(최소 +17,116명). 단순 2단계 규칙과 비교해도 모든 발송량에서 유의하게 더 많이 포착했다. 채택.
 
-원래 던졌던 핵심 질문 15개를 검증 가능한 가설 6개로 재구성했다.
+현행 기준이 상위 10%(614,467건 발송)로 포착하는 구매 고객 19,675명을, 모델은 상위 1.38%(84,833건) 발송만으로 같은 수를 포착한다. 발송량을 86% 줄일 수 있다는 계산은 이 두 발송량의 차이에서 나온다.
 
-| 가설 | 지표 | 방법 |
+가설 8(H8): 적정 발송량이 존재하는가. 발송 순위를 구간으로 나눠 구간마다 1,000건당 구매 고객 수를 보면, 상위 0~5% 구간은 116.2명인데 15~20% 구간은 6.0명으로 19분의 1까지 떨어진다(0~5% 구간의 절반 이하면 채택으로 미리 정했다). 채택. 상위 5%까지가 가장 효율적이고, 그 뒤로는 구간마다 효율이 꾸준히 낮아진다.
+
+![구간별 한계 효율](v2/docs/figures/marginal_efficiency.png)
+
+### 신호의 구조: "있다/없다"와 "얼마나"
+
+구매 신호 변수 6개 중 5개(H1·H2·H3·H4·H5)가 채택됐지만, 그 예측력의 대부분은 "행동이 있었는지 없었는지"에서 나온다. 결측·0 구간을 빼고 "행동이 있는 고객들 사이에서"만 다시 계산한 IV(정보가치, 변수가 구매 여부를 얼마나 잘 가르는지 나타내는 지표)를 보면 이 구조가 드러난다.
+
+| 가설 | 핵심 변수 | 배수(95% CI) | 전체 IV | "있다/없다" 제외 IV | 판정 |
+|---|---|---|---|---|---|
+| H1 최근 활동 | 마지막 활동 경과일 | 10.34배 | 0.555 | 0.555(해당 없음, 모든 고객이 값을 가짐) | 채택 |
+| H2 보류 상품 | 담아두고 안 산 상품 수 | 5.22배 | 0.404 | 0.319 | 채택 |
+| H3 과거 구매 | 신호 기간 구매 건수 | 24.26배 | 1.633 | 0.279 | 채택 |
+| H4 실제 검색 | 실제 검색 횟수 | 6.20배 | 0.447 | 0.369 | 채택 |
+| H5 활동 증가율 | 최근 14일 대비 활동 증가율 | 7.53배 | 0.736 | 0.088 | 채택 |
+| H6 장바구니 제거 | 제거 비율 | 0.30배(0.27~0.33, 예상과 반대) | 1.360 | 0.060 | 기각 |
+
+H3·H5·H6은 "있다/없다" 구간을 빼면 IV가 1.6→0.3, 0.7→0.1 수준으로 급격히 줄어든다. 반면 H1은 모든 고객이 활동 이력을 가져 이 구분 자체가 적용되지 않고, 10개 구간 전체에서 포착률이 매끄럽게 줄어든다 — "얼마나 최근인지"의 정도 정보가 가장 풍부한 변수다. 자세한 수치와 계산 방식은 [`v2/docs/09_checks.md`](v2/docs/09_checks.md)에 있다.
+
+### 실무 시사점: 장바구니에서 뺀 고객은 제외 대상이 아니다
+
+H6은 "제거한 고객일수록 구매율이 낮다"는 예상과 반대로, 제거 비율이 높은 고객의 구매율이 오히려 3배 이상 높게 나왔다. 담기 건수 구간(1건, 2~3건, 4~9건, 10건 이상)을 나눠 같은 장바구니 사용량 안에서 비교해도 이 관계는 유지된다 — 장바구니를 많이 쓰는 고객이라서 생긴 착시와는 다르다. 제거 이벤트의 34%가 24시간 안에 그 고객의 구매로 이어졌다. "결제 전 정리"인지 "여러 후보를 담아두고 고르는 과정"인지는 이 데이터로는 구분되지 않았다. 다만 어느 쪽이든 실무적으로는 **장바구니에서 상품을 뺀 고객을 리마인드 발송 제외 대상이 아니라 우선 대상으로 다뤄야 한다**는 결론은 같다. 근거는 [`v2/docs/10_prechecks.md`](v2/docs/10_prechecks.md)의 P3에 있다.
+
+## 3. 한계와 다음 단계
+
+- 최종평가 구매 고객의 24%(13,229명)는 60일 신호 기간에 방문만 하던 고객이었다. 이 고객군에 대한 모델의 상위10% 포착률(15.6%)은 현행 기준(21.3%)보다 낮다 — 전체 성능이 좋은 모델도 활동 흔적이 적은 고객에게는 상대적으로 약하다.
+- 이 결과는 "곧 살 고객을 고르는 효율"이지 메시지를 보냈을 때의 효과가 아니다. 실제 발송 기록이 데이터에 없어, 메시지가 구매를 늘렸는지는 이번 분석으로 측정할 수 없다.
+- 상품 가격이 0~99 구간화 지수라 실제 금액이 없어 매출 기준 분석은 할 수 없었다. 관측 기간(168일) 양끝의 경계 때문에 기간 시작 전부터 활동했을 고객과 종료 후 행동했을 고객이 구분 없이 잘려 보이는 좌·우측 검열 문제가 있어, 생애 전체 이력이 필요한 분석에는 적용하지 않았다.
+- 다음 단계로 점수 구간별 발송군과 미발송군을 무작위로 나눠 실제 효과를 측정하는 실험을 설계한다. 1차 지표(Primary KPI)는 14일 내 구매율 차이로 잡는다.
+
+## 4. 판단 기록
+
+상황이 생겼을 때 무엇을 선택했고 왜 그랬는지, 그리고 그 선택이 어떤 결과로 이어졌는지를 순서대로 남긴다.
+
+1. 구매 기록 16%가 완전히 똑같이 중복됨. 수량(같은 상품을 여러 개 사서), 시간 반올림, 기록 처리 오류 세 가지 설명을 각각 검증했다. 수량이라면 안 맞는 정황(장바구니 담기 횟수와 중복 횟수가 안 맞음)이 나왔고, 반올림이라면 5초 단위로 뭉친 시각과 아닌 시각의 중복률이 달라야 하는데 차이가 없었다. 대신 월초에 낮았다가 월말로 갈수록 치솟는 패턴이 6개월 내내 반복돼, 기록 처리 과정의 월 단위 중복으로 판단하고 완전 중복 행을 하나로 합쳤다.
+2. 검색어의 21%가 같은 값. 행사 키워드, 광고 링크, 빈 검색 세 해석을 유사 코드 존재 여부·전체 추이 모양·반복 사용 패턴·등장 시작 시각으로 검증했다. 행사 키워드라면 설명되지 않는 특징(2022-07-28 특정 시각에 갑자기 등장, 같은 고객이 하루에도 수십~수백 번 반복)이 나와 기각했고, 빈 검색이 가장 유력하다고 판단했다. 다만 어느 해석이든 안전하도록 이 값을 실제 검색 횟수에서는 빼고 별도 표시 변수로만 남겼다.
+3. 봇 판정 기준을 수정함. 처음 정한 후보 정의(여러 테이블에서 동시에 활동량이 극단적인 고객)가 한 테이블(방문)에서만 극단적인 봇을 놓친다는 것을 확인하고, 전체 고객 대상 속도 기준(1분에 60건 이상)을 별도로 추가해 197명을 찾았다. 이 과정에서 기존 후보군(1,183명) 중 원본 기준으로는 속도 신호를 만족했을 10명 중 7명이 완전 중복 제거만으로 더 이상 만족하지 않게 되는 것도 확인했다 — 정제 순서가 판정에 실제로 영향을 줬다.
+4. 너무 강한 IV를 의심함. H3(과거 구매)의 IV가 1.6으로 지나치게 높아, 먼저 결과 기간과 신호 기간이 코드에서 실제로 겹치지 않는지 줄 단위로 확인했다(겹침 없음). 그다음 "있다/없다"와 "정도"의 신호를 분리해보니, 강한 IV 대부분이 "행동이 있는지"에서 나온다는 것을 확인했다.
+5. 모델이 꼭 필요하지 않을 수 있다고 보고 비교 기준을 추가함. "행동이 있는 고객 우선, 그 안에서 최근 활동 순"이라는 변수 2개짜리 단순 규칙을 비교 대상에 넣고, "모델이 이 규칙보다 상위10% 포착률에서 1%p 이상 낫지 않으면 단순 규칙을 운영 권고안으로 한다"는 기준을 결과를 보기 전에 고정했다. 결과는 모델이 12%p 이상 앞서 모델을 권고했지만, 단순 규칙도 이미 현행 기준을 크게 앞서는 수준이었다.
+6. 결과가 지나치게 좋아 비교 기준이 약했는지 의심함. 현행 기준("최근 활동 순")이 혹시 날짜 단위로 뭉뚱그려 비교가 유리했던 것은 아닌지 코드를 확인했다. 이미 초 단위로 정렬하고 있었고(상위10% 경계 동률 9명뿐), 시각 기준으로 다시 정렬해도 결과는 완전히 같았다.
+
+## 5. 데이터
+
+- 출처: [Synerise RecSys Challenge 2025](https://recsys.synerise.com/data-set) 공식 공개 데이터(© 2025 Synerise SA)
+- 라이선스: CC BY-NC 4.0 — 원본 데이터는 이 저장소에 포함하지 않는다. 받는 방법은 [`v2/docs/01_data_audit.md`](v2/docs/01_data_audit.md) 참고
+- 테이블 6개: `product_buy`(구매), `add_to_cart`(담기), `remove_from_cart`(빼기), `page_visit`(방문), `search_query`(검색), `product_properties`(상품 속성) — 한 행이 이벤트 1건
+- 관측 기간: 2022-06-23 ~ 2022-12-08(168일), 고객 약 2,230만 명
+- 알 수 없는 정보: 실제 결제 금액(가격은 0~99 구간화 지수), 메시지 발송 기록, 고객 인구통계, 주문 번호(한 행이 상품 1개 단위) — 자세한 내용은 [`v2/docs/02_variable_catalog.md`](v2/docs/02_variable_catalog.md)
+- 정제 결과: 완전 중복 제거(product_buy 16.43%, page_visit 10.38% 등), 검색 기본값 분리(실제 검색 외 22.3%는 기술적 요인으로 추정되는 값으로 별도 표시), 속도 기준 봇 197명 제외 — 자세한 근거는 [`v2/docs/06_cleaning_decisions.md`](v2/docs/06_cleaning_decisions.md), [`v2/docs/10_prechecks.md`](v2/docs/10_prechecks.md)
+
+## 6. 분석 과정
+
+```mermaid
+flowchart LR
+    A[원데이터 점검] --> B[정제]
+    B --> C[문제 정의]
+    C --> D[가설 수립]
+    D --> E[신호 검증]
+    E --> F[모델]
+    F --> G[최종 평가]
+```
+
+가설은 결과를 보기 전에 세우고, 결과를 본 뒤에는 기준값을 바꾸지 않았다. 각 단계의 산출물은 [`v2/docs/`](v2/docs/)에 번호순으로 있다.
+
+스냅샷 설계(한 행 = 고객 1명 × 기준일 1개, 행동 신호 60일·결과 확인 14일):
+
+| 구분 | 기준일 | 결과 데이터 사용 시점 |
 |---|---|---|
-| 고객 대부분은 탐색→장바구니→구매 단일 경로를 따른다 | 탐색·장바구니 기록 유무별 구매자 비율 | SQL 경로 분해(CASE 조합) |
-| 첫 구매 이후 재구매는 예측 가능한 수준으로 누적된다 | 7/14/28일 재구매율 | 코호트 조인 + 우측 검열 플래그 |
-| 고객은 구매 recency 기준으로 뚜렷한 라이프사이클 상태를 가진다 | recency 기반 8개 상태 분포 | 데이터 기반 임계값(구매 간격 중앙값·p90 배수) |
-| 비활성 예측(Model A)에서 모델이 규칙보다 효율적이다 | AUC, Lift@10% | LightGBM vs 최근성 규칙 비교 |
-| 구매성향 예측(Model B)에서 모델이 규칙보다 효율적이다 | AUC, Lift@10%, 동일 Recall 접촉 인원 절감률 | LightGBM vs 최근성 규칙 비교 |
-| LLM이 SQL/모델 결과를 왜곡 없이 설명할 수 있다 | 금지 표현(매출 개선 등) 검출 여부 | Pydantic 스키마 검증 + 금지어 규칙 |
+| 학습 | 08-22, 09-05, 09-19, 10-03, 10-17(5개) | 가설 검증·모델 학습에 사용 |
+| 검증 | 11-07(모집단 5,665,601명) | 모델·설정 선택에만 사용 |
+| 최종평가 | 11-23(모집단 6,144,670명) | 모든 선택이 끝난 뒤 한 번만 개봉 |
 
-전체 파이프라인은 다음과 같다.
+학습 마지막 기준일(10-17)의 결과 확인 기간은 10-31에 끝나 검증 기준일(11-07) 이전이고, 검증의 결과 확인 기간도 11-21에 끝나 최종평가(11-23) 이전이다 — 미래 정보가 앞 단계에 섞이지 않는다.
 
-```mermaid
-flowchart LR
-    A["원본 Parquet<br/>6개 테이블"] --> B["SQL staging<br/>6개 VIEW"]
-    B --> C["SQL intermediate<br/>8개 TABLE"]
-    C --> D["SQL mart<br/>10개 TABLE"]
-    D --> E["Feature/Label 스냅샷<br/>mart_customer_snapshot"]
-    E --> F["LightGBM<br/>Model A / Model B"]
-    F --> G["타기팅 시뮬레이션"]
-    G --> H["Streamlit 대시보드<br/>LLM CRM 리포트"]
-```
+검증 결과(상위10% 포착률)와 선택 규칙 적용:
 
-가설 검증 전체 기록은 [`docs/hypotheses.md`](docs/hypotheses.md), 상세 수치는
-[`docs/analysis_details.md`](docs/analysis_details.md)에 있다.
+| 방법 | 상위10% 포착률 |
+|---|---|
+| 무작위 | 10.1% |
+| 최근 활동 순 | 31.3% |
+| 단순 2단계 규칙 | 62.1% |
+| 로지스틱 회귀 | 73.0% |
+| LightGBM | 74.2% |
 
-## 4. SQL 하이라이트
+선택 규칙 세 가지를 결과를 보기 전에 고정했다. ① LightGBM이 로지스틱보다 1%p 이상 나으면 LightGBM 선택 → LightGBM이 1.24%p 앞서 선택됨. ② 검색 기본값 표시를 빼서 포착률이 0.5%p 이상 떨어지면 유지 → 1.46%p 떨어져 유지. ③ 모델이 단순 규칙보다 1%p 이상 나으면 운영 권고안을 모델로 함 → 12.11%p 앞서 모델로 결정.
 
-데이터 계보는 원본 Parquet 6개 → staging VIEW 6개 → intermediate TABLE 8개 →
-mart TABLE 10개 순서다. `mart_customer_snapshot`은 Model A용 feature/label
-스냅샷이고, `mart_churn_target`은 여기서 파생된다. `mart_purchase_propensity`
-(Model B)는 모집단 정의가 달라 동일한 설계 패턴을 쓰되 staging·intermediate
-테이블에서 독립적으로 다시 계산한다.
+민감도 확인(최종평가, 상위10% 포착률 변화): 속도 봇 제외를 적용하지 않으면 +0.003%p, 결과 기간에서 이상치가 의심되는 2022-12-04 하루를 빼면 +0.175%p로 둘 다 영향이 거의 없었다. 검색 기본값 표시 처리를 반대로 하면(유지→제거) −2.085%p로, 검증 단계에서 관찰한 하락폭(−1.46%p)과 방향·크기가 비슷해 선택 규칙이 최종평가에서도 일관됨을 확인했다.
 
-```mermaid
-flowchart LR
-    subgraph RAW["원본 Parquet · 6개"]
-        r1[product_buy]
-        r2[add_to_cart]
-        r3[remove_from_cart]
-        r4[page_visit]
-        r5[search_query]
-        r6[product_properties]
-    end
-    subgraph STG["staging · VIEW 6개"]
-        s1[stg_product_buy]
-        s2[stg_add_to_cart]
-        s3[stg_remove_from_cart]
-        s4[stg_page_visit]
-        s5[stg_search_query]
-        s6[stg_product_properties]
-    end
-    subgraph INT["intermediate · TABLE 8개"]
-        i1[int_customer_purchase_history]
-        i2[int_customer_purchase_gap]
-        i3[int_customer_cart_behavior]
-        i4[int_customer_category_behavior]
-        i5[int_customer_daily_activity]
-        i6[int_customer_observation_period]
-        i7[int_..._category_repurchase_by_snapshot]
-        i8[int_..._category_repurchase_avg_by_snapshot]
-    end
-    subgraph MART["mart · TABLE 10개"]
-        m1[mart_customer_360]
-        m2[mart_customer_lifecycle]
-        m3[mart_customer_segment]
-        m4[mart_customer_cohort]
-        m5[mart_customer_retention]
-        m6[mart_customer_daily / weekly]
-        m8[mart_customer_snapshot]
-        m9[mart_churn_target]
-        m10[mart_purchase_propensity]
-    end
-    subgraph OUT["모델 · 시뮬레이션"]
-        o1[Model A 구매 비활성]
-        o2[Model B 구매성향]
-        o3[타기팅 시뮬레이션]
-    end
+## 7. SQL 하이라이트
 
-    r1-->s1
-    r2-->s2
-    r3-->s3
-    r4-->s4
-    r5-->s5
-    r6-->s6
-    s1-->i1-->i7-->i8
-    s1-->i2
-    s1-->i3
-    s2-->i3
-    s3-->i3
-    s1-->i4
-    s6-->i4
-    s4-->i5
-    s5-->i5
-    s1-->i5
-    s4-->i6
-    s5-->i6
-    s1-->i6
-    i6-->m1
-    i2-->m1
-    i3-->m1
-    s4-->m1
-    s5-->m1
-    m1-->m2
-    i6-->m2
-    i1-->m2
-    m1-->m3
-    m2-->m3
-    s4-->m3
-    s5-->m3
-    i2-->m4-->m5
-    i1-->m5
-    i4-->m5
-    i5-->m6
-    s1 & s4 & s5 & s6 --> m8
-    i8-->m8
-    m8-->m9
-    m1-->m10
-    i8-->m10
-    m9-->o1
-    m10-->o2
-    o1-->o3
-    o2-->o3
-```
-
-아래 두 쿼리는 CTE와 윈도우 함수를 함께 써서 비즈니스 로직을 분명하게 표현한
-사례다.
-
-### 라이프사이클 상태 분류
-
-**목적**: 구매 recency와 "복귀 고객" 여부를 윈도우 함수로 함께 판정해 전체
-고객을 8개 라이프사이클 상태로 분류한다.
-
-전체 파일: [`sql/marts/mart_customer_lifecycle.sql`](sql/marts/mart_customer_lifecycle.sql)
+**보류 중인 장바구니 상품 계산** — sku별 마지막 이벤트가 담기(add)인 것만 센다. 동시 타임스탬프에서는 구매·제거를 담기보다 우선 처리해 "보류 아님" 쪽으로 보수적으로 판단한다.
 
 ```sql
-WITH last_gap AS (  -- 가장 최근 구매 occasion 직전 간격 (복귀 고객 판정용)
-    SELECT client_id, days_since_prev_purchase_occasion AS gap_before_last_purchase
-    FROM (
-        SELECT client_id, days_since_prev_purchase_occasion,
-               ROW_NUMBER() OVER (
-                   PARTITION BY client_id ORDER BY purchase_occasion_seq DESC
-               ) AS rn
-        FROM int_customer_purchase_history
-    )
-    WHERE rn = 1
-)
-SELECT
-    client_id,
-    CASE
-        WHEN is_buyer AND days_since_last_purchase <= 14 AND n_purchase_days = 1
-            THEN '첫_관측_구매_고객'
-        WHEN is_buyer AND days_since_last_purchase <= 14 AND n_purchase_days >= 2
-             AND gap_before_last_purchase > 28
-            THEN '복귀_고객'
-        WHEN is_buyer AND days_since_last_purchase <= 14 AND n_purchase_days >= 2
-            THEN '활성_구매_고객'
-        WHEN is_buyer AND days_since_last_purchase BETWEEN 15 AND 28
-            THEN '구매_감소_고객'
-        WHEN is_buyer AND days_since_last_purchase BETWEEN 29 AND 60
-            THEN '구매_비활성_위험_고객'
-        WHEN is_buyer AND days_since_last_purchase > 60 THEN '비활성_고객'
-        WHEN NOT is_buyer AND has_cart_activity THEN '장바구니_고객'
-        WHEN NOT is_buyer AND (n_page_visit > 0 OR n_search_query > 0) THEN '탐색_고객'
-        ELSE '기타'
-    END AS lifecycle_stage
-FROM base;
-```
-
-**결과 해석**: 임계값(14/28/60일)은 구매 간격 중앙값·p90의 배수로 데이터
-기반 도출했고, 전체 22,298,361명이 미분류 없이 8개 상태로 정확히 나뉜다.
-
-### 구매 occasion 순번·간격 계산
-
-**목적**: 코호트 배정과 재구매율 계산의 공통 기반이다. 동일 결제 내 여러
-상품이 같은 타임스탬프로 중복 기록되는 문제를 occasion 단위로 묶어, 구매
-순번과 재구매 간격을 윈도우 함수로 계산한다.
-
-전체 파일: [`sql/intermediate/int_customer_purchase_history.sql`](sql/intermediate/int_customer_purchase_history.sql)
-
-```sql
-WITH occasion AS (
-    SELECT DISTINCT client_id, event_ts FROM stg_product_buy
+WITH ev AS (
+    SELECT client_id, sku, timestamp, 0 AS kind_priority, 'add' AS kind
+      FROM clean_add_to_cart WHERE timestamp >= :w60_start AND timestamp < :w60_end
+    UNION ALL
+    SELECT client_id, sku, timestamp, 1 AS kind_priority, 'remove' AS kind
+      FROM clean_remove_from_cart WHERE timestamp >= :w60_start AND timestamp < :w60_end
+    UNION ALL
+    SELECT client_id, sku, timestamp, 2 AS kind_priority, 'buy' AS kind
+      FROM clean_product_buy WHERE timestamp >= :w60_start AND timestamp < :w60_end
 ),
-occasion_seq AS (
-    SELECT
-        client_id,
-        event_ts,
-        ROW_NUMBER() OVER (PARTITION BY client_id ORDER BY event_ts) AS purchase_occasion_seq,
-        date_diff(
-            'day',
-            LAG(event_ts) OVER (PARTITION BY client_id ORDER BY event_ts),
-            event_ts
-        ) AS days_since_prev_purchase_occasion
-    FROM occasion
+ranked AS (
+    SELECT *, row_number() OVER (
+        PARTITION BY client_id, sku ORDER BY timestamp DESC, kind_priority ASC
+    ) AS rn FROM ev
 )
-SELECT
-    b.client_id, b.event_ts, b.sku,
-    o.purchase_occasion_seq,
-    o.days_since_prev_purchase_occasion,
-    o.purchase_occasion_seq = 1 AS is_first_observed_purchase
-FROM stg_product_buy b
-JOIN occasion_seq o ON b.client_id = o.client_id AND b.event_ts = o.event_ts;
+SELECT client_id, sku, timestamp AS add_ts
+FROM ranked WHERE rn = 1 AND kind = 'add'
 ```
 
-**결과 해석**: 동일 타임스탬프 재등장 비율이 63.72%에 달해, 원본 행 단위로
-순번을 매기면 구매 간격이 0으로 왜곡된다. occasion 단위로 재계산해 이 문제를
-구조적으로 막았고, 이 결과를 `mart_customer_cohort`·`mart_customer_retention`이
-그대로 재사용한다.
+같은 고객·같은 상품의 가장 최근 이벤트만 남기고, 그게 담기였던 경우만 "아직 사지도 빼지도 않은 상품"으로 센다.
 
-## 5. 핵심 결과
+**정제 계층: 완전 중복 제거 + 검색 기본값 분리**
 
-**1) 구매 유도(전환) 타겟팅은 모델이 접촉 인원을 크게 줄인다.**
-Model B(구매성향, LightGBM)는 AUC 0.865(규칙 기반 0.804), 상위 10% Recall
-62.25%(규칙 55.54%, 무작위 9.96%)를 기록했다. 동일 Recall 기준 접촉 인원을
-21.68~50.87%(접촉 5~30% 구간) 줄였다.
+```sql
+-- 완전 중복 제거(5개 이벤트 테이블 반복)
+CREATE OR REPLACE TABLE clean_product_buy AS
+SELECT DISTINCT * FROM read_parquet('data/raw/product_buy.parquet');
 
-![타기팅 시뮬레이션 결과](reports/figures/11_targeting_simulation_results.png)
+-- 검색 기본값(기술적 요인으로 추정되는 값) 분리
+CREATE OR REPLACE VIEW clean_search_query_real AS
+SELECT * FROM clean_search_query WHERE query <> :TOP_VALUE;
 
-**2) 재활성화 타겟팅은 통계적 우위와 실무 효율이 갈린다.**
-Model A(구매 비활성)는 AUC 0.754로 규칙 기반(0.669)보다 뚜렷이 우수하지만,
-Lift@10%는 1.04 수준에 그친다. 라벨 기저율이 이미 90%+(다수 클래스)라 Lift가
-구조적으로 오를 여지가 거의 없기 때문이다.
+CREATE OR REPLACE VIEW clean_search_query_default AS
+SELECT * FROM clean_search_query WHERE query = :TOP_VALUE;
+```
 
-![ROC/Lift curve 비교](reports/figures/10_model_roc_lift_curves.png)
+모든 컬럼이 같은 행을 `SELECT DISTINCT`로 한 번에 합치고, 검색어 중 기술적 요인으로 추정되는 값만 뷰로 분리해 이후 모든 분석이 이 정제 계층만 쓰게 했다.
 
-**3) 장바구니 미구매는 하나의 그룹이 아니라 최소 셋이다.**
-담은 지 약 16분 만에 뺀 빠른 이탈(72.0%, 대안 상품 추천이 적합), 18.4일을
-고민하다 뺀 고민 후 이탈(28.0%, 강한 프로모션이 정당화됨), 제거 이벤트 자체가
-없는 보류형(79.38%, 가벼운 리마인더면 충분)으로 나뉜다.
+## 8. AI 활용 방식
 
-![장바구니 세그먼트 3분할](reports/figures/13_cart_segment_split.png)
-
-**4) 구매자의 28.46%는 탐색 기록 없는 구매다.**
-`page_visit`/`search_query` 없이 구매만 기록된 고객이 258,808명이다(대표
-그림 참고, 맨 위). 앱 딥링크나 재구매 단축 경로 등 로깅 범위 밖 유입일
-가능성이 있으나 데이터로 확정할 수 없다. "탐색량이 많을수록 구매 가능성이
-높다"는 결론은 탐색 기록이 있는 구매자 집단 안에서만 유효하다.
-
-상세: [`reports/phase6_modeling_results.md`](reports/phase6_modeling_results.md),
-[`docs/analysis_details.md`](docs/analysis_details.md)
-
-## 6. 제안
-
-> 아래는 전부 "과거 데이터 기준 대상 선정 효율"만 나타낸다. 실제 캠페인을
-> 집행하지 않았으므로 이탈률 개선·매출 증가 등 실제 비즈니스 성과를
-> 주장하지 않는다.
-
-| 영역 | 제안 | 근거 | 비고 |
-|---|---|---|---|
-| 구매 유도(전환) 타겟팅 | 모델 기반 접근 단계적 도입 | 동일 Recall 기준 접촉 인원 21.68~50.87% 절감 | 과접촉 위험이 낮은 세그먼트부터 적용 |
-| 재활성화(비활성 위험) 타겟팅 | 단순 최근성 규칙 유지, 모델 도입 보류 | Lift 1.04 개선이 재현 파이프라인 운영 비용을 상회하기 어려움 | 운영 비용과 비교해 재검토 필요 |
-| 장바구니 이탈형(20.62%) | 대안 상품 추천 A/B 테스트 | 이미 제거(거부) 신호가 확인된 그룹 | Primary KPI: 7일 체크아웃 완료율 |
-| 장바구니 보류형(79.38%) | 가벼운 리마인더만 적용 | 제거 이벤트가 없어 로깅 누락·시간 부족이 아닌 미결정 상태로 확인 | 과도한 프로모션은 지양 |
-
-## 7. 판단 기록
-
-### 퍼널 가정: 단일 경로 → 경로 분해
-
-**상황**: 고객 대부분이 탐색→장바구니→구매 단일 경로를 따를 것이라 가정하고
-분석을 설계했다.
-**선택**: 퍼널을 4갈래 경로로 분해해 재분석했다.
-**이유**: 구매자 909,210명 중 표준 경로 완주 비율은 63.54%뿐이었고,
-28.46%는 탐색 기록 자체가 없었다.
-**결과**: "탐색량이 많을수록 구매 가능성이 높다"는 결론을 탐색 기록이 있는
-구매자 집단 안으로 한정했다.
-
-### Lift와 AUC 중 어느 지표로 모델을 평가할 것인가
-
-**상황**: Model A의 Lift@10%가 1.0~1.07에 그쳐, 라벨을 희소하게(60일 비활성)
-만들면 Lift가 개선될 것이라 가정했다.
-**선택**: 라벨 윈도우를 14일에서 60일로 늘려 직접 통제 실험을 했다.
-**이유**: Lift@10%는 예상대로 올랐지만(1.038→1.105) AUC는 오히려
-하락했다(0.7433→0.7109) — Lift가 라벨 기저율에 크게 좌우된다는 뜻이다.
-**결과**: Model A는 Lift가 아니라 AUC로 평가하기로 기준을 바꿨다.
-
-### 우측 검열 고객 처리 방침
-
-**상황**: 관측 종료 14일 이내 마지막 구매를 한 고객(15.18%, 138,041명)은
-그 이후 비활성 여부를 데이터로 알 수 없는 구조적 문제가 있었다.
-**선택**: 검열 고객을 개별 제외하거나 생존분석을 쓰는 대신, `snapshot_date`를
-관측 종료일에서 라벨 윈도우만큼 이전으로 제한하는 설계로 검열을 원천
-차단했다.
-**이유**: 기존 Feature/Label Window 구조를 그대로 재사용해 추가 복잡도 없이
-해결할 수 있었고, 생존분석은 이 프로젝트 스코프 대비 과설계로 판단했다.
-**결과**: 고객 단위 검열 판정 로직 없이, `snapshot_date + 라벨기간 <= 관측
-범위`를 검증하는 pytest로 안전장치를 확보했다.
-
-### 장바구니 세그먼트 분리(이탈형/보류형)
-
-**상황**: 장바구니_고객 세그먼트의 79.38%가 제거 이벤트 자체가 없다는 사실을
-발견했다.
-**선택**: 로깅 누락·시간 부족 가설을 검증 후 기각하고, 세그먼트를
-장바구니_이탈형과 장바구니_보류형 2개로 분리했다(8개→9개).
-**이유**: 능동적 거부(이탈형)와 미결정(보류형)은 실제 CRM 대응이 달라야
-한다는 근거를 확보했다.
-**결과**: 이탈형에는 대안 상품 추천, 보류형에는 가벼운 리마인더로 액션을
-분리해 제안했다.
-
-더 많은 판단 기록은 [`docs/methodology.md`](docs/methodology.md),
-[`docs/decisions_pending_review.md`](docs/decisions_pending_review.md)에 시간순으로
-남아 있다.
-
-## 8. 한계와 다음 단계
-
-**구현한 것**: SQL 기반 고객행동 데이터마트, Funnel/Retention/Lifecycle 분석,
-9개 CRM 세그먼트, 구매 비활성/구매성향 예측 모델(LightGBM), 타기팅 정책
-시뮬레이션, Streamlit 대시보드(7페이지), A/B 테스트 배정·검증 프레임워크
-(`src/experiments/`).
-
-**아직 검증되지 않은 것**: 실제 CRM 메시지 발송, 실제 Treatment-Control 성과
-측정, Incremental conversion/revenue, 실제 서비스 환경에서의 장기 효과.
-
-**핵심 한계 4가지**(전체: [`docs/limitations.md`](docs/limitations.md)):
-
-1. **데이터 최신성**: 2022년 6~12월 스냅샷이라 실시간 고객 행동을 반영하지
-   않는다.
-2. **6개월 고정 관측 창의 구조적 제약**: 관측 시작 시점에 활동 중이던 고객의
-   진짜 첫 구매를 알 수 없고, 관측 종료 근처 고객의 장기 리텐션은 판단할 수
-   없다(우측 검열).
-3. **category 컬럼의 신뢰도**: 익명 정수 ID인 `category`가 상품명 임베딩
-   기준 유사성과 거의 무관하다(NMI 0.1258). "카테고리 기반" 추천은 이 한계
-   위에 있다.
-4. **상품 단위 분석 불가**: `page_visit.url`과 `sku`를 연결할 키가 없어
-   상품 단위 분석은 할 수 없다.
-
-**다음 단계**: Model B가 찾은 "구매확률이 높은 고객"(Propensity)과 "CRM을
-보내야 구매가 발생하는 고객"(Incrementality)은 다른 개념이다. 점수 구간별로
-Treatment/Control을 무작위 배정하는 실험으로 이 둘의 차이를 검증한 뒤, 필요하면
-Uplift Modeling으로 확장하는 방향을 제안한다. 상세: [`docs/analysis_details.md`](docs/analysis_details.md)
+- 내가 정한 것: 문제 정의, 가설, 판정 기준(IV 임계값·배수·신뢰구간 조건), 봇 판정 원칙, 모델·운영 권고 선택 규칙, 결론 표현
+- AI(Claude Code)가 한 것: 코드 작성과 실행, 문서 초안 작성
+- 검토하고 바로잡은 것: 봇 후보 정의가 단일 테이블 극단 고객을 놓치는 오류, 과대해 보이는 IV를 "있다/없다"와 "정도"로 분리한 원인 분석, 비교 기준(현행 최근활동순)이 날짜 단위로 뭉뚱그려져 비교가 유리했는지에 대한 공정성 의심과 검증, 실행 중 발견한 버그(부트스트랩 동점 처리의 부동소수점 정밀도 오류, 대용량 데이터에서의 메모리 부족 처리, 부트스트랩 연산 성능)
+- [`v2/verification/`](v2/verification/)의 집계 CSV는 대조용으로 제공한다.
 
 ## 9. 재현 방법
 
 ```bash
-python3 -m venv .venv && source .venv/bin/activate
+# Python 3.13 기준
 pip install -r requirements.txt
 
-# 원본 데이터를 data/raw/synerise_dataset/에 위치시킨 후
-python3 scripts/build_database.py
-python3 scripts/train_model_a.py && python3 scripts/train_model_b.py
-python3 scripts/build_targeting_simulation.py
-python3 scripts/build_dashboard_data.py
-streamlit run app/Home.py
+# 원본 데이터는 공식 사이트에서 받는다(CC BY-NC 4.0, 저장소에는 포함하지 않음)
+bash v2/scripts/01_download_and_verify.sh
 
-pytest tests/ -q   # 데이터 품질·모델·파이프라인 테스트 전체 실행
+# 이후 스크립트를 번호 순서대로 실행
+python3 v2/scripts/02_data_audit.py
+python3 v2/scripts/03_variable_catalog.py
+# ... v2/scripts/ 안의 02~16번을 번호 순서대로 실행
 ```
 
-Python 3.12, DuckDB, LightGBM 기준으로 작성했다. 대시보드 배포 절차는
-[`docs/deployment.md`](docs/deployment.md) 참고.
+각 스크립트의 입력·출력과 산출물은 [`v2/docs/`](v2/docs/)의 같은 번호 문서에 설명돼 있다.
 
 ## 10. 저장소 구조
 
 ```
 .
-├── app/            Streamlit 대시보드(Home+7개 페이지)
-├── config/         경로 설정(YAML)
-├── docs/           방법론·ERD·데이터 사전·한계·가설 검증 기록
-├── reports/        Phase별 분석 리포트·그림·표
-├── scripts/        빌드·검증·모델 학습·시뮬레이션 실행 스크립트
-├── sql/            staging/intermediate/mart 데이터 계보(DuckDB)
-├── src/            분석·모델링·실험·LLM·대시보드 공통 모듈
-├── tests/          데이터 품질·모델·파이프라인 pytest
-├── requirements.txt
-└── LICENSE
+├── README.md              # 이 문서
+├── v2/                     # 재분석 전체(원데이터 점검부터 최종평가까지)
+│   ├── scripts/            # 번호 순서대로 실행하는 분석 스크립트
+│   ├── docs/                # 단계별 문서·결과 JSON·그림
+│   └── verification/        # 대조용 집계 CSV(고객 단위 아님)
+├── archive/v1/             # 이전 버전(보관용, 유지보수 안 함)
+├── docs/internal/           # 내부 작업 지침 문서
+├── requirements.txt         # v2 실행에 필요한 패키지
+└── LICENSE                  # 코드는 MIT, 데이터는 별도 라이선스
 ```
 
-## 11. 역할
+## 11. 이전 버전(v1)
 
-개인 프로젝트다. 기획부터 SQL 데이터마트 설계, 모델링, 타기팅 시뮬레이션,
-Streamlit 대시보드, LLM CRM 리포트까지 전체를 혼자 맡았다. 기간은 2026년
-8~9월이다.
+2026년 8~9월 첫 분석은 결과를 먼저 보고 가설을 정리했고 데이터 정제 기준도 달랐다. 이 문제를 2026년 10월에 원데이터 점검부터 다시 설계한 것이 이 저장소의 현재 버전이다. v1 코드와 산출물은 [`archive/v1/`](archive/v1/)에 그대로 보관돼 있다.
 
-## 라이선스
+## 데이터 이용 조건과 라이선스
 
-코드는 [MIT License](LICENSE)를 따른다. 데이터는 원 출처(Synerise SA,
-CC BY-NC 4.0)의 라이선스를 따르며 이 저장소에는 포함하지 않는다. 자세한 내용은
-"2. 데이터" 절 참고.
+이 저장소의 코드(SQL, Python, 문서)는 MIT 라이선스를 따른다. 분석에 사용한 원본 데이터셋은 Synerise RecSys Challenge 2025(© 2025 Synerise SA)이며 CC BY-NC 4.0 라이선스로 별도 제공된다. 원본 데이터는 라이선스 조건에 따라 이 저장소에 재배포하지 않으며, 받는 방법은 [`v2/docs/01_data_audit.md`](v2/docs/01_data_audit.md)에 있다. 자세한 조건은 [`LICENSE`](LICENSE)를 참고한다.

@@ -1,0 +1,1007 @@
+{
+  "n_training_rows": 500000,
+  "min_bin_n": 25000.0,
+  "hypotheses": {
+    "H1": {
+      "label": "최근에 활동한 고객일수록 곧 구매할 가능성이 높다",
+      "verdict": "채택",
+      "core": {
+        "col": "h1_days_since_last_activity",
+        "direction": "lower_better",
+        "iv": 0.5546,
+        "strength": "강함",
+        "bin_order": [
+          "Q1",
+          "Q2",
+          "Q3",
+          "Q4",
+          "Q5",
+          "Q6",
+          "Q7",
+          "Q8",
+          "Q9",
+          "Q10"
+        ],
+        "bins": [
+          {
+            "bin_label": "Q1",
+            "n": 50001,
+            "good": 1075,
+            "purchase_rate": 0.02149957000859983,
+            "ci_low": 0.02026450685083644,
+            "ci_high": 0.0228081543372354
+          },
+          {
+            "bin_label": "Q2",
+            "n": 49999,
+            "good": 593,
+            "purchase_rate": 0.011860237204744094,
+            "ci_low": 0.010948111779327939,
+            "ci_high": 0.01284736787597229
+          },
+          {
+            "bin_label": "Q3",
+            "n": 50002,
+            "good": 437,
+            "purchase_rate": 0.008739650413983441,
+            "ci_low": 0.007960712592319003,
+            "ci_high": 0.009594068447502555
+          },
+          {
+            "bin_label": "Q4",
+            "n": 49998,
+            "good": 268,
+            "purchase_rate": 0.005360214408576343,
+            "ci_low": 0.004757079443958575,
+            "ci_high": 0.006039354901771605
+          },
+          {
+            "bin_label": "Q5",
+            "n": 50000,
+            "good": 247,
+            "purchase_rate": 0.00494,
+            "ci_low": 0.0043623285362490785,
+            "ci_high": 0.005593738519206918
+          },
+          {
+            "bin_label": "Q6",
+            "n": 50002,
+            "good": 213,
+            "purchase_rate": 0.004259829606815728,
+            "ci_low": 0.003725804293107808,
+            "ci_high": 0.004870023439146578
+          },
+          {
+            "bin_label": "Q7",
+            "n": 50001,
+            "good": 199,
+            "purchase_rate": 0.0039799204015919685,
+            "ci_low": 0.0034648625191195177,
+            "ci_high": 0.0045711913337138045
+          },
+          {
+            "bin_label": "Q8",
+            "n": 49997,
+            "good": 157,
+            "purchase_rate": 0.003140188411304678,
+            "ci_low": 0.002686465616959186,
+            "ci_high": 0.0036702593866455527
+          },
+          {
+            "bin_label": "Q9",
+            "n": 50000,
+            "good": 113,
+            "purchase_rate": 0.00226,
+            "ci_low": 0.001880271915411526,
+            "ci_high": 0.0027162069279259822
+          },
+          {
+            "bin_label": "Q10",
+            "n": 50000,
+            "good": 104,
+            "purchase_rate": 0.00208,
+            "ci_low": 0.0017170934154941738,
+            "ci_high": 0.0025194130852383614
+          }
+        ],
+        "spearman": -1.0,
+        "spearman_ok": true,
+        "high_end": "Q1",
+        "low_end": "Q10",
+        "p_high": 0.0215,
+        "p_low": 0.00208,
+        "rate_ok": true,
+        "ratio": 10.336,
+        "ratio_ci_low": 8.455,
+        "ratio_ci_high": 12.636,
+        "ci_ok": true
+      },
+      "aux": {
+        "h1_days_since_last_visit": {
+          "col": "h1_days_since_last_visit",
+          "direction": "lower_better",
+          "iv": 0.7347,
+          "strength": "강함",
+          "bin_order": [
+            "Q1",
+            "Q2",
+            "Q3",
+            "Q4",
+            "Q5",
+            "Q6",
+            "Q7",
+            "Q8",
+            "Q9",
+            "Q10"
+          ],
+          "bins": [
+            {
+              "bin_label": "Q1",
+              "n": 49411,
+              "good": 1036,
+              "purchase_rate": 0.020966991155815507,
+              "ci_low": 0.0197404193311508,
+              "ci_high": 0.022268044781784863
+            },
+            {
+              "bin_label": "Q2",
+              "n": 49410,
+              "good": 555,
+              "purchase_rate": 0.011232544019429266,
+              "ci_low": 0.01034054722393487,
+              "ci_high": 0.012200537701548844
+            },
+            {
+              "bin_label": "Q3",
+              "n": 49409,
+              "good": 404,
+              "purchase_rate": 0.008176647979113117,
+              "ci_low": 0.007419927236863153,
+              "ci_high": 0.009009842307092807
+            },
+            {
+              "bin_label": "Q4",
+              "n": 49409,
+              "good": 243,
+              "purchase_rate": 0.004918132324070514,
+              "ci_low": 0.004338592472241738,
+              "ci_high": 0.005574652428047504
+            },
+            {
+              "bin_label": "Q5",
+              "n": 49410,
+              "good": 221,
+              "purchase_rate": 0.00447277878971868,
+              "ci_low": 0.003921677619031408,
+              "ci_high": 0.00510092790128094
+            },
+            {
+              "bin_label": "Q6",
+              "n": 49410,
+              "good": 186,
+              "purchase_rate": 0.0037644201578627807,
+              "ci_low": 0.0032616624551746473,
+              "ci_high": 0.004344335941841301
+            },
+            {
+              "bin_label": "Q7",
+              "n": 49409,
+              "good": 166,
+              "purchase_rate": 0.003359711793397964,
+              "ci_low": 0.002886645472810742,
+              "ci_high": 0.003910000684855285
+            },
+            {
+              "bin_label": "Q8",
+              "n": 49410,
+              "good": 137,
+              "purchase_rate": 0.002772718073264521,
+              "ci_low": 0.0023461246707841676,
+              "ci_high": 0.00327662375361682
+            },
+            {
+              "bin_label": "Q9",
+              "n": 49410,
+              "good": 95,
+              "purchase_rate": 0.0019226877150374418,
+              "ci_low": 0.0015732240389344711,
+              "ci_high": 0.002349595837510836
+            },
+            {
+              "bin_label": "Q10",
+              "n": 49410,
+              "good": 88,
+              "purchase_rate": 0.0017810159886662619,
+              "ci_low": 0.0014459633290076499,
+              "ci_high": 0.0021935351227783777
+            },
+            {
+              "bin_label": "결측",
+              "n": 5902,
+              "good": 275,
+              "purchase_rate": 0.04659437478820739,
+              "ci_low": 0.04150569545174198,
+              "ci_high": 0.05227291181737274
+            }
+          ],
+          "spearman": -1.0,
+          "spearman_ok": true,
+          "high_end": "Q1",
+          "low_end": "Q10",
+          "p_high": 0.02097,
+          "p_low": 0.00178,
+          "rate_ok": true,
+          "ratio": 11.772,
+          "ratio_ci_low": 9.473,
+          "ratio_ci_high": 14.629,
+          "ci_ok": true
+        },
+        "h1_days_since_last_cart_add": {
+          "col": "h1_days_since_last_cart_add",
+          "direction": "lower_better",
+          "iv": 1.2684,
+          "strength": "강함",
+          "bin_order": [
+            "Q1",
+            "Q2"
+          ],
+          "bins": [
+            {
+              "bin_label": "Q1",
+              "n": 28749,
+              "good": 1378,
+              "purchase_rate": 0.047932101986156044,
+              "ci_low": 0.04552252550454666,
+              "ci_high": 0.05046247793942597
+            },
+            {
+              "bin_label": "Q2",
+              "n": 28748,
+              "good": 674,
+              "purchase_rate": 0.023445109224989564,
+              "ci_low": 0.02175859242078923,
+              "ci_high": 0.02525897322968374
+            },
+            {
+              "bin_label": "결측",
+              "n": 442503,
+              "good": 1354,
+              "purchase_rate": 0.003059866260793712,
+              "ci_low": 0.0029013879195994266,
+              "ci_high": 0.0032269729215451373
+            }
+          ],
+          "spearman": -1.0,
+          "spearman_ok": true,
+          "high_end": "Q1",
+          "low_end": "Q2",
+          "p_high": 0.04793,
+          "p_low": 0.02345,
+          "rate_ok": true,
+          "ratio": 2.044,
+          "ratio_ci_low": 1.867,
+          "ratio_ci_high": 2.238,
+          "ci_ok": true
+        },
+        "h1_active_days_last30": {
+          "col": "h1_active_days_last30",
+          "direction": "higher_better",
+          "iv": 0.9132,
+          "strength": "강함",
+          "bin_order": [
+            "Q1",
+            "Q2",
+            "Q3"
+          ],
+          "bins": [
+            {
+              "bin_label": "Q1",
+              "n": 446757,
+              "good": 1726,
+              "purchase_rate": 0.003863397775524502,
+              "ci_low": 0.003685701370368742,
+              "ci_high": 0.004049626523686331
+            },
+            {
+              "bin_label": "Q2",
+              "n": 25885,
+              "good": 400,
+              "purchase_rate": 0.015452965037666602,
+              "ci_low": 0.014020614145231591,
+              "ci_high": 0.0170291181069832
+            },
+            {
+              "bin_label": "Q3",
+              "n": 27358,
+              "good": 1280,
+              "purchase_rate": 0.04678704583668397,
+              "ci_low": 0.04434755754112096,
+              "ci_high": 0.049353796244948775
+            }
+          ],
+          "spearman": 1.0,
+          "spearman_ok": true,
+          "high_end": "Q3",
+          "low_end": "Q1",
+          "p_high": 0.04679,
+          "p_low": 0.00386,
+          "rate_ok": true,
+          "ratio": 12.11,
+          "ratio_ci_low": 11.277,
+          "ratio_ci_high": 13.005,
+          "ci_ok": true
+        }
+      },
+      "stability": {
+        "2022-08-22": 0.4797,
+        "2022-09-05": 0.5181,
+        "2022-09-19": 0.5966,
+        "2022-10-03": 0.6052,
+        "2022-10-17": 0.595
+      }
+    },
+    "H2": {
+      "label": "장바구니에 담아두고 아직 사지도 빼지도 않은 상품이 있는 고객은 구매 가능성이 높다",
+      "verdict": "채택",
+      "core": {
+        "col": "h2_pending_items",
+        "direction": "higher_better",
+        "iv": 0.4044,
+        "strength": "강함",
+        "bin_order": [
+          "0",
+          "Q1"
+        ],
+        "bins": [
+          {
+            "bin_label": "0",
+            "n": 457982,
+            "good": 2303,
+            "purchase_rate": 0.005028581909332681,
+            "ci_low": 0.004827831232744091,
+            "ci_high": 0.005237636258336533
+          },
+          {
+            "bin_label": "Q1",
+            "n": 42018,
+            "good": 1103,
+            "purchase_rate": 0.026250654481412727,
+            "ci_low": 0.024764686307147177,
+            "ci_high": 0.027823242157177915
+          }
+        ],
+        "spearman": 1.0,
+        "spearman_ok": true,
+        "high_end": "Q1",
+        "low_end": "0",
+        "p_high": 0.02625,
+        "p_low": 0.00503,
+        "rate_ok": true,
+        "ratio": 5.22,
+        "ratio_ci_low": 4.862,
+        "ratio_ci_high": 5.605,
+        "ci_ok": true
+      },
+      "aux": {
+        "h2_has_pending": {
+          "col": "h2_has_pending",
+          "direction": "higher_better",
+          "iv": 0.4044,
+          "strength": "강함",
+          "bin_order": [
+            "0",
+            "1"
+          ],
+          "bins": [
+            {
+              "bin_label": "0",
+              "n": 457982,
+              "good": 2303,
+              "purchase_rate": 0.005028581909332681,
+              "ci_low": 0.004827831232744091,
+              "ci_high": 0.005237636258336533
+            },
+            {
+              "bin_label": "1",
+              "n": 42018,
+              "good": 1103,
+              "purchase_rate": 0.026250654481412727,
+              "ci_low": 0.024764686307147177,
+              "ci_high": 0.027823242157177915
+            }
+          ],
+          "spearman": 1.0,
+          "spearman_ok": true,
+          "high_end": "1",
+          "low_end": "0",
+          "p_high": 0.02625,
+          "p_low": 0.00503,
+          "rate_ok": true,
+          "ratio": 5.22,
+          "ratio_ci_low": 4.862,
+          "ratio_ci_high": 5.605,
+          "ci_ok": true
+        },
+        "h2_pending_items_last7": {
+          "col": "h2_pending_items_last7",
+          "direction": "higher_better",
+          "iv": 0.2667,
+          "strength": "중간",
+          "bin_order": [
+            "0",
+            "Q1"
+          ],
+          "bins": [
+            {
+              "bin_label": "0",
+              "n": 490832,
+              "good": 2934,
+              "purchase_rate": 0.0059776053721028784,
+              "ci_low": 0.005765787162838781,
+              "ci_high": 0.006197156661433076
+            },
+            {
+              "bin_label": "Q1",
+              "n": 9168,
+              "good": 472,
+              "purchase_rate": 0.05148342059336824,
+              "ci_low": 0.04714482441881419,
+              "ci_high": 0.056197736577878125
+            }
+          ],
+          "spearman": 1.0,
+          "spearman_ok": true,
+          "high_end": "Q1",
+          "low_end": "0",
+          "p_high": 0.05148,
+          "p_low": 0.00598,
+          "rate_ok": true,
+          "ratio": 8.613,
+          "ratio_ci_low": 7.832,
+          "ratio_ci_high": 9.471,
+          "ci_ok": true
+        }
+      },
+      "stability": {
+        "2022-08-22": 0.3194,
+        "2022-09-05": 0.3632,
+        "2022-09-19": 0.4525,
+        "2022-10-03": 0.433,
+        "2022-10-17": 0.4428
+      }
+    },
+    "H3": {
+      "label": "과거에 구매한 적 있는 고객은 구매 가능성이 높다",
+      "verdict": "채택",
+      "core": {
+        "col": "h3_purchase_count",
+        "direction": "higher_better",
+        "iv": 1.6325,
+        "strength": "강함",
+        "bin_order": [
+          "0",
+          "Q1"
+        ],
+        "bins": [
+          {
+            "bin_label": "0",
+            "n": 476662,
+            "good": 1557,
+            "purchase_rate": 0.0032664655458165327,
+            "ci_low": 0.0031084333598389384,
+            "ci_high": 0.003432504395496119
+          },
+          {
+            "bin_label": "Q1",
+            "n": 23338,
+            "good": 1849,
+            "purchase_rate": 0.07922701174050904,
+            "ci_low": 0.0758305849913122,
+            "ci_high": 0.08276194011604693
+          }
+        ],
+        "spearman": 1.0,
+        "spearman_ok": true,
+        "high_end": "Q1",
+        "low_end": "0",
+        "p_high": 0.07923,
+        "p_low": 0.00327,
+        "rate_ok": true,
+        "ratio": 24.255,
+        "ratio_ci_low": 22.703,
+        "ratio_ci_high": 25.913,
+        "ci_ok": true
+      },
+      "aux": {
+        "h3_days_since_last_purchase": {
+          "col": "h3_days_since_last_purchase",
+          "direction": "lower_better",
+          "iv": 1.6325,
+          "strength": "강함",
+          "bin_order": [
+            "Q1"
+          ],
+          "bins": [
+            {
+              "bin_label": "Q1",
+              "n": 23338,
+              "good": 1849,
+              "purchase_rate": 0.07922701174050904,
+              "ci_low": 0.0758305849913122,
+              "ci_high": 0.08276194011604693
+            },
+            {
+              "bin_label": "결측",
+              "n": 476662,
+              "good": 1557,
+              "purchase_rate": 0.0032664655458165327,
+              "ci_low": 0.0031084333598389384,
+              "ci_high": 0.003432504395496119
+            }
+          ],
+          "spearman": null,
+          "spearman_ok": false,
+          "high_end": null,
+          "low_end": null,
+          "p_high": null,
+          "p_low": null,
+          "rate_ok": false,
+          "ratio": null,
+          "ratio_ci_low": null,
+          "ratio_ci_high": null,
+          "ci_ok": false
+        },
+        "h3_unique_skus_bought": {
+          "col": "h3_unique_skus_bought",
+          "direction": "higher_better",
+          "iv": 1.6325,
+          "strength": "강함",
+          "bin_order": [
+            "0",
+            "Q1"
+          ],
+          "bins": [
+            {
+              "bin_label": "0",
+              "n": 476662,
+              "good": 1557,
+              "purchase_rate": 0.0032664655458165327,
+              "ci_low": 0.0031084333598389384,
+              "ci_high": 0.003432504395496119
+            },
+            {
+              "bin_label": "Q1",
+              "n": 23338,
+              "good": 1849,
+              "purchase_rate": 0.07922701174050904,
+              "ci_low": 0.0758305849913122,
+              "ci_high": 0.08276194011604693
+            }
+          ],
+          "spearman": 1.0,
+          "spearman_ok": true,
+          "high_end": "Q1",
+          "low_end": "0",
+          "p_high": 0.07923,
+          "p_low": 0.00327,
+          "rate_ok": true,
+          "ratio": 24.255,
+          "ratio_ci_low": 22.703,
+          "ratio_ci_high": 25.913,
+          "ci_ok": true
+        }
+      },
+      "stability": {
+        "2022-08-22": 1.4133,
+        "2022-09-05": 1.6858,
+        "2022-09-19": 1.6734,
+        "2022-10-03": 1.668,
+        "2022-10-17": 1.6975
+      }
+    },
+    "H4": {
+      "label": "실제 검색을 한 고객은 구매 가능성이 높다",
+      "verdict": "채택",
+      "core": {
+        "col": "h4_real_search_count",
+        "direction": "higher_better",
+        "iv": 0.4473,
+        "strength": "강함",
+        "bin_order": [
+          "0",
+          "Q1"
+        ],
+        "bins": [
+          {
+            "bin_label": "0",
+            "n": 466708,
+            "good": 2362,
+            "purchase_rate": 0.005060980313172262,
+            "ci_low": 0.004861427823801778,
+            "ci_high": 0.005268680689819444
+          },
+          {
+            "bin_label": "Q1",
+            "n": 33292,
+            "good": 1044,
+            "purchase_rate": 0.0313588850174216,
+            "ci_low": 0.029540101877183353,
+            "ci_high": 0.03328580969250647
+          }
+        ],
+        "spearman": 1.0,
+        "spearman_ok": true,
+        "high_end": "Q1",
+        "low_end": "0",
+        "p_high": 0.03136,
+        "p_low": 0.00506,
+        "rate_ok": true,
+        "ratio": 6.196,
+        "ratio_ci_low": 5.766,
+        "ratio_ci_high": 6.659,
+        "ci_ok": true
+      },
+      "aux": {
+        "h4_unique_queries": {
+          "col": "h4_unique_queries",
+          "direction": "higher_better",
+          "iv": 0.4473,
+          "strength": "강함",
+          "bin_order": [
+            "0",
+            "Q1"
+          ],
+          "bins": [
+            {
+              "bin_label": "0",
+              "n": 466708,
+              "good": 2362,
+              "purchase_rate": 0.005060980313172262,
+              "ci_low": 0.004861427823801778,
+              "ci_high": 0.005268680689819444
+            },
+            {
+              "bin_label": "Q1",
+              "n": 33292,
+              "good": 1044,
+              "purchase_rate": 0.0313588850174216,
+              "ci_low": 0.029540101877183353,
+              "ci_high": 0.03328580969250647
+            }
+          ],
+          "spearman": 1.0,
+          "spearman_ok": true,
+          "high_end": "Q1",
+          "low_end": "0",
+          "p_high": 0.03136,
+          "p_low": 0.00506,
+          "rate_ok": true,
+          "ratio": 6.196,
+          "ratio_ci_low": 5.766,
+          "ratio_ci_high": 6.659,
+          "ci_ok": true
+        },
+        "h4_real_search_last7": {
+          "col": "h4_real_search_last7",
+          "direction": "higher_better",
+          "iv": 0.1846,
+          "strength": "중간",
+          "bin_order": [
+            "0",
+            "1"
+          ],
+          "bins": [
+            {
+              "bin_label": "0",
+              "n": 492849,
+              "good": 3060,
+              "purchase_rate": 0.006208798232318621,
+              "ci_low": 0.0059933082463052454,
+              "ci_high": 0.006431986046651509
+            },
+            {
+              "bin_label": "1",
+              "n": 7151,
+              "good": 346,
+              "purchase_rate": 0.04838484128093973,
+              "ci_low": 0.04364929702216276,
+              "ci_high": 0.05360535079561701
+            }
+          ],
+          "spearman": 1.0,
+          "spearman_ok": true,
+          "high_end": "1",
+          "low_end": "0",
+          "p_high": 0.04838,
+          "p_low": 0.00621,
+          "rate_ok": true,
+          "ratio": 7.793,
+          "ratio_ci_low": 6.99,
+          "ratio_ci_high": 8.688,
+          "ci_ok": true
+        }
+      },
+      "stability": {
+        "2022-08-22": 0.4548,
+        "2022-09-05": 0.5321,
+        "2022-09-19": 0.4802,
+        "2022-10-03": 0.3895,
+        "2022-10-17": 0.4102
+      }
+    },
+    "H5": {
+      "label": "최근 활동이 늘어나는 고객은 구매 가능성이 높다",
+      "verdict": "채택",
+      "core": {
+        "col": "h5_activity_growth_ratio",
+        "direction": "higher_better",
+        "iv": 0.7359,
+        "strength": "강함",
+        "bin_order": [
+          "0",
+          "Q1",
+          "Q2",
+          "Q3"
+        ],
+        "bins": [
+          {
+            "bin_label": "0",
+            "n": 234504,
+            "good": 702,
+            "purchase_rate": 0.0029935523487872274,
+            "ci_low": 0.002780428426335197,
+            "ci_high": 0.003222959734992709
+          },
+          {
+            "bin_label": "Q1",
+            "n": 26896,
+            "good": 749,
+            "purchase_rate": 0.02784800713860797,
+            "ci_low": 0.025947999972627176,
+            "ci_high": 0.029882871537040005
+          },
+          {
+            "bin_label": "Q2",
+            "n": 37721,
+            "good": 600,
+            "purchase_rate": 0.01590625911296095,
+            "ci_low": 0.014692054897863308,
+            "ci_high": 0.01721905589656876
+          },
+          {
+            "bin_label": "Q3",
+            "n": 25034,
+            "good": 564,
+            "purchase_rate": 0.022529360070304386,
+            "ci_low": 0.02076299739134574,
+            "ci_high": 0.02444224106658907
+          },
+          {
+            "bin_label": "이전활동없음",
+            "n": 175845,
+            "good": 791,
+            "purchase_rate": 0.004498279734993887,
+            "ci_low": 0.004196143289026077,
+            "ci_high": 0.004822065677099975
+          }
+        ],
+        "spearman": 0.4,
+        "spearman_ok": true,
+        "high_end": "Q3",
+        "low_end": "0",
+        "p_high": 0.02253,
+        "p_low": 0.00299,
+        "rate_ok": true,
+        "ratio": 7.526,
+        "ratio_ci_low": 6.742,
+        "ratio_ci_high": 8.402,
+        "ci_ok": true
+      },
+      "aux": {
+        "h5_active_days_growth_ratio": {
+          "col": "h5_active_days_growth_ratio",
+          "direction": "higher_better",
+          "iv": 0.7299,
+          "strength": "강함",
+          "bin_order": [
+            "0",
+            "Q1",
+            "Q2"
+          ],
+          "bins": [
+            {
+              "bin_label": "0",
+              "n": 234504,
+              "good": 702,
+              "purchase_rate": 0.0029935523487872274,
+              "ci_low": 0.002780428426335197,
+              "ci_high": 0.003222959734992709
+            },
+            {
+              "bin_label": "Q1",
+              "n": 38303,
+              "good": 1011,
+              "purchase_rate": 0.02639479936297418,
+              "ci_low": 0.02483624686628587,
+              "ci_high": 0.028048342814947468
+            },
+            {
+              "bin_label": "Q2",
+              "n": 51348,
+              "good": 902,
+              "purchase_rate": 0.017566409597257925,
+              "ci_low": 0.016465684280055175,
+              "ci_high": 0.018739316040712287
+            },
+            {
+              "bin_label": "이전활동없음",
+              "n": 175845,
+              "good": 791,
+              "purchase_rate": 0.004498279734993887,
+              "ci_low": 0.004196143289026077,
+              "ci_high": 0.004822065677099975
+            }
+          ],
+          "spearman": 0.5,
+          "spearman_ok": true,
+          "high_end": "Q2",
+          "low_end": "0",
+          "p_high": 0.01757,
+          "p_low": 0.00299,
+          "rate_ok": true,
+          "ratio": 5.868,
+          "ratio_ci_low": 5.319,
+          "ratio_ci_high": 6.473,
+          "ci_ok": true
+        }
+      },
+      "stability": {
+        "2022-08-22": 0.6067,
+        "2022-09-05": 0.7425,
+        "2022-09-19": 0.7532,
+        "2022-10-03": 0.7799,
+        "2022-10-17": 0.7943
+      }
+    },
+    "H6": {
+      "label": "장바구니에서 상품을 뺀 고객은 담기만 한 고객보다 구매 가능성이 낮다",
+      "verdict": "기각",
+      "core": {
+        "col": "h6_removal_ratio",
+        "direction": "lower_better",
+        "iv": 1.3601,
+        "strength": "강함",
+        "bin_order": [
+          "0",
+          "Q1"
+        ],
+        "bins": [
+          {
+            "bin_label": "0",
+            "n": 40283,
+            "good": 843,
+            "purchase_rate": 0.02092694188615545,
+            "ci_low": 0.01957411079836904,
+            "ci_high": 0.02237113814365772
+          },
+          {
+            "bin_label": "Q1",
+            "n": 17214,
+            "good": 1209,
+            "purchase_rate": 0.07023353084698501,
+            "ci_low": 0.06651118205352487,
+            "ci_high": 0.0741476563922882
+          },
+          {
+            "bin_label": "결측",
+            "n": 442503,
+            "good": 1354,
+            "purchase_rate": 0.003059866260793712,
+            "ci_low": 0.0029013879195994266,
+            "ci_high": 0.0032269729215451373
+          }
+        ],
+        "spearman": 1.0,
+        "spearman_ok": false,
+        "high_end": "0",
+        "low_end": "Q1",
+        "p_high": 0.02093,
+        "p_low": 0.07023,
+        "rate_ok": false,
+        "ratio": 0.298,
+        "ratio_ci_low": 0.273,
+        "ratio_ci_high": 0.325,
+        "ci_ok": false
+      },
+      "aux": {
+        "h6_removal_last7": {
+          "col": "h6_removal_last7",
+          "direction": "lower_better",
+          "iv": 0.4104,
+          "strength": "강함",
+          "bin_order": [
+            "0",
+            "1"
+          ],
+          "bins": [
+            {
+              "bin_label": "0",
+              "n": 496218,
+              "good": 2941,
+              "purchase_rate": 0.0059268305462518486,
+              "ci_low": 0.005717052090247387,
+              "ci_high": 0.006144258933511467
+            },
+            {
+              "bin_label": "1",
+              "n": 3782,
+              "good": 465,
+              "purchase_rate": 0.12295081967213115,
+              "ci_low": 0.11286592510245136,
+              "ci_high": 0.13380091906767977
+            }
+          ],
+          "spearman": 1.0,
+          "spearman_ok": false,
+          "high_end": "0",
+          "low_end": "1",
+          "p_high": 0.00593,
+          "p_low": 0.12295,
+          "rate_ok": false,
+          "ratio": 0.048,
+          "ratio_ci_low": 0.044,
+          "ratio_ci_high": 0.053,
+          "ci_ok": false
+        }
+      },
+      "stability": {
+        "2022-08-22": 1.0534,
+        "2022-09-05": 1.2091,
+        "2022-09-19": 1.4352,
+        "2022-10-03": 1.5122,
+        "2022-10-17": 1.5369
+      }
+    }
+  },
+  "reference": {
+    "ref_default_search_flag": {
+      "col": "ref_default_search_flag",
+      "direction": "lower_better",
+      "iv": 0.6554,
+      "strength": "강함",
+      "bin_order": [
+        "0",
+        "1"
+      ],
+      "bins": [
+        {
+          "bin_label": "0",
+          "n": 493573,
+          "good": 2665,
+          "purchase_rate": 0.005399403938221904,
+          "ci_low": 0.005198772522439469,
+          "ci_high": 0.00560773449014562
+        },
+        {
+          "bin_label": "1",
+          "n": 6427,
+          "good": 741,
+          "purchase_rate": 0.11529484985218609,
+          "ci_low": 0.10771531814035896,
+          "ci_high": 0.12333400517060548
+        }
+      ],
+      "spearman": 1.0,
+      "spearman_ok": false,
+      "high_end": "0",
+      "low_end": "1",
+      "p_high": 0.0054,
+      "p_low": 0.11529,
+      "rate_ok": false,
+      "ratio": 0.047,
+      "ratio_ci_low": 0.043,
+      "ratio_ci_high": 0.051,
+      "ci_ok": false
+    }
+  }
+}

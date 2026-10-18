@@ -1,0 +1,37 @@
+{
+  "product_buy": {
+    "before": 2318502,
+    "after": 1937599,
+    "removed": 380903,
+    "removed_pct": 16.429
+  },
+  "add_to_cart": {
+    "before": 7541117,
+    "after": 7379624,
+    "removed": 161493,
+    "removed_pct": 2.141
+  },
+  "remove_from_cart": {
+    "before": 2688894,
+    "after": 2535306,
+    "removed": 153588,
+    "removed_pct": 5.712
+  },
+  "page_visit": {
+    "before": 199451980,
+    "after": 178752573,
+    "removed": 20699407,
+    "removed_pct": 10.378
+  },
+  "search_query": {
+    "before": 13223769,
+    "after": 12606626,
+    "removed": 617143,
+    "removed_pct": 4.667
+  },
+  "search_default_split": {
+    "default_rows": 2809642,
+    "real_rows": 9796984,
+    "total_clean": 12606626
+  }
+}

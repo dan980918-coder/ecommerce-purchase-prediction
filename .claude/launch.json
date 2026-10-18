@@ -4,7 +4,7 @@
     {
       "name": "streamlit-dashboard",
       "runtimeExecutable": "streamlit",
-      "runtimeArgs": ["run", "app/Home.py", "--server.headless", "true"],
+      "runtimeArgs": ["run", "archive/v1/app/Home.py", "--server.headless", "true"],
       "port": 8501
     }
   ]

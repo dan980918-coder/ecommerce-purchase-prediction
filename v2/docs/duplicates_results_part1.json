@@ -1,0 +1,937 @@
+{
+  "multiplicity_distribution": {
+    "product_buy": [
+      {
+        "bucket": "1(무중복)",
+        "n_groups": 1573108,
+        "n_rows": 1573108.0
+      },
+      {
+        "bucket": "2",
+        "n_groups": 348395,
+        "n_rows": 696790.0
+      },
+      {
+        "bucket": "3",
+        "n_groups": 15796,
+        "n_rows": 47388.0
+      },
+      {
+        "bucket": "4",
+        "n_groups": 284,
+        "n_rows": 1136.0
+      },
+      {
+        "bucket": "5-9",
+        "n_groups": 16,
+        "n_rows": 80.0
+      }
+    ],
+    "add_to_cart": [
+      {
+        "bucket": "1(무중복)",
+        "n_groups": 7258315,
+        "n_rows": 7258315.0
+      },
+      {
+        "bucket": "2",
+        "n_groups": 94396,
+        "n_rows": 188792.0
+      },
+      {
+        "bucket": "3",
+        "n_groups": 20017,
+        "n_rows": 60051.0
+      },
+      {
+        "bucket": "4",
+        "n_groups": 4521,
+        "n_rows": 18084.0
+      },
+      {
+        "bucket": "5-9",
+        "n_groups": 2103,
+        "n_rows": 12247.0
+      },
+      {
+        "bucket": "10+",
+        "n_groups": 272,
+        "n_rows": 3628.0
+      }
+    ],
+    "remove_from_cart": [
+      {
+        "bucket": "1(무중복)",
+        "n_groups": 2415650,
+        "n_rows": 2415650.0
+      },
+      {
+        "bucket": "2",
+        "n_groups": 92182,
+        "n_rows": 184364.0
+      },
+      {
+        "bucket": "3",
+        "n_groups": 21948,
+        "n_rows": 65844.0
+      },
+      {
+        "bucket": "4",
+        "n_groups": 4819,
+        "n_rows": 19276.0
+      },
+      {
+        "bucket": "5-9",
+        "n_groups": 693,
+        "n_rows": 3586.0
+      },
+      {
+        "bucket": "10+",
+        "n_groups": 14,
+        "n_rows": 174.0
+      }
+    ],
+    "page_visit": [
+      {
+        "bucket": "1(무중복)",
+        "n_groups": 161431726,
+        "n_rows": 161431726.0
+      },
+      {
+        "bucket": "2",
+        "n_groups": 15277700,
+        "n_rows": 30555400.0
+      },
+      {
+        "bucket": "3",
+        "n_groups": 1484502,
+        "n_rows": 4453506.0
+      },
+      {
+        "bucket": "4",
+        "n_groups": 303802,
+        "n_rows": 1215208.0
+      },
+      {
+        "bucket": "5-9",
+        "n_groups": 222964,
+        "n_rows": 1330925.0
+      },
+      {
+        "bucket": "10+",
+        "n_groups": 31879,
+        "n_rows": 465215.0
+      }
+    ],
+    "search_query": [
+      {
+        "bucket": "1(무중복)",
+        "n_groups": 11993735,
+        "n_rows": 11993735.0
+      },
+      {
+        "bucket": "2",
+        "n_groups": 609405,
+        "n_rows": 1218810.0
+      },
+      {
+        "bucket": "3",
+        "n_groups": 2856,
+        "n_rows": 8568.0
+      },
+      {
+        "bucket": "4",
+        "n_groups": 553,
+        "n_rows": 2212.0
+      },
+      {
+        "bucket": "5-9",
+        "n_groups": 75,
+        "n_rows": 424.0
+      },
+      {
+        "bucket": "10+",
+        "n_groups": 2,
+        "n_rows": 20.0
+      }
+    ]
+  },
+  "product_buy_dup_examples": [
+    {
+      "고객": "고객00016",
+      "sku": 755972,
+      "중복_timestamp": "2022-12-07 04:54:10",
+      "반복_횟수": 2,
+      "전후_이벤트": [
+        {
+          "table_name": "add_to_cart",
+          "timestamp": "2022-12-07 04:52:10"
+        },
+        {
+          "table_name": "add_to_cart",
+          "timestamp": "2022-12-07 04:52:15"
+        },
+        {
+          "table_name": "remove_from_cart",
+          "timestamp": "2022-12-07 04:52:35"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-12-07 04:54:10"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-12-07 04:54:10"
+        }
+      ]
+    },
+    {
+      "고객": "고객00017",
+      "sku": 411280,
+      "중복_timestamp": "2022-11-23 16:17:25",
+      "반복_횟수": 2,
+      "전후_이벤트": [
+        {
+          "table_name": "add_to_cart",
+          "timestamp": "2022-11-23 16:14:00"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-11-23 16:17:25"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-11-23 16:17:25"
+        }
+      ]
+    },
+    {
+      "고객": "고객00018",
+      "sku": 978153,
+      "중복_timestamp": "2022-10-29 18:14:05",
+      "반복_횟수": 2,
+      "전후_이벤트": [
+        {
+          "table_name": "add_to_cart",
+          "timestamp": "2022-10-29 18:12:35"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-10-29 18:14:05"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-10-29 18:14:05"
+        }
+      ]
+    },
+    {
+      "고객": "고객00019",
+      "sku": 871312,
+      "중복_timestamp": "2022-11-26 09:15:00",
+      "반복_횟수": 2,
+      "전후_이벤트": [
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-11-08 09:29:25"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-11-08 09:29:25"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-11-26 09:15:00"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-11-26 09:15:00"
+        }
+      ]
+    },
+    {
+      "고객": "고객00020",
+      "sku": 1150186,
+      "중복_timestamp": "2022-11-05 13:12:55",
+      "반복_횟수": 2,
+      "전후_이벤트": [
+        {
+          "table_name": "add_to_cart",
+          "timestamp": "2022-11-05 13:08:35"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-11-05 13:12:55"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-11-05 13:12:55"
+        }
+      ]
+    },
+    {
+      "고객": "고객00021",
+      "sku": 882003,
+      "중복_timestamp": "2022-12-01 10:18:10",
+      "반복_횟수": 2,
+      "전후_이벤트": [
+        {
+          "table_name": "add_to_cart",
+          "timestamp": "2022-11-30 17:06:25"
+        },
+        {
+          "table_name": "add_to_cart",
+          "timestamp": "2022-12-01 10:12:59"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-12-01 10:13:25"
+        },
+        {
+          "table_name": "add_to_cart",
+          "timestamp": "2022-12-01 10:14:55"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-12-01 10:16:00"
+        },
+        {
+          "table_name": "add_to_cart",
+          "timestamp": "2022-12-01 10:16:40"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-12-01 10:18:10"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-12-01 10:18:10"
+        }
+      ]
+    },
+    {
+      "고객": "고객00022",
+      "sku": 470831,
+      "중복_timestamp": "2022-11-25 19:29:05",
+      "반복_횟수": 2,
+      "전후_이벤트": [
+        {
+          "table_name": "add_to_cart",
+          "timestamp": "2022-11-25 17:16:45"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-11-25 19:29:05"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-11-25 19:29:05"
+        }
+      ]
+    },
+    {
+      "고객": "고객00023",
+      "sku": 229017,
+      "중복_timestamp": "2022-10-02 15:11:50",
+      "반복_횟수": 2,
+      "전후_이벤트": [
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-10-02 15:11:50"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-10-02 15:11:50"
+        }
+      ]
+    },
+    {
+      "고객": "고객00024",
+      "sku": 373410,
+      "중복_timestamp": "2022-08-17 09:30:25",
+      "반복_횟수": 2,
+      "전후_이벤트": [
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-08-17 09:30:25"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-08-17 09:30:25"
+        }
+      ]
+    },
+    {
+      "고객": "고객00025",
+      "sku": 226584,
+      "중복_timestamp": "2022-12-01 09:21:40",
+      "반복_횟수": 2,
+      "전후_이벤트": [
+        {
+          "table_name": "add_to_cart",
+          "timestamp": "2022-12-01 09:18:05"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-12-01 09:21:40"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-12-01 09:21:40"
+        }
+      ]
+    },
+    {
+      "고객": "고객00026",
+      "sku": 237632,
+      "중복_timestamp": "2022-07-23 12:06:30",
+      "반복_횟수": 2,
+      "전후_이벤트": [
+        {
+          "table_name": "add_to_cart",
+          "timestamp": "2022-07-22 18:53:20"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-07-23 12:06:30"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-07-23 12:06:30"
+        }
+      ]
+    },
+    {
+      "고객": "고객00027",
+      "sku": 1315756,
+      "중복_timestamp": "2022-11-15 11:44:20",
+      "반복_횟수": 2,
+      "전후_이벤트": [
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-11-15 11:44:20"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-11-15 11:44:20"
+        }
+      ]
+    },
+    {
+      "고객": "고객00028",
+      "sku": 563125,
+      "중복_timestamp": "2022-11-26 23:11:05",
+      "반복_횟수": 2,
+      "전후_이벤트": [
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-11-26 23:11:05"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-11-26 23:11:05"
+        }
+      ]
+    },
+    {
+      "고객": "고객00029",
+      "sku": 1240442,
+      "중복_timestamp": "2022-09-29 19:43:40",
+      "반복_횟수": 2,
+      "전후_이벤트": [
+        {
+          "table_name": "add_to_cart",
+          "timestamp": "2022-09-29 19:32:10"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-09-29 19:43:40"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-09-29 19:43:40"
+        }
+      ]
+    },
+    {
+      "고객": "고객00030",
+      "sku": 991768,
+      "중복_timestamp": "2022-09-22 11:07:55",
+      "반복_횟수": 2,
+      "전후_이벤트": [
+        {
+          "table_name": "add_to_cart",
+          "timestamp": "2022-08-26 15:52:00"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-08-26 15:55:40"
+        },
+        {
+          "table_name": "add_to_cart",
+          "timestamp": "2022-08-30 14:19:40"
+        },
+        {
+          "table_name": "add_to_cart",
+          "timestamp": "2022-09-11 07:31:30"
+        },
+        {
+          "table_name": "remove_from_cart",
+          "timestamp": "2022-09-11 07:36:10"
+        },
+        {
+          "table_name": "add_to_cart",
+          "timestamp": "2022-09-16 14:33:35"
+        },
+        {
+          "table_name": "add_to_cart",
+          "timestamp": "2022-09-17 18:42:40"
+        },
+        {
+          "table_name": "remove_from_cart",
+          "timestamp": "2022-09-17 18:44:05"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-09-22 11:07:55"
+        },
+        {
+          "table_name": "product_buy",
+          "timestamp": "2022-09-22 11:07:55"
+        }
+      ]
+    }
+  ],
+  "dup_rate_by_5s_multiple": {
+    "product_buy": [
+      {
+        "is_mult5": 0,
+        "dup_rows": 24925.0,
+        "total_rows": 77308.0,
+        "dup_groups": 12186.0,
+        "total_groups": 64569,
+        "dup_row_rate_pct": 32.241
+      },
+      {
+        "is_mult5": 1,
+        "dup_rows": 720469.0,
+        "total_rows": 2241194.0,
+        "dup_groups": 352305.0,
+        "total_groups": 1873030,
+        "dup_row_rate_pct": 32.147
+      }
+    ],
+    "add_to_cart": [
+      {
+        "is_mult5": 0,
+        "dup_rows": 3550.0,
+        "total_rows": 251157.0,
+        "dup_groups": 1635.0,
+        "total_groups": 249242,
+        "dup_row_rate_pct": 1.413
+      },
+      {
+        "is_mult5": 1,
+        "dup_rows": 279252.0,
+        "total_rows": 7289960.0,
+        "dup_groups": 119674.0,
+        "total_groups": 7130382,
+        "dup_row_rate_pct": 3.831
+      }
+    ],
+    "remove_from_cart": [
+      {
+        "is_mult5": 0,
+        "dup_rows": 3412.0,
+        "total_rows": 89708.0,
+        "dup_groups": 1683.0,
+        "total_groups": 87979,
+        "dup_row_rate_pct": 3.803
+      },
+      {
+        "is_mult5": 1,
+        "dup_rows": 269832.0,
+        "total_rows": 2599186.0,
+        "dup_groups": 117973.0,
+        "total_groups": 2447327,
+        "dup_row_rate_pct": 10.381
+      }
+    ],
+    "page_visit": [
+      {
+        "is_mult5": 0,
+        "dup_rows": 900199.0,
+        "total_rows": 6649002.0,
+        "dup_groups": 412341.0,
+        "total_groups": 6161144,
+        "dup_row_rate_pct": 13.539
+      },
+      {
+        "is_mult5": 1,
+        "dup_rows": 37120055.0,
+        "total_rows": 192802978.0,
+        "dup_groups": 16908506.0,
+        "total_groups": 172591429,
+        "dup_row_rate_pct": 19.253
+      }
+    ],
+    "search_query": [
+      {
+        "is_mult5": 0,
+        "dup_rows": 22676.0,
+        "total_rows": 441043.0,
+        "dup_groups": 11315.0,
+        "total_groups": 429682,
+        "dup_row_rate_pct": 5.141
+      },
+      {
+        "is_mult5": 1,
+        "dup_rows": 1207358.0,
+        "total_rows": 12782726.0,
+        "dup_groups": 601576.0,
+        "total_groups": 12176944,
+        "dup_row_rate_pct": 9.445
+      }
+    ]
+  },
+  "quantity_cart_crosstab": [
+    {
+      "mult_bucket": "2",
+      "cart_bucket": "0",
+      "n_groups": 156239
+    },
+    {
+      "mult_bucket": "2",
+      "cart_bucket": "1",
+      "n_groups": 150517
+    },
+    {
+      "mult_bucket": "2",
+      "cart_bucket": "2",
+      "n_groups": 26309
+    },
+    {
+      "mult_bucket": "2",
+      "cart_bucket": "3",
+      "n_groups": 7808
+    },
+    {
+      "mult_bucket": "2",
+      "cart_bucket": "4+",
+      "n_groups": 7522
+    },
+    {
+      "mult_bucket": "3",
+      "cart_bucket": "0",
+      "n_groups": 6740
+    },
+    {
+      "mult_bucket": "3",
+      "cart_bucket": "1",
+      "n_groups": 7075
+    },
+    {
+      "mult_bucket": "3",
+      "cart_bucket": "2",
+      "n_groups": 1201
+    },
+    {
+      "mult_bucket": "3",
+      "cart_bucket": "3",
+      "n_groups": 399
+    },
+    {
+      "mult_bucket": "3",
+      "cart_bucket": "4+",
+      "n_groups": 381
+    },
+    {
+      "mult_bucket": "4",
+      "cart_bucket": "0",
+      "n_groups": 103
+    },
+    {
+      "mult_bucket": "4",
+      "cart_bucket": "1",
+      "n_groups": 141
+    },
+    {
+      "mult_bucket": "4",
+      "cart_bucket": "2",
+      "n_groups": 28
+    },
+    {
+      "mult_bucket": "4",
+      "cart_bucket": "3",
+      "n_groups": 6
+    },
+    {
+      "mult_bucket": "4",
+      "cart_bucket": "4+",
+      "n_groups": 6
+    },
+    {
+      "mult_bucket": "5+",
+      "cart_bucket": "0",
+      "n_groups": 8
+    },
+    {
+      "mult_bucket": "5+",
+      "cart_bucket": "1",
+      "n_groups": 8
+    }
+  ],
+  "quantity_price_decile_comparison": [
+    {
+      "dup_flag": "비중복",
+      "price_decile": 0,
+      "n_groups": 78791
+    },
+    {
+      "dup_flag": "비중복",
+      "price_decile": 10,
+      "n_groups": 134226
+    },
+    {
+      "dup_flag": "비중복",
+      "price_decile": 20,
+      "n_groups": 171098
+    },
+    {
+      "dup_flag": "비중복",
+      "price_decile": 30,
+      "n_groups": 143793
+    },
+    {
+      "dup_flag": "비중복",
+      "price_decile": 40,
+      "n_groups": 181764
+    },
+    {
+      "dup_flag": "비중복",
+      "price_decile": 50,
+      "n_groups": 148739
+    },
+    {
+      "dup_flag": "비중복",
+      "price_decile": 60,
+      "n_groups": 204295
+    },
+    {
+      "dup_flag": "비중복",
+      "price_decile": 70,
+      "n_groups": 174961
+    },
+    {
+      "dup_flag": "비중복",
+      "price_decile": 80,
+      "n_groups": 183141
+    },
+    {
+      "dup_flag": "비중복",
+      "price_decile": 90,
+      "n_groups": 113704
+    },
+    {
+      "dup_flag": "비중복",
+      "price_decile": 100,
+      "n_groups": 38596
+    },
+    {
+      "dup_flag": "중복",
+      "price_decile": 0,
+      "n_groups": 14805
+    },
+    {
+      "dup_flag": "중복",
+      "price_decile": 10,
+      "n_groups": 25143
+    },
+    {
+      "dup_flag": "중복",
+      "price_decile": 20,
+      "n_groups": 33306
+    },
+    {
+      "dup_flag": "중복",
+      "price_decile": 30,
+      "n_groups": 29364
+    },
+    {
+      "dup_flag": "중복",
+      "price_decile": 40,
+      "n_groups": 38533
+    },
+    {
+      "dup_flag": "중복",
+      "price_decile": 50,
+      "n_groups": 31850
+    },
+    {
+      "dup_flag": "중복",
+      "price_decile": 60,
+      "n_groups": 43375
+    },
+    {
+      "dup_flag": "중복",
+      "price_decile": 70,
+      "n_groups": 39343
+    },
+    {
+      "dup_flag": "중복",
+      "price_decile": 80,
+      "n_groups": 45495
+    },
+    {
+      "dup_flag": "중복",
+      "price_decile": 90,
+      "n_groups": 39744
+    },
+    {
+      "dup_flag": "중복",
+      "price_decile": 100,
+      "n_groups": 23533
+    }
+  ],
+  "daily_dup_rate_summary": {
+    "product_buy": {
+      "min": 7.561,
+      "max": 85.769,
+      "median": 16.48
+    },
+    "add_to_cart": {
+      "min": 1.836,
+      "max": 5.851,
+      "median": 3.496
+    },
+    "remove_from_cart": {
+      "min": 6.427,
+      "max": 15.464,
+      "median": 9.688
+    },
+    "page_visit": {
+      "min": 9.831,
+      "max": 22.253,
+      "median": 19.943
+    },
+    "search_query": {
+      "min": 2.105,
+      "max": 20.204,
+      "median": 6.35
+    }
+  },
+  "hourly_dup_rate_summary": {
+    "product_buy": {
+      "min": 26.081,
+      "max": 34.026
+    },
+    "add_to_cart": {
+      "min": 3.336,
+      "max": 4.25
+    },
+    "remove_from_cart": {
+      "min": 9.108,
+      "max": 10.629
+    },
+    "page_visit": {
+      "min": 16.257,
+      "max": 20.157
+    },
+    "search_query": {
+      "min": 8.021,
+      "max": 10.081
+    }
+  },
+  "cross_table_same_time_duplicates": {
+    "add_to_cart": {
+      "overlap_with_product_buy_dup_ts": 45,
+      "product_buy_dup_ts_total": 295848
+    },
+    "remove_from_cart": {
+      "overlap_with_product_buy_dup_ts": 0,
+      "product_buy_dup_ts_total": 295848
+    },
+    "search_query": {
+      "overlap_with_product_buy_dup_ts": 0,
+      "product_buy_dup_ts_total": 295848
+    },
+    "page_visit": {
+      "overlap_with_product_buy_dup_ts": 357,
+      "product_buy_dup_ts_total": 295848
+    }
+  },
+  "processing_options_row_counts": {
+    "product_buy": {
+      "옵션1_그대로": 2318502,
+      "옵션2_완전중복_1건으로_합침": 1937599,
+      "옵션3_수량으로_해석_행수(quantity_field_보존)": 1937599
+    },
+    "add_to_cart": {
+      "옵션1_그대로": 7541117,
+      "옵션2_완전중복_1건으로_합침": 7379624,
+      "옵션3_수량으로_해석_행수(quantity_field_보존)": null
+    },
+    "remove_from_cart": {
+      "옵션1_그대로": 2688894,
+      "옵션2_완전중복_1건으로_합침": 2535306,
+      "옵션3_수량으로_해석_행수(quantity_field_보존)": null
+    },
+    "page_visit": {
+      "옵션1_그대로": 199451980,
+      "옵션2_완전중복_1건으로_합침": 178752573,
+      "옵션3_수량으로_해석_행수(quantity_field_보존)": null
+    },
+    "search_query": {
+      "옵션1_그대로": 13223769,
+      "옵션2_완전중복_1건으로_합침": 12606626,
+      "옵션3_수량으로_해석_행수(quantity_field_보존)": null
+    }
+  },
+  "day_of_month_vs_dup_rate_correlation": {
+    "product_buy": {
+      "2022-06": 0.749,
+      "2022-07": 0.498,
+      "2022-08": 0.637,
+      "2022-09": 0.499,
+      "2022-10": 0.707,
+      "2022-11": 0.262,
+      "2022-12": -0.59
+    },
+    "add_to_cart": {
+      "2022-06": -0.862,
+      "2022-07": 0.264,
+      "2022-08": -0.43,
+      "2022-09": 0.847,
+      "2022-10": -0.292,
+      "2022-11": 0.937,
+      "2022-12": -0.025
+    },
+    "remove_from_cart": {
+      "2022-06": -0.394,
+      "2022-07": 0.257,
+      "2022-08": -0.551,
+      "2022-09": 0.722,
+      "2022-10": -0.619,
+      "2022-11": 0.828,
+      "2022-12": 0.128
+    },
+    "page_visit": {
+      "2022-06": 0.748,
+      "2022-07": 0.841,
+      "2022-08": -0.315,
+      "2022-09": 0.129,
+      "2022-10": 0.211,
+      "2022-11": 0.726,
+      "2022-12": 0.393
+    },
+    "search_query": {
+      "2022-06": 0.85,
+      "2022-07": -0.679,
+      "2022-08": 0.691,
+      "2022-09": -0.909,
+      "2022-10": 0.225,
+      "2022-11": -0.306,
+      "2022-12": 0.484
+    }
+  }
+}

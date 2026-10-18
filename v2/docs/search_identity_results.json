@@ -1,0 +1,35 @@
+{
+  "similar_codes_summary": {
+    "n_distinct_similar_codes": 56,
+    "by_distance": {
+      "1": 3,
+      "2": 17,
+      "3": 36
+    },
+    "total_rows_similar_codes": 11648
+  },
+  "trend_correlation": {
+    "full_period": 0.682,
+    "after_jump": 0.69
+  },
+  "per_client_usage_count": {
+    "median": 4.0,
+    "p90": 24.0,
+    "p99": 90.0,
+    "max": 1445,
+    "n_clients": 273687
+  },
+  "same_day_repeat_count": {
+    "median": 2.0,
+    "p90": 7.0,
+    "p99": 19.0,
+    "max": 182,
+    "n_client_days": 855050,
+    "n_client_days_with_1": 316385,
+    "n_client_days_with_2plus": 538665
+  },
+  "jump_hour": {
+    "hour_bucket": "2022-07-28 07:00:00",
+    "jump_size": 452.0
+  }
+}

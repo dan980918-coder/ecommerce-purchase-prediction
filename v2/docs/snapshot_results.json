@@ -1,0 +1,55 @@
+{
+  "population": {
+    "2022-08-22": 4938144,
+    "2022-09-05": 5164314,
+    "2022-09-19": 5326692,
+    "2022-10-03": 5103373,
+    "2022-10-17": 5063116,
+    "2022-11-07": 5665687,
+    "2022-11-23": 6144750
+  },
+  "training_outcome": {
+    "2022-08-22": {
+      "n_population": 4938144,
+      "n_purchasers": 30867,
+      "purchase_rate": 0.00625,
+      "sampled": true,
+      "sample_size": 100000,
+      "sample_method": "구매여부 층화 무작위 표본, seed=42"
+    },
+    "2022-09-05": {
+      "n_population": 5164314,
+      "n_purchasers": 32121,
+      "purchase_rate": 0.00622,
+      "sampled": true,
+      "sample_size": 100000,
+      "sample_method": "구매여부 층화 무작위 표본, seed=42"
+    },
+    "2022-09-19": {
+      "n_population": 5326692,
+      "n_purchasers": 33471,
+      "purchase_rate": 0.00628,
+      "sampled": true,
+      "sample_size": 100000,
+      "sample_method": "구매여부 층화 무작위 표본, seed=42"
+    },
+    "2022-10-03": {
+      "n_population": 5103373,
+      "n_purchasers": 38256,
+      "purchase_rate": 0.0075,
+      "sampled": true,
+      "sample_size": 100000,
+      "sample_method": "구매여부 층화 무작위 표본, seed=42"
+    },
+    "2022-10-17": {
+      "n_population": 5063116,
+      "n_purchasers": 39537,
+      "purchase_rate": 0.00781,
+      "sampled": true,
+      "sample_size": 100000,
+      "sample_method": "구매여부 층화 무작위 표본, seed=42"
+    }
+  },
+  "training_snapshot_total_rows": 500000,
+  "training_snapshot_unique_clients": 492497
+}
