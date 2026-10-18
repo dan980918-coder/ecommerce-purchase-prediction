@@ -1,0 +1,256 @@
+{
+  "a1_candidate_membership": {
+    "고객00036": true,
+    "고객00040": false
+  },
+  "a1_signal_values": {
+    "고객00036": {
+      "속도_1분최대건수(pre-11/22, 4테이블결합)": 31,
+      "속도_신호(>=60)": false,
+      "수면없음_18시간대이상_일수(pre-11/22)": 1,
+      "수면없음_신호(>=3일)": false,
+      "기계적반복_add건수(pre-11/22)": 501,
+      "기계적반복_직전sku반복률": 0.7984031936127745,
+      "기계적반복_신호(>=20건&80%+)": false
+    },
+    "고객00040": {
+      "속도_1분최대건수(pre-11/22, 4테이블결합)": 574,
+      "속도_신호(>=60)": true,
+      "수면없음_18시간대이상_일수(pre-11/22)": 0,
+      "수면없음_신호(>=3일)": false,
+      "기계적반복_add건수(pre-11/22)": 25,
+      "기계적반복_직전sku반복률": 0.4,
+      "기계적반복_신호(>=20건&80%+)": false
+    }
+  },
+  "a2_customer40_minute_burst": {
+    "raw_max_count": 1764,
+    "raw_max_minute": "2022-06-28 22:30:00",
+    "clean_max_count": 574,
+    "clean_max_minute": "2022-06-28 22:30:00",
+    "clean_count_in_raw_max_minute": 574,
+    "duplicates_removed_in_that_minute": 1190,
+    "n_distinct_url_in_minute": 165,
+    "sample_events": [
+      {
+        "timestamp": "2022-06-28 22:30:05",
+        "url": "13979615"
+      },
+      {
+        "timestamp": "2022-06-28 22:30:05",
+        "url": "6374848"
+      },
+      {
+        "timestamp": "2022-06-28 22:30:05",
+        "url": "13805412"
+      },
+      {
+        "timestamp": "2022-06-28 22:30:05",
+        "url": "5050598"
+      },
+      {
+        "timestamp": "2022-06-28 22:30:05",
+        "url": "8382655"
+      },
+      {
+        "timestamp": "2022-06-28 22:30:05",
+        "url": "1270366"
+      },
+      {
+        "timestamp": "2022-06-28 22:30:05",
+        "url": "8382655"
+      },
+      {
+        "timestamp": "2022-06-28 22:30:05",
+        "url": "11711275"
+      },
+      {
+        "timestamp": "2022-06-28 22:30:05",
+        "url": "6374848"
+      },
+      {
+        "timestamp": "2022-06-28 22:30:05",
+        "url": "8382655"
+      },
+      {
+        "timestamp": "2022-06-28 22:30:05",
+        "url": "2425168"
+      },
+      {
+        "timestamp": "2022-06-28 22:30:05",
+        "url": "16379536"
+      },
+      {
+        "timestamp": "2022-06-28 22:30:05",
+        "url": "10438074"
+      },
+      {
+        "timestamp": "2022-06-28 22:30:05",
+        "url": "2991848"
+      },
+      {
+        "timestamp": "2022-06-28 22:30:05",
+        "url": "9923293"
+      }
+    ]
+  },
+  "a3_customer36_repeat_other_tables": {
+    "add_to_cart": {
+      "n_rows": 501,
+      "n_distinct_sku": 8,
+      "직전sku반복률": 0.7984031936127745
+    },
+    "remove_from_cart": {
+      "n_rows": 15,
+      "n_distinct_sku": 5,
+      "직전sku반복률": 0.5333333333333333
+    },
+    "product_buy(참고)": {
+      "n_rows": 458,
+      "n_distinct_sku": 6,
+      "직전sku반복률": 0.7969432314410481
+    }
+  },
+  "a4_activity_range": {
+    "고객00036": {
+      "min_ts": "2022-06-23 05:13:10",
+      "max_ts": "2022-12-07 12:24:35",
+      "entirely_before_cutoff": false,
+      "spans_across_cutoff": true
+    },
+    "고객00040": {
+      "min_ts": "2022-06-27 00:38:50",
+      "max_ts": "2022-11-13 12:17:10",
+      "entirely_before_cutoff": true,
+      "spans_across_cutoff": false
+    }
+  },
+  "a5_minute_definition_code": {
+    "07_abnormal_clients.py:128": "minute_counts = sub.groupby(sub[\"ts\"].dt.floor(\"min\")).size()",
+    "09_bot_flags.py:79": "minute_counts = combined.groupby([\"client_id\", combined[\"ts\"].dt.floor(\"min\")]).size()",
+    "동일여부": true,
+    "설명": "두 스크립트 모두 pandas .dt.floor('min')으로 분 단위 내림(정시 00초 기준 고정 1분 구간)을 쓴다. 슬라이딩 60초 창이 아니다."
+  },
+  "a6_dedup_effect_on_speed_signal": {
+    "n_candidates": 1183,
+    "n_raw_max_minute_over60": 10,
+    "n_clean_max_minute_over60": 3,
+    "n_lost_extremity_due_to_dedup": 7
+  },
+  "b1_code_lines": {
+    "신호(기준일 00:00 미만)": [
+      "11_build_features.py:42  w60_start, w60_end = shift(d, -60), shift(d, 0)",
+      "11_build_features.py:61,72,83,105,108,111,142,160,169,175,213,219,230  WHERE timestamp >= '{w60_start}' AND timestamp < '{w60_end}'  (w60_end=기준일 00:00, 강한 부등호 <)"
+    ],
+    "결과(기준일 00:00 이상)": [
+      "10_build_snapshots.py:65-66  out_start = shift_days(d, 0); out_end = shift_days(d, 14)",
+      "10_build_snapshots.py:74  WHERE timestamp >= '{out_start}' AND timestamp < '{out_end}'  (out_start=기준일 00:00, >= 포함)"
+    ],
+    "결론": "신호는 '< 기준일 00:00'(기준일 자체 제외), 결과는 '>= 기준일 00:00'(기준일 자체 포함). 정각에 찍힌 이벤트는 결과 쪽에 들어가고 신호 쪽에는 절대 들어가지 않는다 — 경계 중복 없음."
+  },
+  "b2_midnight_boundary_events": {
+    "2022-08-22": 7,
+    "2022-09-05": 8,
+    "2022-09-19": 10,
+    "2022-10-03": 4,
+    "2022-10-17": 8
+  },
+  "b3_random5_audit": [
+    {
+      "고객": "고객00064",
+      "저장된_h3_purchase_count": 0,
+      "신호기간_실제구매건수": 0,
+      "저장된_outcome": 0,
+      "결과기간_실제구매건수": 0,
+      "신호건수_일치": true,
+      "outcome_일치": true,
+      "결과기간_구매가_신호건수에_섞이지_않음": true
+    },
+    {
+      "고객": "고객00065",
+      "저장된_h3_purchase_count": 0,
+      "신호기간_실제구매건수": 0,
+      "저장된_outcome": 0,
+      "결과기간_실제구매건수": 0,
+      "신호건수_일치": true,
+      "outcome_일치": true,
+      "결과기간_구매가_신호건수에_섞이지_않음": true
+    },
+    {
+      "고객": "고객00066",
+      "저장된_h3_purchase_count": 1,
+      "신호기간_실제구매건수": 1,
+      "저장된_outcome": 0,
+      "결과기간_실제구매건수": 0,
+      "신호건수_일치": true,
+      "outcome_일치": true,
+      "결과기간_구매가_신호건수에_섞이지_않음": true
+    },
+    {
+      "고객": "고객00067",
+      "저장된_h3_purchase_count": 0,
+      "신호기간_실제구매건수": 0,
+      "저장된_outcome": 0,
+      "결과기간_실제구매건수": 0,
+      "신호건수_일치": true,
+      "outcome_일치": true,
+      "결과기간_구매가_신호건수에_섞이지_않음": true
+    },
+    {
+      "고객": "고객00068",
+      "저장된_h3_purchase_count": 0,
+      "신호기간_실제구매건수": 0,
+      "저장된_outcome": 0,
+      "결과기간_실제구매건수": 0,
+      "신호건수_일치": true,
+      "outcome_일치": true,
+      "결과기간_구매가_신호건수에_섞이지_않음": true
+    }
+  ],
+  "b3_sample_date": "2022-08-22",
+  "c1_iv_excluding_zero": {
+    "h1_days_since_last_activity": {
+      "원래_IV(0/결측_포함)": 0.5546,
+      "0_결측_제외_IV": 0.5545696786080223,
+      "제외_후_표본수": 500000,
+      "비고": "구조적으로 0/결측 구간 없음(해당없음)"
+    },
+    "h2_pending_items": {
+      "원래_IV(0/결측_포함)": 0.4044,
+      "0_결측_제외_IV": 0.31942096974780776,
+      "제외_후_표본수": 42018,
+      "비고": ""
+    },
+    "h3_purchase_count": {
+      "원래_IV(0/결측_포함)": 1.6325,
+      "0_결측_제외_IV": 0.2785800224334975,
+      "제외_후_표본수": 23338,
+      "비고": ""
+    },
+    "h4_real_search_count": {
+      "원래_IV(0/결측_포함)": 0.4473,
+      "0_결측_제외_IV": 0.3693591148928162,
+      "제외_후_표본수": 33292,
+      "비고": ""
+    },
+    "h5_activity_growth_ratio": {
+      "원래_IV(0/결측_포함)": 0.7359,
+      "0_결측_제외_IV": 0.0877218777291367,
+      "제외_후_표본수": 89651,
+      "비고": ""
+    },
+    "h6_removal_ratio": {
+      "원래_IV(0/결측_포함)": 1.3601,
+      "0_결측_제외_IV": 0.060271066206246046,
+      "제외_후_표본수": 17214,
+      "비고": ""
+    }
+  },
+  "c2_visit_only_segment": {
+    "n_visit_only": 418223,
+    "n_total": 500000,
+    "share_pct": 83.645,
+    "purchase_rate_pct": 0.2095,
+    "overall_purchase_rate_pct": 0.6812
+  }
+}
