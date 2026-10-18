@@ -2,6 +2,10 @@
 data/raw/
 data/external/
 
+# v2 rebuild — raw/external data and derived DB (same license restriction)
+v2/data/
+v2/*.duckdb
+
 # Databases
 *.duckdb
 *.db
