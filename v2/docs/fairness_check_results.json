@@ -1,0 +1,85 @@
+{
+  "code_citation": {
+    "file": "scripts/_features.py",
+    "lines": "40-43",
+    "code": "    last_activity[\"h1_days_since_last_activity\"] = (\n        pd.Timestamp(d) - pd.to_datetime(last_activity[\"last_ts\"], format=\"%Y-%m-%d %H:%M:%S\")\n    ).dt.total_seconds() / 86400\n    feat = feat.join(last_activity.set_index(\"client_id\")[[\"h1_days_since_last_activity\"]])\n"
+  },
+  "conclusion_granularity": "초 단위(이미 raw timestamp와 동일한 순서) — 일 단위 아님",
+  "boundary_ties": {
+    "k": 614467,
+    "n_tied_total": 9,
+    "n_tied_included_by_tiebreak": 9,
+    "boundary_days_since_last_activity": 1.6784722222222221
+  },
+  "ranking_identical_check": {
+    "symmetric_diff_at_top10pct": 0
+  },
+  "comparison_table": {
+    "0.05": {
+      "현행(h1_days_since_last_activity)_포착": 11906,
+      "현행_포착률": 0.21214,
+      "현행_1만건당": 387.52,
+      "시각기준(raw timestamp)_포착": 11906,
+      "시각기준_포착률": 0.21214,
+      "시각기준_1만건당": 387.52,
+      "두_기준_차이": 0
+    },
+    "0.1": {
+      "현행(h1_days_since_last_activity)_포착": 19675,
+      "현행_포착률": 0.35058,
+      "현행_1만건당": 320.2,
+      "시각기준(raw timestamp)_포착": 19675,
+      "시각기준_포착률": 0.35058,
+      "시각기준_1만건당": 320.2,
+      "두_기준_차이": 0
+    },
+    "0.2": {
+      "현행(h1_days_since_last_activity)_포착": 29625,
+      "현행_포착률": 0.52787,
+      "현행_1만건당": 241.06,
+      "시각기준(raw timestamp)_포착": 29625,
+      "시각기준_포착률": 0.52787,
+      "시각기준_1만건당": 241.06,
+      "두_기준_차이": 0
+    }
+  },
+  "h7_vs_bysec_recency": {
+    "0.05": {
+      "n_sent": 307234,
+      "captured_model": 35719,
+      "captured_recency_bysec": 11906,
+      "diff": 23813,
+      "ci95_low": 23500.85,
+      "ci95_high": 24110.1
+    },
+    "0.1": {
+      "n_sent": 614467,
+      "captured_model": 42482,
+      "captured_recency_bysec": 19675,
+      "diff": 22807,
+      "ci95_low": 22502.85,
+      "ci95_high": 23124.05
+    },
+    "0.2": {
+      "n_sent": 1228934,
+      "captured_model": 47021,
+      "captured_recency_bysec": 29625,
+      "diff": 17396,
+      "ci95_low": 17115.95,
+      "ci95_high": 17682.15
+    }
+  },
+  "send_volume_reduction_bysec": {
+    "target_captured": 19675,
+    "model_needed_pct": 1.381,
+    "model_needed_n": 84833,
+    "reduction_pct": 86.19
+  },
+  "visit_only_capture_bysec": {
+    "n_visit_only_purchasers": 13229,
+    "captured_bysec": 2822,
+    "rate_bysec_pct": 21.332,
+    "captured_current": 2822,
+    "rate_current_pct": 21.332
+  }
+}
