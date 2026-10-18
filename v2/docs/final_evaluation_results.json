@@ -1,0 +1,271 @@
+{
+  "final_population": {
+    "n": 6144670,
+    "n_purchasers": 56122,
+    "purchase_rate_pct": 0.9133
+  },
+  "basic_table": {
+    "무작위": {
+      "0.05": {
+        "n_sent": 307234,
+        "n_captured": 2858,
+        "capture_rate": 0.05092,
+        "per_10k": 93.02
+      },
+      "0.1": {
+        "n_sent": 614467,
+        "n_captured": 5708,
+        "capture_rate": 0.10171,
+        "per_10k": 92.89
+      },
+      "0.2": {
+        "n_sent": 1228934,
+        "n_captured": 11316,
+        "capture_rate": 0.20163,
+        "per_10k": 92.08
+      }
+    },
+    "최근활동순(현행기준)": {
+      "0.05": {
+        "n_sent": 307234,
+        "n_captured": 11906,
+        "capture_rate": 0.21214,
+        "per_10k": 387.52
+      },
+      "0.1": {
+        "n_sent": 614467,
+        "n_captured": 19675,
+        "capture_rate": 0.35058,
+        "per_10k": 320.2
+      },
+      "0.2": {
+        "n_sent": 1228934,
+        "n_captured": 29625,
+        "capture_rate": 0.52787,
+        "per_10k": 241.06
+      }
+    },
+    "단순2단계규칙": {
+      "0.05": {
+        "n_sent": 307234,
+        "n_captured": 25218,
+        "capture_rate": 0.44934,
+        "per_10k": 820.81
+      },
+      "0.1": {
+        "n_sent": 614467,
+        "n_captured": 35701,
+        "capture_rate": 0.63613,
+        "per_10k": 581.01
+      },
+      "0.2": {
+        "n_sent": 1228934,
+        "n_captured": 44545,
+        "capture_rate": 0.79372,
+        "per_10k": 362.47
+      }
+    },
+    "LightGBM(최종모델)": {
+      "0.05": {
+        "n_sent": 307234,
+        "n_captured": 35711,
+        "capture_rate": 0.63631,
+        "per_10k": 1162.34
+      },
+      "0.1": {
+        "n_sent": 614467,
+        "n_captured": 42482,
+        "capture_rate": 0.75696,
+        "per_10k": 691.36
+      },
+      "0.2": {
+        "n_sent": 1228934,
+        "n_captured": 47023,
+        "capture_rate": 0.83787,
+        "per_10k": 382.63
+      }
+    }
+  },
+  "h7_main": {
+    "0.05": {
+      "n_sent": 307234,
+      "captured_model": 35711,
+      "captured_recency": 11906,
+      "diff": 23805,
+      "ci95_low": 23500.85,
+      "ci95_high": 24110.1
+    },
+    "0.1": {
+      "n_sent": 614467,
+      "captured_model": 42482,
+      "captured_recency": 19675,
+      "diff": 22807,
+      "ci95_low": 22502.85,
+      "ci95_high": 23124.05
+    },
+    "0.2": {
+      "n_sent": 1228934,
+      "captured_model": 47023,
+      "captured_recency": 29625,
+      "diff": 17398,
+      "ci95_low": 17115.95,
+      "ci95_high": 17682.15
+    }
+  },
+  "h7_verdict": "채택",
+  "h7_vs_simple_rule": {
+    "0.05": {
+      "n_sent": 307234,
+      "captured_model": 35711,
+      "captured_simple_rule": 25218,
+      "diff": 10493,
+      "ci95_low": 10251.975,
+      "ci95_high": 10723.025
+    },
+    "0.1": {
+      "n_sent": 614467,
+      "captured_model": 42482,
+      "captured_simple_rule": 35701,
+      "diff": 6781,
+      "ci95_low": 6604.925,
+      "ci95_high": 6971.0
+    },
+    "0.2": {
+      "n_sent": 1228934,
+      "captured_model": 47023,
+      "captured_simple_rule": 44545,
+      "diff": 2478,
+      "ci95_low": 2349.875,
+      "ci95_high": 2621.05
+    }
+  },
+  "send_volume_reduction": {
+    "target_captured_by_recency_top10pct": 19675,
+    "model_needed_pct": 1.381,
+    "model_needed_n": 84833,
+    "reduction_pct_vs_recency_top10pct_volume": 86.19
+  },
+  "h8_operational_segments": {
+    "0~5%": {
+      "n": 307234,
+      "captured": 35711,
+      "per_1000": 116.234
+    },
+    "5~10%": {
+      "n": 307233,
+      "captured": 6771,
+      "per_1000": 22.039
+    },
+    "10~15%": {
+      "n": 307233,
+      "captured": 2684,
+      "per_1000": 8.736
+    },
+    "15~20%": {
+      "n": 307234,
+      "captured": 1857,
+      "per_1000": 6.044
+    },
+    "20~30%": {
+      "n": 614467,
+      "captured": 2572,
+      "per_1000": 4.186
+    },
+    "30~50%": {
+      "n": 1228934,
+      "captured": 2871,
+      "per_1000": 2.336
+    },
+    "50~100%": {
+      "n": 3072335,
+      "captured": 3656,
+      "per_1000": 1.19
+    }
+  },
+  "h8_recency_segments": {
+    "0~5%": {
+      "n": 307234,
+      "captured": 11906,
+      "per_1000": 38.752
+    },
+    "5~10%": {
+      "n": 307233,
+      "captured": 7769,
+      "per_1000": 25.287
+    },
+    "10~15%": {
+      "n": 307233,
+      "captured": 5720,
+      "per_1000": 18.618
+    },
+    "15~20%": {
+      "n": 307234,
+      "captured": 4230,
+      "per_1000": 13.768
+    },
+    "20~30%": {
+      "n": 614467,
+      "captured": 6596,
+      "per_1000": 10.735
+    },
+    "30~50%": {
+      "n": 1228934,
+      "captured": 8736,
+      "per_1000": 7.109
+    },
+    "50~100%": {
+      "n": 3072335,
+      "captured": 11165,
+      "per_1000": 3.634
+    }
+  },
+  "h8_verdict": "채택",
+  "h8_operational_method": "LightGBM(최종모델)",
+  "limitation_quantification": {
+    "n_visit_only_purchasers": 13229,
+    "n_total_purchasers": 56122,
+    "share_pct": 23.572,
+    "by_method_top10pct_capture_of_vo": {
+      "무작위": {
+        "captured": 1345,
+        "rate_pct": 10.167
+      },
+      "최근활동순(현행기준)": {
+        "captured": 2822,
+        "rate_pct": 21.332
+      },
+      "단순2단계규칙": {
+        "captured": 161,
+        "rate_pct": 1.217
+      },
+      "LightGBM(최종모델)": {
+        "captured": 2065,
+        "rate_pct": 15.61
+      }
+    }
+  },
+  "sensitivity": {
+    "a_no_speedbot_exclusion": {
+      "n_added": 80,
+      "n_population": 6144750,
+      "model_capture10_rate": 0.75699,
+      "simple_capture10_rate": 0.63615,
+      "model_capture10_n": 42492,
+      "simple_capture10_n": 35709
+    },
+    "b_exclude_1204": {
+      "n_purchasers_no1204": 51854,
+      "model_capture10_rate": 0.75871,
+      "simple_capture10_rate": 0.63845,
+      "model_capture10_n": 39342,
+      "simple_capture10_n": 33106
+    },
+    "c_opposite_default_search_flag": {
+      "original_decision": "유지",
+      "opposite_decision": "제거",
+      "model_capture10_rate_opposite": 0.73611,
+      "model_capture10_rate_original": 0.7569580556644453,
+      "simple_capture10_rate_unaffected": 0.6361319981468943
+    }
+  }
+}
