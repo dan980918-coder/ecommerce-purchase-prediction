@@ -1,0 +1,184 @@
+{
+  "product_buy": {
+    "n_rows": 2318502,
+    "columns": {
+      "client_id": {
+        "dtype": "BIGINT",
+        "n_null": 0,
+        "null_rate_pct": 0.0,
+        "n_distinct": 909210,
+        "n_distinct_rate_pct": 39.2154,
+        "repr": "min=33, max=23929160, avg=11968238.06; 최빈값 top5: [10541597, 5358489, 17761854, 23047216, 7410183] (counts=[644, 536, 485, 404, 383])"
+      },
+      "timestamp": {
+        "dtype": "VARCHAR",
+        "n_null": 0,
+        "null_rate_pct": 0.0,
+        "n_distinct": 1037152,
+        "n_distinct_rate_pct": 44.7337,
+        "repr": "min=2022-06-23 00:12:15, max=2022-12-08 00:09:15 (YYYY-MM-DD HH:MM:SS 문자열)"
+      },
+      "sku": {
+        "dtype": "BIGINT",
+        "n_null": 0,
+        "null_rate_pct": 0.0,
+        "n_distinct": 639126,
+        "n_distinct_rate_pct": 27.5663,
+        "repr": "min=1, max=1623139, avg=805858.82; 최빈값 top5: [219232, 52586, 147718, 1243077, 940412] (counts=[1957, 1563, 1461, 1319, 1312])"
+      }
+    }
+  },
+  "add_to_cart": {
+    "n_rows": 7541117,
+    "columns": {
+      "client_id": {
+        "dtype": "BIGINT",
+        "n_null": 0,
+        "null_rate_pct": 0.0,
+        "n_distinct": 2333463,
+        "n_distinct_rate_pct": 30.9432,
+        "repr": "min=1, max=23929218, avg=11983501.79; 최빈값 top5: [10391084, 6573244, 22902108, 19316386, 13731357] (counts=[2200, 1993, 1491, 1227, 1220])"
+      },
+      "timestamp": {
+        "dtype": "VARCHAR",
+        "n_null": 0,
+        "null_rate_pct": 0.0,
+        "n_distinct": 2344352,
+        "n_distinct_rate_pct": 31.0876,
+        "repr": "min=2022-06-23 00:10:20, max=2022-12-08 00:09:55 (YYYY-MM-DD HH:MM:SS 문자열)"
+      },
+      "sku": {
+        "dtype": "BIGINT",
+        "n_null": 0,
+        "null_rate_pct": 0.0,
+        "n_distinct": 1444160,
+        "n_distinct_rate_pct": 19.1505,
+        "repr": "min=0, max=1623140, avg=806014.52; 최빈값 top5: [219232, 52586, 1243077, 301108, 1492640] (counts=[9130, 7531, 7374, 6169, 6024])"
+      }
+    }
+  },
+  "remove_from_cart": {
+    "n_rows": 2688894,
+    "columns": {
+      "client_id": {
+        "dtype": "BIGINT",
+        "n_null": 0,
+        "null_rate_pct": 0.0,
+        "n_distinct": 694391,
+        "n_distinct_rate_pct": 25.8244,
+        "repr": "min=1, max=23929175, avg=12002191.84; 최빈값 top5: [6573244, 22902108, 10391084, 3102728, 17012917] (counts=[1511, 1351, 1032, 858, 823])"
+      },
+      "timestamp": {
+        "dtype": "VARCHAR",
+        "n_null": 0,
+        "null_rate_pct": 0.0,
+        "n_distinct": 1413950,
+        "n_distinct_rate_pct": 52.5848,
+        "repr": "min=2022-06-23 00:12:25, max=2022-12-08 00:09:40 (YYYY-MM-DD HH:MM:SS 문자열)"
+      },
+      "sku": {
+        "dtype": "BIGINT",
+        "n_null": 0,
+        "null_rate_pct": 0.0,
+        "n_distinct": 824536,
+        "n_distinct_rate_pct": 30.6645,
+        "repr": "min=1, max=1623138, avg=805680.55; 최빈값 top5: [219232, 52586, 1243077, 301108, 561077] (counts=[3313, 3163, 2536, 2437, 1998])"
+      }
+    }
+  },
+  "page_visit": {
+    "n_rows": 199451980,
+    "columns": {
+      "client_id": {
+        "dtype": "BIGINT",
+        "n_null": 0,
+        "null_rate_pct": 0.0,
+        "n_distinct": 21993998,
+        "n_distinct_rate_pct": 11.0272,
+        "repr": "min=0, max=23929218, avg=11967808.88; 최빈값 top5: [3818841, 19629850, 17873087, 11431224, 9252426] (counts=[55561, 37073, 29566, 28306, 25860])"
+      },
+      "timestamp": {
+        "dtype": "VARCHAR",
+        "n_null": 0,
+        "null_rate_pct": 0.0,
+        "n_distinct": 3135737,
+        "n_distinct_rate_pct": 1.5722,
+        "repr": "min=2022-06-23 00:10:00, max=2022-12-08 00:09:59 (YYYY-MM-DD HH:MM:SS 문자열)"
+      },
+      "url": {
+        "dtype": "BIGINT",
+        "n_null": 0,
+        "null_rate_pct": 0.0,
+        "n_distinct": 15293447,
+        "n_distinct_rate_pct": 7.6677,
+        "repr": "min=0, max=16491808, avg=7602894.91; 최빈값 top5: [1763078, 2257144, 14844027, 1523342, 7346404] (counts=[12827298, 6545495, 4820678, 3680817, 3096258])"
+      }
+    }
+  },
+  "search_query": {
+    "n_rows": 13223769,
+    "columns": {
+      "client_id": {
+        "dtype": "BIGINT",
+        "n_null": 0,
+        "null_rate_pct": 0.0,
+        "n_distinct": 1629447,
+        "n_distinct_rate_pct": 12.3221,
+        "repr": "min=1, max=23929172, avg=11975289.31; 최빈값 top5: [6573244, 8152809, 12280913, 21951980, 10822530] (counts=[4558, 3245, 2916, 2824, 2353])"
+      },
+      "timestamp": {
+        "dtype": "VARCHAR",
+        "n_null": 0,
+        "null_rate_pct": 0.0,
+        "n_distinct": 2618501,
+        "n_distinct_rate_pct": 19.8015,
+        "repr": "min=2022-06-23 00:10:00, max=2022-12-08 00:09:55 (YYYY-MM-DD HH:MM:SS 문자열)"
+      },
+      "query": {
+        "dtype": "VARCHAR",
+        "n_null": 0,
+        "null_rate_pct": 0.0,
+        "n_distinct": 3028391,
+        "n_distinct_rate_pct": 22.9011,
+        "repr": "상위 반복값: [203 242 203 203 203 203 203  59  59 203... (n=2817157); [213 213 213 213 213 213 213 213 213 213... (n=31029); [203 203 203 203 203 203 203 203 203 203... (n=29287)"
+      }
+    }
+  },
+  "product_properties": {
+    "n_rows": 1534050,
+    "columns": {
+      "sku": {
+        "dtype": "BIGINT",
+        "n_null": 0,
+        "null_rate_pct": 0.0,
+        "n_distinct": 1534050,
+        "n_distinct_rate_pct": 100.0,
+        "repr": "min=0, max=1623140, avg=811600.25; 최빈값 top5: [1299800, 703083, 368720, 261544, 548278] (counts=[1, 1, 1, 1, 1])"
+      },
+      "category": {
+        "dtype": "BIGINT",
+        "n_null": 0,
+        "null_rate_pct": 0.0,
+        "n_distinct": 6912,
+        "n_distinct_rate_pct": 0.4506,
+        "repr": "min=0, max=6988, avg=3190.42; 최빈값 top5: [258, 949, 1096, 1135, 2890] (counts=[52009, 13748, 12799, 10677, 8506])"
+      },
+      "price": {
+        "dtype": "BIGINT",
+        "n_null": 0,
+        "null_rate_pct": 0.0,
+        "n_distinct": 100,
+        "n_distinct_rate_pct": 0.0065,
+        "repr": "min=0, max=99, avg=47.86; 최빈값 top5: [99, 42, 14, 26, 18] (counts=[23868, 21800, 21141, 20562, 19860])"
+      },
+      "name": {
+        "dtype": "VARCHAR",
+        "n_null": 0,
+        "null_rate_pct": 0.0,
+        "n_distinct": 1228730,
+        "n_distinct_rate_pct": 80.0971,
+        "repr": "상위 반복값: [74 74 74 74 74 74 74 74 74 74 74 74 74 ... (n=3391); [198 198  18 198 198 198 198 198 198 198... (n=2107); [195 195 195 195 195 195 195 195 195 195... (n=1862)"
+      }
+    }
+  }
+}

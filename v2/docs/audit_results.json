@@ -1,0 +1,557 @@
+{
+  "basic": {
+    "product_buy": {
+      "n_rows": 2318502,
+      "dtypes": {
+        "client_id": "BIGINT",
+        "timestamp": "VARCHAR",
+        "sku": "BIGINT"
+      },
+      "null_counts": {
+        "client_id": 0,
+        "timestamp": 0,
+        "sku": 0
+      },
+      "n_distinct_client_id": 909210
+    },
+    "add_to_cart": {
+      "n_rows": 7541117,
+      "dtypes": {
+        "client_id": "BIGINT",
+        "timestamp": "VARCHAR",
+        "sku": "BIGINT"
+      },
+      "null_counts": {
+        "client_id": 0,
+        "timestamp": 0,
+        "sku": 0
+      },
+      "n_distinct_client_id": 2333463
+    },
+    "remove_from_cart": {
+      "n_rows": 2688894,
+      "dtypes": {
+        "client_id": "BIGINT",
+        "timestamp": "VARCHAR",
+        "sku": "BIGINT"
+      },
+      "null_counts": {
+        "client_id": 0,
+        "timestamp": 0,
+        "sku": 0
+      },
+      "n_distinct_client_id": 694391
+    },
+    "page_visit": {
+      "n_rows": 199451980,
+      "dtypes": {
+        "client_id": "BIGINT",
+        "timestamp": "VARCHAR",
+        "url": "BIGINT"
+      },
+      "null_counts": {
+        "client_id": 0,
+        "timestamp": 0,
+        "url": 0
+      },
+      "n_distinct_client_id": 21993998
+    },
+    "search_query": {
+      "n_rows": 13223769,
+      "dtypes": {
+        "client_id": "BIGINT",
+        "timestamp": "VARCHAR",
+        "query": "VARCHAR"
+      },
+      "null_counts": {
+        "client_id": 0,
+        "timestamp": 0,
+        "query": 0
+      },
+      "n_distinct_client_id": 1629447
+    },
+    "product_properties": {
+      "n_rows": 1534050,
+      "dtypes": {
+        "sku": "BIGINT",
+        "category": "BIGINT",
+        "price": "BIGINT",
+        "name": "VARCHAR"
+      },
+      "null_counts": {
+        "sku": 0,
+        "category": 0,
+        "price": 0,
+        "name": 0
+      },
+      "n_distinct_client_id": null
+    }
+  },
+  "time_info": {
+    "product_buy": {
+      "min_ts": "2022-06-23 00:12:15",
+      "max_ts": "2022-12-08 00:09:15",
+      "str_len": [
+        19,
+        19
+      ],
+      "not_multiple_of_5s": 77308
+    },
+    "add_to_cart": {
+      "min_ts": "2022-06-23 00:10:20",
+      "max_ts": "2022-12-08 00:09:55",
+      "str_len": [
+        19,
+        19
+      ],
+      "not_multiple_of_5s": 251157
+    },
+    "remove_from_cart": {
+      "min_ts": "2022-06-23 00:12:25",
+      "max_ts": "2022-12-08 00:09:40",
+      "str_len": [
+        19,
+        19
+      ],
+      "not_multiple_of_5s": 89708
+    },
+    "page_visit": {
+      "min_ts": "2022-06-23 00:10:00",
+      "max_ts": "2022-12-08 00:09:59",
+      "str_len": [
+        19,
+        19
+      ],
+      "not_multiple_of_5s": 6649002
+    },
+    "search_query": {
+      "min_ts": "2022-06-23 00:10:00",
+      "max_ts": "2022-12-08 00:09:55",
+      "str_len": [
+        19,
+        19
+      ],
+      "not_multiple_of_5s": 441043
+    }
+  },
+  "sku_coverage": {
+    "product_buy": {
+      "distinct_sku_in_event": 639126,
+      "event_sku_found_in_pp": 639126,
+      "distinct_sku_in_pp": 1534050,
+      "pp_sku_found_in_event": 639126,
+      "total_rows": 2318502,
+      "rows_with_pp": 2318502
+    },
+    "add_to_cart": {
+      "distinct_sku_in_event": 1444160,
+      "event_sku_found_in_pp": 1444160,
+      "distinct_sku_in_pp": 1534050,
+      "pp_sku_found_in_event": 1444160,
+      "total_rows": 7541117,
+      "rows_with_pp": 7541117
+    },
+    "remove_from_cart": {
+      "distinct_sku_in_event": 824536,
+      "event_sku_found_in_pp": 824536,
+      "distinct_sku_in_pp": 1534050,
+      "pp_sku_found_in_event": 824536,
+      "total_rows": 2688894,
+      "rows_with_pp": 2688894
+    }
+  },
+  "url_vs_sku_idspace": {
+    "distinct_url": 15293447,
+    "min_url": 0,
+    "max_url": 16491808,
+    "min_sku": 0,
+    "max_sku": 1623140
+  },
+  "search_query_form": {
+    "n": 13223769,
+    "n_distinct": 3028391,
+    "minlen": 33,
+    "maxlen": 65,
+    "avglen": 64.87468867612554
+  },
+  "product_properties_form": {
+    "n": 1534050,
+    "distinct_category": 6912,
+    "min_category": 0,
+    "max_category": 6988,
+    "distinct_price": 100,
+    "min_price": 0,
+    "max_price": 99,
+    "avg_price": 47.86288843258043
+  },
+  "client_coverage": {
+    "total_distinct_clients_any_table": 22298361,
+    "per_table_distinct_clients": {
+      "product_buy": 909210,
+      "add_to_cart": 2333463,
+      "remove_from_cart": 694391,
+      "page_visit": 21993998,
+      "search_query": 1629447
+    },
+    "top10_combos": [
+      {
+        "has_buy": false,
+        "has_cart": false,
+        "has_remove": false,
+        "has_visit": true,
+        "has_search": false,
+        "n_clients": 18805967,
+        "pct_of_total": 84.338
+      },
+      {
+        "has_buy": false,
+        "has_cart": true,
+        "has_remove": false,
+        "has_visit": true,
+        "has_search": false,
+        "n_clients": 1031553,
+        "pct_of_total": 4.626
+      },
+      {
+        "has_buy": false,
+        "has_cart": false,
+        "has_remove": false,
+        "has_visit": true,
+        "has_search": true,
+        "n_clients": 806984,
+        "pct_of_total": 3.619
+      },
+      {
+        "has_buy": false,
+        "has_cart": true,
+        "has_remove": false,
+        "has_visit": true,
+        "has_search": true,
+        "n_clients": 305974,
+        "pct_of_total": 1.372
+      },
+      {
+        "has_buy": true,
+        "has_cart": false,
+        "has_remove": false,
+        "has_visit": false,
+        "has_search": false,
+        "n_clients": 258808,
+        "pct_of_total": 1.161
+      },
+      {
+        "has_buy": false,
+        "has_cart": true,
+        "has_remove": true,
+        "has_visit": true,
+        "has_search": false,
+        "n_clients": 197825,
+        "pct_of_total": 0.887
+      },
+      {
+        "has_buy": true,
+        "has_cart": true,
+        "has_remove": true,
+        "has_visit": true,
+        "has_search": true,
+        "n_clients": 194997,
+        "pct_of_total": 0.874
+      },
+      {
+        "has_buy": true,
+        "has_cart": true,
+        "has_remove": false,
+        "has_visit": true,
+        "has_search": false,
+        "n_clients": 186779,
+        "pct_of_total": 0.838
+      },
+      {
+        "has_buy": false,
+        "has_cart": true,
+        "has_remove": true,
+        "has_visit": true,
+        "has_search": true,
+        "n_clients": 186624,
+        "pct_of_total": 0.837
+      },
+      {
+        "has_buy": true,
+        "has_cart": true,
+        "has_remove": false,
+        "has_visit": true,
+        "has_search": true,
+        "n_clients": 113188,
+        "pct_of_total": 0.508
+      }
+    ]
+  },
+  "events_per_client": {
+    "product_buy": {
+      "median": 2.0,
+      "p90": 5.0,
+      "p99": 18.0,
+      "max": 644,
+      "mean": 2.5500181476226613
+    },
+    "add_to_cart": {
+      "median": 1.0,
+      "p90": 6.0,
+      "p99": 31.0,
+      "max": 2200,
+      "mean": 3.2317276939895767
+    },
+    "remove_from_cart": {
+      "median": 2.0,
+      "p90": 8.0,
+      "p99": 35.0,
+      "max": 1511,
+      "mean": 3.872305372621477
+    },
+    "page_visit": {
+      "median": 2.0,
+      "p90": 17.0,
+      "p99": 110.0,
+      "max": 55561,
+      "mean": 9.06847313526172
+    },
+    "search_query": {
+      "median": 3.0,
+      "p90": 17.0,
+      "p99": 78.0,
+      "max": 4558,
+      "mean": 8.115495011497766
+    }
+  },
+  "exact_duplicates": {
+    "product_buy": {
+      "dup_excess_rows": 380903,
+      "dup_groups": 364491,
+      "total_groups": 1937599
+    },
+    "add_to_cart": {
+      "dup_excess_rows": 161493,
+      "dup_groups": 121309,
+      "total_groups": 7379624
+    },
+    "remove_from_cart": {
+      "dup_excess_rows": 153588,
+      "dup_groups": 119656,
+      "total_groups": 2535306
+    },
+    "page_visit": {
+      "dup_excess_rows": 20699407,
+      "dup_groups": 17320847,
+      "total_groups": 178752573
+    },
+    "search_query": {
+      "dup_excess_rows": 617143,
+      "dup_groups": 612891,
+      "total_groups": 12606626
+    },
+    "product_properties": {
+      "dup_excess_rows": 0,
+      "dup_groups": 0,
+      "total_groups": 1534050
+    }
+  },
+  "burst_repeats": {
+    "product_buy": {
+      "exact_same_ts_same_target": 380903,
+      "within_1s": 5,
+      "within_5s": 249,
+      "within_30s": 911,
+      "total_rows": 2318502
+    },
+    "add_to_cart": {
+      "exact_same_ts_same_target": 161493,
+      "within_1s": 6846,
+      "within_5s": 194209,
+      "within_30s": 475945,
+      "total_rows": 7541117
+    },
+    "remove_from_cart": {
+      "exact_same_ts_same_target": 153588,
+      "within_1s": 6449,
+      "within_5s": 123421,
+      "within_30s": 169626,
+      "total_rows": 2688894
+    },
+    "search_query": {
+      "exact_same_ts_same_target": 617143,
+      "within_1s": 18160,
+      "within_5s": 535160,
+      "within_30s": 1921023,
+      "total_rows": 13223769
+    },
+    "page_visit": {
+      "exact_same_ts_same_target": 20699407,
+      "within_1s": 406136,
+      "within_5s": 12419421,
+      "within_30s": 34415391,
+      "total_rows": 199451980
+    }
+  },
+  "same_timestamp_any_target": {
+    "product_buy": {
+      "rows_in_collision_groups": 1371601,
+      "collision_groups": 473600,
+      "total_groups": 1420501,
+      "max_rows_same_ts": 168
+    },
+    "add_to_cart": {
+      "rows_in_collision_groups": 313628,
+      "collision_groups": 135573,
+      "total_groups": 7363062,
+      "max_rows_same_ts": 46
+    },
+    "remove_from_cart": {
+      "rows_in_collision_groups": 698063,
+      "collision_groups": 305703,
+      "total_groups": 2296534,
+      "max_rows_same_ts": 19
+    },
+    "search_query": {
+      "rows_in_collision_groups": 1552582,
+      "collision_groups": 765447,
+      "total_groups": 12436634,
+      "max_rows_same_ts": 20
+    },
+    "page_visit": {
+      "rows_in_collision_groups": 53266089,
+      "collision_groups": 23153939,
+      "total_groups": 169339830,
+      "max_rows_same_ts": 737
+    }
+  },
+  "basket_size_dist_top20": [
+    {
+      "basket_size": 1,
+      "n_baskets": 1188002
+    },
+    {
+      "basket_size": 2,
+      "n_baskets": 132982
+    },
+    {
+      "basket_size": 3,
+      "n_baskets": 45055
+    },
+    {
+      "basket_size": 4,
+      "n_baskets": 20829
+    },
+    {
+      "basket_size": 5,
+      "n_baskets": 11224
+    },
+    {
+      "basket_size": 6,
+      "n_baskets": 6682
+    },
+    {
+      "basket_size": 7,
+      "n_baskets": 4169
+    },
+    {
+      "basket_size": 8,
+      "n_baskets": 2797
+    },
+    {
+      "basket_size": 9,
+      "n_baskets": 2058
+    },
+    {
+      "basket_size": 10,
+      "n_baskets": 1429
+    },
+    {
+      "basket_size": 11,
+      "n_baskets": 1079
+    },
+    {
+      "basket_size": 12,
+      "n_baskets": 751
+    },
+    {
+      "basket_size": 13,
+      "n_baskets": 648
+    },
+    {
+      "basket_size": 14,
+      "n_baskets": 501
+    },
+    {
+      "basket_size": 15,
+      "n_baskets": 386
+    },
+    {
+      "basket_size": 16,
+      "n_baskets": 313
+    },
+    {
+      "basket_size": 17,
+      "n_baskets": 248
+    },
+    {
+      "basket_size": 18,
+      "n_baskets": 196
+    },
+    {
+      "basket_size": 19,
+      "n_baskets": 173
+    },
+    {
+      "basket_size": 20,
+      "n_baskets": 151
+    }
+  ],
+  "basket_size_max": 97,
+  "basket_n_over_20": 828,
+  "basket_total": 1420501,
+  "value_ranges": {
+    "product_buy": {
+      "min_client_id": 33,
+      "max_client_id": 23929160,
+      "min_sku": 1,
+      "max_sku": 1623139
+    },
+    "add_to_cart": {
+      "min_client_id": 1,
+      "max_client_id": 23929218,
+      "min_sku": 0,
+      "max_sku": 1623140
+    },
+    "remove_from_cart": {
+      "min_client_id": 1,
+      "max_client_id": 23929175,
+      "min_sku": 1,
+      "max_sku": 1623138
+    },
+    "page_visit": {
+      "min_client_id": 0,
+      "max_client_id": 23929218,
+      "min_url": 0,
+      "max_url": 16491808
+    },
+    "search_query": {
+      "min_client_id": 1,
+      "max_client_id": 23929172
+    },
+    "product_properties": {
+      "min_sku": 0,
+      "max_sku": 1623140,
+      "min_category": 0,
+      "max_category": 6988,
+      "min_price": 0,
+      "max_price": 99
+    }
+  },
+  "future_timestamp_rows": {
+    "product_buy": 0,
+    "add_to_cart": 0,
+    "remove_from_cart": 0,
+    "page_visit": 0,
+    "search_query": 0
+  }
+}
