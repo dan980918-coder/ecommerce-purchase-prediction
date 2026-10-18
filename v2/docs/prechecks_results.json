@@ -1,0 +1,475 @@
+{
+  "p1_method": "테이블별 사전집계 -> parquet -> 재결합 1회 OOM -> client_id 해시 8분할 재처리 (이전 실행 결과 재사용)",
+  "p1_n_total": 197,
+  "p1_population_overlap": {
+    "2022-08-22": 0,
+    "2022-09-05": 0,
+    "2022-09-19": 0,
+    "2022-10-03": 0,
+    "2022-10-17": 0,
+    "2022-11-07": 0,
+    "2022-11-23": 0
+  },
+  "p1_sample10": [
+    {
+      "고객": "고객00069",
+      "1분최대건수": 67,
+      "그1분내고유url_sku수": 61,
+      "동일타임스탬프최대행수": 51,
+      "활동일수": 43,
+      "이벤트간격중앙값(초)": 5.0,
+      "add_to_cart등장": false,
+      "product_buy등장": false
+    },
+    {
+      "고객": "고객00070",
+      "1분최대건수": 156,
+      "그1분내고유url_sku수": 156,
+      "동일타임스탬프최대행수": 155,
+      "활동일수": 1,
+      "이벤트간격중앙값(초)": 0.0,
+      "add_to_cart등장": false,
+      "product_buy등장": false
+    },
+    {
+      "고객": "고객00071",
+      "1분최대건수": 155,
+      "그1분내고유url_sku수": 136,
+      "동일타임스탬프최대행수": 119,
+      "활동일수": 25,
+      "이벤트간격중앙값(초)": 0.0,
+      "add_to_cart등장": true,
+      "product_buy등장": false
+    },
+    {
+      "고객": "고객00072",
+      "1분최대건수": 77,
+      "그1분내고유url_sku수": 69,
+      "동일타임스탬프최대행수": 66,
+      "활동일수": 1,
+      "이벤트간격중앙값(초)": 0.0,
+      "add_to_cart등장": false,
+      "product_buy등장": false
+    },
+    {
+      "고객": "고객00073",
+      "1분최대건수": 123,
+      "그1분내고유url_sku수": 123,
+      "동일타임스탬프최대행수": 123,
+      "활동일수": 16,
+      "이벤트간격중앙값(초)": 0.0,
+      "add_to_cart등장": true,
+      "product_buy등장": true
+    },
+    {
+      "고객": "고객00074",
+      "1분최대건수": 61,
+      "그1분내고유url_sku수": 61,
+      "동일타임스탬프최대행수": 47,
+      "활동일수": 39,
+      "이벤트간격중앙값(초)": 0.0,
+      "add_to_cart등장": true,
+      "product_buy등장": true
+    },
+    {
+      "고객": "고객00075",
+      "1분최대건수": 62,
+      "그1분내고유url_sku수": 62,
+      "동일타임스탬프최대행수": 62,
+      "활동일수": 13,
+      "이벤트간격중앙값(초)": 0.0,
+      "add_to_cart등장": false,
+      "product_buy등장": true
+    },
+    {
+      "고객": "고객00076",
+      "1분최대건수": 69,
+      "그1분내고유url_sku수": 54,
+      "동일타임스탬프최대행수": 11,
+      "활동일수": 2,
+      "이벤트간격중앙값(초)": 0.0,
+      "add_to_cart등장": false,
+      "product_buy등장": false
+    },
+    {
+      "고객": "고객00077",
+      "1분최대건수": 75,
+      "그1분내고유url_sku수": 75,
+      "동일타임스탬프최대행수": 71,
+      "활동일수": 6,
+      "이벤트간격중앙값(초)": 0.0,
+      "add_to_cart등장": true,
+      "product_buy등장": false
+    },
+    {
+      "고객": "고객00078",
+      "1분최대건수": 67,
+      "그1분내고유url_sku수": 67,
+      "동일타임스탬프최대행수": 67,
+      "활동일수": 1,
+      "이벤트간격중앙값(초)": 0.0,
+      "add_to_cart등장": false,
+      "product_buy등장": false
+    }
+  ],
+  "p1_purchase_rate_compare": {
+    "2022-08-22": {
+      "n_population_new": 4938013,
+      "n_purchasers_new": 30859,
+      "purchase_rate_new": 0.00625,
+      "purchase_rate_orig": 0.00625,
+      "n_population_orig": 4938144
+    },
+    "2022-09-05": {
+      "n_population_new": 5164203,
+      "n_purchasers_new": 32106,
+      "purchase_rate_new": 0.00622,
+      "purchase_rate_orig": 0.00622,
+      "n_population_orig": 5164314
+    },
+    "2022-09-19": {
+      "n_population_new": 5326580,
+      "n_purchasers_new": 33465,
+      "purchase_rate_new": 0.00628,
+      "purchase_rate_orig": 0.00628,
+      "n_population_orig": 5326692
+    },
+    "2022-10-03": {
+      "n_population_new": 5103273,
+      "n_purchasers_new": 38242,
+      "purchase_rate_new": 0.00749,
+      "purchase_rate_orig": 0.0075,
+      "n_population_orig": 5103373
+    },
+    "2022-10-17": {
+      "n_population_new": 5063020,
+      "n_purchasers_new": 39527,
+      "purchase_rate_new": 0.00781,
+      "purchase_rate_orig": 0.00781,
+      "n_population_orig": 5063116
+    }
+  },
+  "p1_hypothesis_verdict_compare": {
+    "h1_days_since_last_activity": {
+      "iv_orig": 0.5546,
+      "iv_new": 0.54,
+      "verdict_orig": "채택",
+      "verdict_new": "채택",
+      "changed": false
+    },
+    "h2_pending_items": {
+      "iv_orig": 0.4044,
+      "iv_new": 0.4221,
+      "verdict_orig": "채택",
+      "verdict_new": "채택",
+      "changed": false
+    },
+    "h3_purchase_count": {
+      "iv_orig": 1.6325,
+      "iv_new": 1.6875,
+      "verdict_orig": "채택",
+      "verdict_new": "채택",
+      "changed": false
+    },
+    "h4_real_search_count": {
+      "iv_orig": 0.4473,
+      "iv_new": 0.4325,
+      "verdict_orig": "채택",
+      "verdict_new": "채택",
+      "changed": false
+    },
+    "h5_activity_growth_ratio": {
+      "iv_orig": 0.7359,
+      "iv_new": 0.7065,
+      "verdict_orig": "채택",
+      "verdict_new": "채택",
+      "changed": false
+    },
+    "h6_removal_ratio": {
+      "iv_orig": 1.3601,
+      "iv_new": 1.3563,
+      "verdict_orig": "기각",
+      "verdict_new": "기각",
+      "changed": false
+    }
+  },
+  "p2": {
+    "2022-08-22": {
+      "n_population": 4938013,
+      "n_visit_only": 4139560,
+      "share_of_population_pct": 83.83,
+      "share_of_population_ci95": [
+        83.798,
+        83.863
+      ],
+      "purchase_rate_pct": 0.2103,
+      "purchase_rate_ci95": [
+        0.2059,
+        0.2147
+      ],
+      "n_total_purchasers": 30859,
+      "n_visit_only_purchasers": 8705,
+      "share_of_all_purchasers_pct": 28.209,
+      "share_of_all_purchasers_ci95": [
+        27.71,
+        28.714
+      ]
+    },
+    "2022-09-05": {
+      "n_population": 5164203,
+      "n_visit_only": 4334564,
+      "share_of_population_pct": 83.935,
+      "share_of_population_ci95": [
+        83.903,
+        83.966
+      ],
+      "purchase_rate_pct": 0.1911,
+      "purchase_rate_ci95": [
+        0.1871,
+        0.1953
+      ],
+      "n_total_purchasers": 32106,
+      "n_visit_only_purchasers": 8285,
+      "share_of_all_purchasers_pct": 25.805,
+      "share_of_all_purchasers_ci95": [
+        25.329,
+        26.287
+      ]
+    },
+    "2022-09-19": {
+      "n_population": 5326580,
+      "n_visit_only": 4466585,
+      "share_of_population_pct": 83.855,
+      "share_of_population_ci95": [
+        83.823,
+        83.886
+      ],
+      "purchase_rate_pct": 0.184,
+      "purchase_rate_ci95": [
+        0.1801,
+        0.1881
+      ],
+      "n_total_purchasers": 33465,
+      "n_visit_only_purchasers": 8220,
+      "share_of_all_purchasers_pct": 24.563,
+      "share_of_all_purchasers_ci95": [
+        24.105,
+        25.027
+      ]
+    },
+    "2022-10-03": {
+      "n_population": 5103273,
+      "n_visit_only": 4256252,
+      "share_of_population_pct": 83.402,
+      "share_of_population_ci95": [
+        83.37,
+        83.435
+      ],
+      "purchase_rate_pct": 0.2115,
+      "purchase_rate_ci95": [
+        0.2072,
+        0.2159
+      ],
+      "n_total_purchasers": 38242,
+      "n_visit_only_purchasers": 9003,
+      "share_of_all_purchasers_pct": 23.542,
+      "share_of_all_purchasers_ci95": [
+        23.12,
+        23.97
+      ]
+    },
+    "2022-10-17": {
+      "n_population": 5063020,
+      "n_visit_only": 4194729,
+      "share_of_population_pct": 82.85,
+      "share_of_population_ci95": [
+        82.817,
+        82.883
+      ],
+      "purchase_rate_pct": 0.2213,
+      "purchase_rate_ci95": [
+        0.2168,
+        0.2258
+      ],
+      "n_total_purchasers": 39527,
+      "n_visit_only_purchasers": 9281,
+      "share_of_all_purchasers_pct": 23.48,
+      "share_of_all_purchasers_ci95": [
+        23.065,
+        23.901
+      ]
+    }
+  },
+  "p3_controlled_comparison": [
+    {
+      "담기구간": "1건",
+      "제거비율그룹": "0",
+      "n": 29227,
+      "구매자": 463,
+      "구매율": 0.01584,
+      "ci_low": 0.014472,
+      "ci_high": 0.017338
+    },
+    {
+      "담기구간": "1건",
+      "제거비율그룹": "0초과~0.5",
+      "n": 0,
+      "구매자": 0,
+      "구매율": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN
+    },
+    {
+      "담기구간": "1건",
+      "제거비율그룹": "0.5초과",
+      "n": 2570,
+      "구매자": 74,
+      "구매율": 0.02879,
+      "ci_low": 0.022998,
+      "ci_high": 0.035996
+    },
+    {
+      "담기구간": "2~3건",
+      "제거비율그룹": "0",
+      "n": 8332,
+      "구매자": 288,
+      "구매율": 0.03457,
+      "ci_low": 0.030853,
+      "ci_high": 0.038707
+    },
+    {
+      "담기구간": "2~3건",
+      "제거비율그룹": "0초과~0.5",
+      "n": 4472,
+      "구매자": 163,
+      "구매율": 0.03645,
+      "ci_low": 0.031342,
+      "ci_high": 0.042352
+    },
+    {
+      "담기구간": "2~3건",
+      "제거비율그룹": "0.5초과",
+      "n": 1991,
+      "구매자": 96,
+      "구매율": 0.04822,
+      "ci_low": 0.039646,
+      "ci_high": 0.058528
+    },
+    {
+      "담기구간": "4~9건",
+      "제거비율그룹": "0",
+      "n": 2073,
+      "구매자": 102,
+      "구매율": 0.0492,
+      "ci_low": 0.040698,
+      "ci_high": 0.059378
+    },
+    {
+      "담기구간": "4~9건",
+      "제거비율그룹": "0초과~0.5",
+      "n": 3790,
+      "구매자": 289,
+      "구매율": 0.07625,
+      "ci_low": 0.068226,
+      "ci_high": 0.085139
+    },
+    {
+      "담기구간": "4~9건",
+      "제거비율그룹": "0.5초과",
+      "n": 1875,
+      "구매자": 141,
+      "구매율": 0.0752,
+      "ci_low": 0.064112,
+      "ci_high": 0.088025
+    },
+    {
+      "담기구간": "10건+",
+      "제거비율그룹": "0",
+      "n": 221,
+      "구매자": 13,
+      "구매율": 0.05882,
+      "ci_low": 0.034695,
+      "ci_high": 0.098028
+    },
+    {
+      "담기구간": "10건+",
+      "제거비율그룹": "0초과~0.5",
+      "n": 1494,
+      "구매자": 269,
+      "구매율": 0.18005,
+      "ci_low": 0.161398,
+      "ci_high": 0.20035
+    },
+    {
+      "담기구간": "10건+",
+      "제거비율그룹": "0.5초과",
+      "n": 1081,
+      "구매자": 156,
+      "구매율": 0.14431,
+      "ci_low": 0.124621,
+      "ci_high": 0.16652
+    }
+  ],
+  "p3_monotonic_within_bucket": {
+    "1건": "False",
+    "2~3건": "True",
+    "4~9건": "False",
+    "10건+": "False"
+  },
+  "p3_pre_checkout_tidy": {
+    "2022-08-22": {
+      "n_removes": 463131,
+      "n_matched_24h": 141899,
+      "rate": 0.30639,
+      "ci95": [
+        0.305065,
+        0.30772
+      ]
+    },
+    "2022-09-05": {
+      "n_removes": 512321,
+      "n_matched_24h": 162247,
+      "rate": 0.31669,
+      "ci95": [
+        0.315418,
+        0.317965
+      ]
+    },
+    "2022-09-19": {
+      "n_removes": 579087,
+      "n_matched_24h": 193199,
+      "rate": 0.33363,
+      "ci95": [
+        0.332414,
+        0.334842
+      ]
+    },
+    "2022-10-03": {
+      "n_removes": 642673,
+      "n_matched_24h": 222907,
+      "rate": 0.34684,
+      "ci95": [
+        0.345681,
+        0.348008
+      ]
+    },
+    "2022-10-17": {
+      "n_removes": 731472,
+      "n_matched_24h": 262301,
+      "rate": 0.35859,
+      "ci95": [
+        0.357495,
+        0.359693
+      ]
+    },
+    "전체(5개 기준일 합)": {
+      "n_removes": 2928684,
+      "n_matched_24h": 982553,
+      "rate": 0.33549,
+      "ci95": [
+        0.334952,
+        0.336034
+      ]
+    }
+  }
+}
