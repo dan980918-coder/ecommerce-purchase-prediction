@@ -1,0 +1,314 @@
+{
+  "train_sampling": {
+    "2022-08-22": {
+      "n_purchasers": 30859,
+      "n_nonpurchasers_sampled": 617180,
+      "ratio": 20.0
+    },
+    "2022-09-05": {
+      "n_purchasers": 32106,
+      "n_nonpurchasers_sampled": 642120,
+      "ratio": 20.0
+    },
+    "2022-09-19": {
+      "n_purchasers": 33465,
+      "n_nonpurchasers_sampled": 669300,
+      "ratio": 20.0
+    },
+    "2022-10-03": {
+      "n_purchasers": 38242,
+      "n_nonpurchasers_sampled": 764840,
+      "ratio": 20.0
+    },
+    "2022-10-17": {
+      "n_purchasers": 39527,
+      "n_nonpurchasers_sampled": 790540,
+      "ratio": 20.0
+    }
+  },
+  "train_total_rows": 3658179,
+  "logistic_caps_p999": {
+    "h1_days_since_last_activity": 29.77204861111111,
+    "h1_days_since_last_visit": 29.811505902777814,
+    "h1_days_since_last_cart_add": 58.20616759259288,
+    "h1_active_days_last30": 2.9444389791664403,
+    "h2_pending_items": 2.70805020110221,
+    "h2_has_pending": 1.0,
+    "h2_pending_items_last7": 1.9459101490553132,
+    "h3_purchase_count": 2.772588722239781,
+    "h3_days_since_last_purchase": 56.45187488425959,
+    "h3_unique_skus_bought": 2.70805020110221,
+    "h4_real_search_count": 4.418840607796598,
+    "h4_unique_queries": 3.8501476017100584,
+    "h4_real_search_last7": 1.0,
+    "h5_activity_growth_ratio": 121.57142857142857,
+    "h5_active_days_growth_ratio": 16.42857142857143,
+    "h6_removal_ratio": 2.0,
+    "h6_removal_last7": 1.0
+  },
+  "validation_population": {
+    "n": 5665601,
+    "n_purchasers": 48094,
+    "purchase_rate_pct": 0.8489
+  },
+  "logistic_grid": {
+    "0.01": {
+      "capture_at_10pct": 0.72943,
+      "auc": 0.879,
+      "pr_auc": 0.1688
+    },
+    "0.1": {
+      "capture_at_10pct": 0.72959,
+      "auc": 0.879,
+      "pr_auc": 0.1686
+    },
+    "1": {
+      "capture_at_10pct": 0.72938,
+      "auc": 0.879,
+      "pr_auc": 0.1688
+    }
+  },
+  "logistic_selected_c": 0.1,
+  "lightgbm_grid": {
+    "leaves15_lr0.03_minchild100": {
+      "capture_at_10pct": 0.73936,
+      "auc": 0.883,
+      "pr_auc": 0.1773,
+      "best_iteration": 96
+    },
+    "leaves15_lr0.03_minchild500": {
+      "capture_at_10pct": 0.73936,
+      "auc": 0.883,
+      "pr_auc": 0.1773,
+      "best_iteration": 96
+    },
+    "leaves15_lr0.05_minchild100": {
+      "capture_at_10pct": 0.73934,
+      "auc": 0.883,
+      "pr_auc": 0.1769,
+      "best_iteration": 56
+    },
+    "leaves15_lr0.05_minchild500": {
+      "capture_at_10pct": 0.73934,
+      "auc": 0.883,
+      "pr_auc": 0.1769,
+      "best_iteration": 56
+    },
+    "leaves31_lr0.03_minchild100": {
+      "capture_at_10pct": 0.74105,
+      "auc": 0.884,
+      "pr_auc": 0.1807,
+      "best_iteration": 108
+    },
+    "leaves31_lr0.03_minchild500": {
+      "capture_at_10pct": 0.74109,
+      "auc": 0.8835,
+      "pr_auc": 0.1803,
+      "best_iteration": 101
+    },
+    "leaves31_lr0.05_minchild100": {
+      "capture_at_10pct": 0.74107,
+      "auc": 0.8842,
+      "pr_auc": 0.1807,
+      "best_iteration": 70
+    },
+    "leaves31_lr0.05_minchild500": {
+      "capture_at_10pct": 0.74107,
+      "auc": 0.8836,
+      "pr_auc": 0.1803,
+      "best_iteration": 64
+    },
+    "leaves63_lr0.03_minchild100": {
+      "capture_at_10pct": 0.74198,
+      "auc": 0.8844,
+      "pr_auc": 0.1817,
+      "best_iteration": 104
+    },
+    "leaves63_lr0.03_minchild500": {
+      "capture_at_10pct": 0.74184,
+      "auc": 0.8844,
+      "pr_auc": 0.1815,
+      "best_iteration": 104
+    },
+    "leaves63_lr0.05_minchild100": {
+      "capture_at_10pct": 0.74171,
+      "auc": 0.8844,
+      "pr_auc": 0.1814,
+      "best_iteration": 63
+    },
+    "leaves63_lr0.05_minchild500": {
+      "capture_at_10pct": 0.74186,
+      "auc": 0.8843,
+      "pr_auc": 0.1813,
+      "best_iteration": 63
+    }
+  },
+  "lightgbm_selected_params": {
+    "objective": "binary",
+    "metric": "binary_logloss",
+    "num_leaves": 63,
+    "learning_rate": 0.03,
+    "min_child_samples": 100,
+    "verbose": -1,
+    "seed": 42
+  },
+  "validation_table": {
+    "무작위": {
+      "0.05": {
+        "n_sent": 283280,
+        "n_captured": 2416,
+        "capture_rate": 0.05023,
+        "per_10k": 85.29
+      },
+      "0.1": {
+        "n_sent": 566560,
+        "n_captured": 4867,
+        "capture_rate": 0.1012,
+        "per_10k": 85.9
+      },
+      "0.2": {
+        "n_sent": 1133120,
+        "n_captured": 9730,
+        "capture_rate": 0.20231,
+        "per_10k": 85.87
+      },
+      "auc": 0.4999,
+      "pr_auc": 0.0085,
+      "total_positive": 48094,
+      "n_population": 5665601
+    },
+    "최근활동순(현행기준)": {
+      "0.05": {
+        "n_sent": 283280,
+        "n_captured": 9167,
+        "capture_rate": 0.19061,
+        "per_10k": 323.6
+      },
+      "0.1": {
+        "n_sent": 566560,
+        "n_captured": 15038,
+        "capture_rate": 0.31268,
+        "per_10k": 265.43
+      },
+      "0.2": {
+        "n_sent": 1133120,
+        "n_captured": 23806,
+        "capture_rate": 0.49499,
+        "per_10k": 210.09
+      },
+      "auc": 0.691,
+      "pr_auc": 0.0222,
+      "total_positive": 48094,
+      "n_population": 5665601
+    },
+    "단순2단계규칙": {
+      "0.05": {
+        "n_sent": 283280,
+        "n_captured": 20720,
+        "capture_rate": 0.43082,
+        "per_10k": 731.43
+      },
+      "0.1": {
+        "n_sent": 566560,
+        "n_captured": 29860,
+        "capture_rate": 0.62087,
+        "per_10k": 527.04
+      },
+      "0.2": {
+        "n_sent": 1133120,
+        "n_captured": 37771,
+        "capture_rate": 0.78536,
+        "per_10k": 333.34
+      },
+      "auc": 0.8433,
+      "pr_auc": 0.0653,
+      "total_positive": 48094,
+      "n_population": 5665601
+    },
+    "로지스틱회귀": {
+      "0.05": {
+        "n_sent": 283280,
+        "n_captured": 29169,
+        "capture_rate": 0.6065,
+        "per_10k": 1029.69
+      },
+      "0.1": {
+        "n_sent": 566560,
+        "n_captured": 35089,
+        "capture_rate": 0.72959,
+        "per_10k": 619.33
+      },
+      "0.2": {
+        "n_sent": 1133120,
+        "n_captured": 39257,
+        "capture_rate": 0.81626,
+        "per_10k": 346.45
+      },
+      "auc": 0.879,
+      "pr_auc": 0.1686,
+      "total_positive": 48094,
+      "n_population": 5665601
+    },
+    "LightGBM": {
+      "0.05": {
+        "n_sent": 283280,
+        "n_captured": 29738,
+        "capture_rate": 0.61833,
+        "per_10k": 1049.77
+      },
+      "0.1": {
+        "n_sent": 566560,
+        "n_captured": 35685,
+        "capture_rate": 0.74198,
+        "per_10k": 629.85
+      },
+      "0.2": {
+        "n_sent": 1133120,
+        "n_captured": 39749,
+        "capture_rate": 0.82649,
+        "per_10k": 350.79
+      },
+      "auc": 0.8844,
+      "pr_auc": 0.1817,
+      "total_positive": 48094,
+      "n_population": 5665601
+    }
+  },
+  "rule1_model_selection": {
+    "lightgbm_capture10": 0.74198,
+    "logistic_capture10": 0.72959,
+    "diff_pp": 1.239,
+    "selected": "LightGBM"
+  },
+  "rule2_default_search_flag": {
+    "capture10_with_flag": 0.74198,
+    "capture10_without_flag": 0.72739,
+    "drop_pp": 1.459,
+    "decision": "유지"
+  },
+  "rule3_operational_recommendation": {
+    "final_model_capture10": 0.74198,
+    "simple_rule_capture10": 0.62087,
+    "diff_pp": 12.111,
+    "recommendation": "모델"
+  },
+  "feature_importance_top15": {
+    "h3_purchase_count": 4406638.010631561,
+    "ref_other_than_browsing": 1948448.8083496094,
+    "h1_active_days_last30": 451931.8709640503,
+    "ref_default_search_flag": 450516.59457683563,
+    "h5_activity_growth_ratio": 235421.09679412842,
+    "h1_days_since_last_visit": 205220.03376865387,
+    "h1_days_since_last_activity": 146981.42792892456,
+    "h3_unique_skus_bought": 85342.67660236359,
+    "h1_days_since_last_cart_add": 58729.058055877686,
+    "h5_active_days_growth_ratio": 44430.8882932663,
+    "h6_removal_ratio": 40838.689257621765,
+    "h2_pending_items": 23497.68327331543,
+    "h4_unique_queries": 15316.995209693909,
+    "h4_real_search_count": 12349.703243255615,
+    "h3_days_since_last_purchase": 8989.234292984009
+  },
+  "final_model_name": "LightGBM",
+  "final_model_keeps_default_search_flag": true
+}
