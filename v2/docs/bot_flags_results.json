@@ -1,0 +1,20 @@
+{
+  "candidate_overlap_distribution": {
+    "3": 757,
+    "1": 19460,
+    "2": 1947,
+    "4": 316,
+    "5": 110
+  },
+  "n_candidates": 1183,
+  "signal_counts": {
+    "속도": 3,
+    "수면없음": 1,
+    "기계적반복": 1
+  },
+  "n_bot_excluded": 0,
+  "signal_count_distribution": {
+    "0": 1178,
+    "1": 5
+  }
+}
