@@ -74,7 +74,7 @@ for d in TRAINING_DATES:
             WHERE timestamp >= '{out_start}' AND timestamp < '{out_end}'
         ) b ON p.client_id = b.client_id
     """)
-    df = con.execute(f"SELECT client_id, outcome FROM outcome_{tag}").fetchdf()
+    df = con.execute(f"SELECT client_id, outcome FROM outcome_{tag} ORDER BY client_id").fetchdf()
     n = len(df)
     n_pos = int(df["outcome"].sum())
     rate = n_pos / n

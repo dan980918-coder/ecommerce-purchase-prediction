@@ -46,33 +46,33 @@
   "h7_vs_bysec_recency": {
     "0.05": {
       "n_sent": 307234,
-      "captured_model": 35719,
+      "captured_model": 35711,
       "captured_recency_bysec": 11906,
-      "diff": 23813,
-      "ci95_low": 23500.85,
-      "ci95_high": 24110.1
+      "diff": 23805,
+      "ci95_low": 23460.95,
+      "ci95_high": 24127.125
     },
     "0.1": {
       "n_sent": 614467,
-      "captured_model": 42482,
+      "captured_model": 42510,
       "captured_recency_bysec": 19675,
-      "diff": 22807,
-      "ci95_low": 22502.85,
-      "ci95_high": 23124.05
+      "diff": 22835,
+      "ci95_low": 22526.975,
+      "ci95_high": 23116.1
     },
     "0.2": {
       "n_sent": 1228934,
-      "captured_model": 47021,
+      "captured_model": 47023,
       "captured_recency_bysec": 29625,
-      "diff": 17396,
-      "ci95_low": 17115.95,
-      "ci95_high": 17682.15
+      "diff": 17398,
+      "ci95_low": 17134.0,
+      "ci95_high": 17666.2
     }
   },
   "send_volume_reduction_bysec": {
     "target_captured": 19675,
     "model_needed_pct": 1.381,
-    "model_needed_n": 84833,
+    "model_needed_n": 84858,
     "reduction_pct": 86.19
   },
   "visit_only_capture_bysec": {

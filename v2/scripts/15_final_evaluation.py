@@ -65,13 +65,15 @@ def add_transforms(df, caps):
 
 
 print("\n== 최종 평가 모집단(2022-11-23) 변수·결과 생성 — 이번 호출이 11-23 구매 결과를 처음이자 마지막으로 연다 ==")
-final_pop = con.execute(f"SELECT client_id FROM pop_{FINAL_DATE.replace('-', '')}").fetchdf()
+final_pop = con.execute(
+    f"SELECT client_id FROM pop_{FINAL_DATE.replace('-', '')}_clean ORDER BY client_id"
+).fetchdf()
 print("최종 평가 모집단 인원:", len(final_pop))
 final_feat = build_features(con, final_pop, FINAL_DATE)
 out_start, out_end = shift(FINAL_DATE, 0), shift(FINAL_DATE, 14)
 final_outcome = con.execute(
     f"""SELECT p.client_id, CASE WHEN b.client_id IS NOT NULL THEN 1 ELSE 0 END AS outcome
-        FROM pop_{FINAL_DATE.replace('-', '')} p
+        FROM pop_{FINAL_DATE.replace('-', '')}_clean p
         LEFT JOIN (SELECT DISTINCT client_id FROM clean_product_buy
                     WHERE timestamp >= '{out_start}' AND timestamp < '{out_end}') b
         ON p.client_id = b.client_id"""
@@ -325,6 +327,7 @@ union_sql_f = " UNION ALL ".join(
 pop_with_speedbot = con.execute(f"""
     SELECT DISTINCT client_id FROM ({union_sql_f}) u
     WHERE client_id NOT IN (SELECT client_id FROM bot_clients)
+    ORDER BY client_id
 """).fetchdf()
 added_ids = pop_with_speedbot[~pop_with_speedbot["client_id"].isin(final_df["client_id"])]
 print("다시 포함되는 속도봇 인원:", len(added_ids))
@@ -368,7 +371,7 @@ print("(b) 결과 기간에서 2022-12-04 제외")
 outcome_no1204 = con.execute(
     f"""SELECT p.client_id,
                CASE WHEN b.client_id IS NOT NULL THEN 1 ELSE 0 END AS outcome
-        FROM pop_{FINAL_DATE.replace('-', '')} p
+        FROM pop_{FINAL_DATE.replace('-', '')}_clean p
         LEFT JOIN (SELECT DISTINCT client_id FROM clean_product_buy
                     WHERE timestamp >= '{out_start}' AND timestamp < '{out_end}'
                       AND CAST(strptime(timestamp,'%Y-%m-%d %H:%M:%S') AS DATE) <> DATE '2022-12-04') b

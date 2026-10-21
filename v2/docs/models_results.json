@@ -28,15 +28,15 @@
   },
   "train_total_rows": 3658179,
   "logistic_caps_p999": {
-    "h1_days_since_last_activity": 29.77204861111111,
-    "h1_days_since_last_visit": 29.811505902777814,
-    "h1_days_since_last_cart_add": 58.20616759259288,
+    "h1_days_since_last_activity": 29.769494074074103,
+    "h1_days_since_last_visit": 29.808738425925927,
+    "h1_days_since_last_cart_add": 58.226378587963005,
     "h1_active_days_last30": 2.9444389791664403,
     "h2_pending_items": 2.70805020110221,
     "h2_has_pending": 1.0,
     "h2_pending_items_last7": 1.9459101490553132,
     "h3_purchase_count": 2.772588722239781,
-    "h3_days_since_last_purchase": 56.45187488425959,
+    "h3_days_since_last_purchase": 56.49210902777785,
     "h3_unique_skus_bought": 2.70805020110221,
     "h4_real_search_count": 4.418840607796598,
     "h4_unique_queries": 3.8501476017100584,
@@ -53,127 +53,129 @@
   },
   "logistic_grid": {
     "0.01": {
-      "capture_at_10pct": 0.72943,
+      "capture_at_10pct": 0.72936,
       "auc": 0.879,
       "pr_auc": 0.1688
     },
     "0.1": {
-      "capture_at_10pct": 0.72959,
-      "auc": 0.879,
-      "pr_auc": 0.1686
-    },
-    "1": {
-      "capture_at_10pct": 0.72938,
+      "capture_at_10pct": 0.72943,
       "auc": 0.879,
       "pr_auc": 0.1688
+    },
+    "1": {
+      "capture_at_10pct": 0.7294,
+      "auc": 0.879,
+      "pr_auc": 0.1687
     }
   },
   "logistic_selected_c": 0.1,
   "lightgbm_grid": {
     "leaves15_lr0.03_minchild100": {
-      "capture_at_10pct": 0.73936,
-      "auc": 0.883,
-      "pr_auc": 0.1773,
-      "best_iteration": 96
+      "capture_at_10pct": 0.73874,
+      "auc": 0.8829,
+      "pr_auc": 0.1769,
+      "best_iteration": 90
     },
     "leaves15_lr0.03_minchild500": {
-      "capture_at_10pct": 0.73936,
-      "auc": 0.883,
-      "pr_auc": 0.1773,
-      "best_iteration": 96
+      "capture_at_10pct": 0.73874,
+      "auc": 0.8829,
+      "pr_auc": 0.1769,
+      "best_iteration": 90
     },
     "leaves15_lr0.05_minchild100": {
-      "capture_at_10pct": 0.73934,
-      "auc": 0.883,
-      "pr_auc": 0.1769,
-      "best_iteration": 56
+      "capture_at_10pct": 0.73961,
+      "auc": 0.8832,
+      "pr_auc": 0.1777,
+      "best_iteration": 66
     },
     "leaves15_lr0.05_minchild500": {
-      "capture_at_10pct": 0.73934,
-      "auc": 0.883,
-      "pr_auc": 0.1769,
-      "best_iteration": 56
+      "capture_at_10pct": 0.73961,
+      "auc": 0.8832,
+      "pr_auc": 0.1777,
+      "best_iteration": 66
     },
     "leaves31_lr0.03_minchild100": {
-      "capture_at_10pct": 0.74105,
-      "auc": 0.884,
-      "pr_auc": 0.1807,
-      "best_iteration": 108
-    },
-    "leaves31_lr0.03_minchild500": {
-      "capture_at_10pct": 0.74109,
-      "auc": 0.8835,
-      "pr_auc": 0.1803,
+      "capture_at_10pct": 0.74124,
+      "auc": 0.8836,
+      "pr_auc": 0.1802,
       "best_iteration": 101
     },
+    "leaves31_lr0.03_minchild500": {
+      "capture_at_10pct": 0.74113,
+      "auc": 0.8836,
+      "pr_auc": 0.1802,
+      "best_iteration": 100
+    },
     "leaves31_lr0.05_minchild100": {
-      "capture_at_10pct": 0.74107,
-      "auc": 0.8842,
-      "pr_auc": 0.1807,
+      "capture_at_10pct": 0.74105,
+      "auc": 0.8841,
+      "pr_auc": 0.1805,
       "best_iteration": 70
     },
     "leaves31_lr0.05_minchild500": {
-      "capture_at_10pct": 0.74107,
-      "auc": 0.8836,
-      "pr_auc": 0.1803,
-      "best_iteration": 64
+      "capture_at_10pct": 0.74128,
+      "auc": 0.8841,
+      "pr_auc": 0.1804,
+      "best_iteration": 67
     },
     "leaves63_lr0.03_minchild100": {
-      "capture_at_10pct": 0.74198,
-      "auc": 0.8844,
-      "pr_auc": 0.1817,
-      "best_iteration": 104
+      "capture_at_10pct": 0.74153,
+      "auc": 0.8843,
+      "pr_auc": 0.181,
+      "best_iteration": 106
     },
     "leaves63_lr0.03_minchild500": {
-      "capture_at_10pct": 0.74184,
-      "auc": 0.8844,
-      "pr_auc": 0.1815,
-      "best_iteration": 104
+      "capture_at_10pct": 0.74155,
+      "auc": 0.8842,
+      "pr_auc": 0.181,
+      "best_iteration": 97
     },
     "leaves63_lr0.05_minchild100": {
-      "capture_at_10pct": 0.74171,
-      "auc": 0.8844,
-      "pr_auc": 0.1814,
-      "best_iteration": 63
+      "capture_at_10pct": 0.74155,
+      "auc": 0.8843,
+      "pr_auc": 0.181,
+      "best_iteration": 67
     },
     "leaves63_lr0.05_minchild500": {
-      "capture_at_10pct": 0.74186,
+      "capture_at_10pct": 0.74167,
       "auc": 0.8843,
-      "pr_auc": 0.1813,
-      "best_iteration": 63
+      "pr_auc": 0.1812,
+      "best_iteration": 67
     }
   },
   "lightgbm_selected_params": {
     "objective": "binary",
     "metric": "binary_logloss",
     "num_leaves": 63,
-    "learning_rate": 0.03,
-    "min_child_samples": 100,
+    "learning_rate": 0.05,
+    "min_child_samples": 500,
     "verbose": -1,
-    "seed": 42
+    "seed": 42,
+    "deterministic": true,
+    "num_threads": 1
   },
   "validation_table": {
     "무작위": {
       "0.05": {
         "n_sent": 283280,
-        "n_captured": 2416,
-        "capture_rate": 0.05023,
-        "per_10k": 85.29
+        "n_captured": 2344,
+        "capture_rate": 0.04874,
+        "per_10k": 82.74
       },
       "0.1": {
         "n_sent": 566560,
-        "n_captured": 4867,
-        "capture_rate": 0.1012,
-        "per_10k": 85.9
+        "n_captured": 4761,
+        "capture_rate": 0.09899,
+        "per_10k": 84.03
       },
       "0.2": {
         "n_sent": 1133120,
-        "n_captured": 9730,
-        "capture_rate": 0.20231,
-        "per_10k": 85.87
+        "n_captured": 9543,
+        "capture_rate": 0.19842,
+        "per_10k": 84.22
       },
-      "auc": 0.4999,
-      "pr_auc": 0.0085,
+      "auc": 0.4989,
+      "pr_auc": 0.0084,
       "total_positive": 48094,
       "n_population": 5665601
     },
@@ -234,80 +236,80 @@
       },
       "0.1": {
         "n_sent": 566560,
-        "n_captured": 35089,
-        "capture_rate": 0.72959,
-        "per_10k": 619.33
+        "n_captured": 35081,
+        "capture_rate": 0.72943,
+        "per_10k": 619.19
       },
       "0.2": {
         "n_sent": 1133120,
-        "n_captured": 39257,
-        "capture_rate": 0.81626,
-        "per_10k": 346.45
+        "n_captured": 39238,
+        "capture_rate": 0.81586,
+        "per_10k": 346.28
       },
       "auc": 0.879,
-      "pr_auc": 0.1686,
+      "pr_auc": 0.1688,
       "total_positive": 48094,
       "n_population": 5665601
     },
     "LightGBM": {
       "0.05": {
         "n_sent": 283280,
-        "n_captured": 29738,
-        "capture_rate": 0.61833,
-        "per_10k": 1049.77
+        "n_captured": 29773,
+        "capture_rate": 0.61906,
+        "per_10k": 1051.01
       },
       "0.1": {
         "n_sent": 566560,
-        "n_captured": 35685,
-        "capture_rate": 0.74198,
-        "per_10k": 629.85
+        "n_captured": 35670,
+        "capture_rate": 0.74167,
+        "per_10k": 629.59
       },
       "0.2": {
         "n_sent": 1133120,
-        "n_captured": 39749,
-        "capture_rate": 0.82649,
-        "per_10k": 350.79
+        "n_captured": 39750,
+        "capture_rate": 0.82651,
+        "per_10k": 350.8
       },
-      "auc": 0.8844,
-      "pr_auc": 0.1817,
+      "auc": 0.8843,
+      "pr_auc": 0.1812,
       "total_positive": 48094,
       "n_population": 5665601
     }
   },
   "rule1_model_selection": {
-    "lightgbm_capture10": 0.74198,
-    "logistic_capture10": 0.72959,
-    "diff_pp": 1.239,
+    "lightgbm_capture10": 0.74167,
+    "logistic_capture10": 0.72943,
+    "diff_pp": 1.224,
     "selected": "LightGBM"
   },
   "rule2_default_search_flag": {
-    "capture10_with_flag": 0.74198,
-    "capture10_without_flag": 0.72739,
-    "drop_pp": 1.459,
+    "capture10_with_flag": 0.74167,
+    "capture10_without_flag": 0.72751,
+    "drop_pp": 1.416,
     "decision": "유지"
   },
   "rule3_operational_recommendation": {
-    "final_model_capture10": 0.74198,
+    "final_model_capture10": 0.74167,
     "simple_rule_capture10": 0.62087,
-    "diff_pp": 12.111,
+    "diff_pp": 12.08,
     "recommendation": "모델"
   },
   "feature_importance_top15": {
-    "h3_purchase_count": 4406638.010631561,
-    "ref_other_than_browsing": 1948448.8083496094,
-    "h1_active_days_last30": 451931.8709640503,
-    "ref_default_search_flag": 450516.59457683563,
-    "h5_activity_growth_ratio": 235421.09679412842,
-    "h1_days_since_last_visit": 205220.03376865387,
-    "h1_days_since_last_activity": 146981.42792892456,
-    "h3_unique_skus_bought": 85342.67660236359,
-    "h1_days_since_last_cart_add": 58729.058055877686,
-    "h5_active_days_growth_ratio": 44430.8882932663,
-    "h6_removal_ratio": 40838.689257621765,
-    "h2_pending_items": 23497.68327331543,
-    "h4_unique_queries": 15316.995209693909,
-    "h4_real_search_count": 12349.703243255615,
-    "h3_days_since_last_purchase": 8989.234292984009
+    "h3_purchase_count": 2637742.4419403076,
+    "ref_other_than_browsing": 1211270.968536377,
+    "h1_active_days_last30": 279994.5683956146,
+    "ref_default_search_flag": 270243.480093956,
+    "h1_days_since_last_visit": 128622.96133041382,
+    "h5_active_days_growth_ratio": 120166.15407848358,
+    "h1_days_since_last_activity": 88812.4964466095,
+    "h3_unique_skus_bought": 57442.157245635986,
+    "h5_activity_growth_ratio": 51909.480209350586,
+    "h1_days_since_last_cart_add": 38431.50630950928,
+    "h6_removal_ratio": 25989.158588409424,
+    "h2_pending_items": 13661.907075881958,
+    "h4_unique_queries": 10000.0646982193,
+    "h4_real_search_count": 7787.1909646987915,
+    "h3_days_since_last_purchase": 6893.639701843262
   },
   "final_model_name": "LightGBM",
   "final_model_keeps_default_search_flag": true

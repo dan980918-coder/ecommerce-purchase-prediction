@@ -101,21 +101,22 @@ for d in TRAINING_DATES:
 
     # ---------- H2: 보류 상품 ----------
     pending_union = f"""
-        SELECT client_id, sku, timestamp, 0 AS kind_priority, 'add' AS kind
+        SELECT client_id, sku, timestamp, 'add' AS kind
           FROM clean_add_to_cart WHERE timestamp >= '{w60_start}' AND timestamp < '{w60_end}'
         UNION ALL
-        SELECT client_id, sku, timestamp, 1 AS kind_priority, 'remove' AS kind
+        SELECT client_id, sku, timestamp, 'remove' AS kind
           FROM clean_remove_from_cart WHERE timestamp >= '{w60_start}' AND timestamp < '{w60_end}'
         UNION ALL
-        SELECT client_id, sku, timestamp, 2 AS kind_priority, 'buy' AS kind
+        SELECT client_id, sku, timestamp, 'buy' AS kind
           FROM clean_product_buy WHERE timestamp >= '{w60_start}' AND timestamp < '{w60_end}'
     """
-    # 동시 타임스탬프 2차 정렬: buy>remove>add가 먼저 오도록(동시면 '보류 아님'으로 보수적 처리)
+    # 상품별 마지막 행동이 담기면 보류. 같은 시각이면 구매 > 제거 > 담기 순으로 마지막으로 봄
     pending = con.execute(
         f"""WITH ev AS ({pending_union}),
              ranked AS (
                SELECT *, row_number() OVER (
-                 PARTITION BY client_id, sku ORDER BY timestamp DESC, kind_priority ASC
+                 PARTITION BY client_id, sku ORDER BY timestamp DESC,
+                          CASE kind WHEN 'buy' THEN 1 WHEN 'remove' THEN 2 ELSE 3 END
                ) AS rn
                FROM ev
              )

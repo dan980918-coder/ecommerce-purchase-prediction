@@ -122,7 +122,7 @@ if n_speed_bot > 1000:
 print(f"\n속도 기준 해당 인원 {n_speed_bot}명 <= 1,000명 — 모집단에서 제외하고 계속 진행한다.")
 
 # 표본 10명(seed=42) 패턴 요약
-all_ids = con.execute("SELECT client_id FROM speed_bot_candidates").fetchdf()["client_id"].tolist()
+all_ids = con.execute("SELECT client_id FROM speed_bot_candidates ORDER BY client_id").fetchdf()["client_id"].tolist()
 rng = np.random.default_rng(42)
 sample_ids = rng.choice(all_ids, size=min(10, len(all_ids)), replace=False).tolist()
 pseudo_map = dict(zip(sample_ids, pseudonymize([int(c) for c in sample_ids])))
@@ -176,11 +176,15 @@ with open("docs/prechecks_results.json", "w", encoding="utf-8") as f:
 print("wrote docs/prechecks_results.json (P1까지)")
 
 # ---------- P1 재계산: 속도봇 제외한 스냅샷/변수/가설판정 ----------
-# 이후 P2·P3·모델링·최종평가는 전부 이 속도봇 제외 결과(= 아래에서 덮어쓰는
-# pop_*/outcome_*/training_snapshot/training_features)를 "현재" 정제 계층으로 쓴다.
+# 이후 P2·P3·모델링·최종평가는 전부 이 속도봇 제외 결과를 "현재" 정제 계층으로 쓴다.
+# 원본 pop_*/outcome_*/training_snapshot/training_features는 덮어쓰지 않고 그대로 둔다
+# (08_signal_hypotheses.md 등 앞 단계 문서가 참조하는 모집단을 보존하기 위함).
+# 속도봇 제외 결과는 별도의 _clean 테이블(pop_*_clean/outcome_*_clean/
+# training_snapshot_clean/training_features_clean)에 저장하고, 14·15 등 이후
+# 단계는 이 _clean 테이블을 읽는다.
 # 3-5번 민감도 확인에서 "(a) 속도 봇 제외를 하지 않은 경우"와 비교하기 위해
 # 원래(제외 전) 수치는 docs/snapshot_results.json·hypothesis_results.json에 그대로 남겨둔다.
-print("\n## P1 재계산: 속도봇 제외 후 스냅샷/가설 재검증 (이후 단계의 기본 모집단이 됨)")
+print("\n## P1 재계산: 속도봇 제외 후 스냅샷/가설 재검증 (_clean 테이블, 이후 단계의 기본 모집단이 됨)")
 con.execute("SET threads=4")
 con.execute("SET memory_limit='6GB'")
 con.execute("SET preserve_insertion_order=false")
@@ -204,13 +208,13 @@ for d in ALL_DATES:
         for t in EVENT_TABLES
     )
     con.execute(f"""
-        CREATE OR REPLACE TABLE pop_{tag} AS
+        CREATE OR REPLACE TABLE pop_{tag}_clean AS
         SELECT DISTINCT client_id FROM ({union_sql2}) u
         WHERE client_id NOT IN (SELECT client_id FROM bot_clients)
           AND client_id NOT IN (SELECT client_id FROM speed_bot_candidates)
     """)
-    n = con.execute(f"SELECT count(*) FROM pop_{tag}").fetchone()[0]
-    print(d, "모집단(속도봇 제외 후):", n)
+    n = con.execute(f"SELECT count(*) FROM pop_{tag}_clean").fetchone()[0]
+    print(d, "모집단(속도봇 제외 후, _clean):", n)
 
 purchase_rate_compare = {}
 sample_frames = []
@@ -218,14 +222,14 @@ for d in TRAINING_DATES:
     tag = d.replace("-", "")
     out_start, out_end = shift(d, 0), shift(d, 14)
     con.execute(f"""
-        CREATE OR REPLACE TABLE outcome_{tag} AS
+        CREATE OR REPLACE TABLE outcome_{tag}_clean AS
         SELECT p.client_id, CASE WHEN b.client_id IS NOT NULL THEN 1 ELSE 0 END AS outcome
-        FROM pop_{tag} p
+        FROM pop_{tag}_clean p
         LEFT JOIN (SELECT DISTINCT client_id FROM clean_product_buy
                     WHERE timestamp >= '{out_start}' AND timestamp < '{out_end}') b
         ON p.client_id = b.client_id
     """)
-    df = con.execute(f"SELECT client_id, outcome FROM outcome_{tag}").fetchdf()
+    df = con.execute(f"SELECT client_id, outcome FROM outcome_{tag}_clean ORDER BY client_id").fetchdf()
     n, n_pos = len(df), int(df["outcome"].sum())
     purchase_rate_compare[d] = {"n_population_new": n, "n_purchasers_new": n_pos,
                                  "purchase_rate_new": round(n_pos / n, 5)}
@@ -246,10 +250,10 @@ print("\n구매율 비교(원래 vs 속도봇 제외):")
 for d, v in purchase_rate_compare.items():
     print(d, "원래=", v["purchase_rate_orig"], "제외후=", v["purchase_rate_new"])
 
-training_snapshot = pd.concat(sample_frames, ignore_index=True)
-con.register("training_snapshot_df", training_snapshot)
-con.execute("CREATE OR REPLACE TABLE training_snapshot AS SELECT * FROM training_snapshot_df")
-print("training_snapshot 덮어씀(속도봇 제외), 행 수:", len(training_snapshot))
+training_snapshot_clean = pd.concat(sample_frames, ignore_index=True)
+con.register("training_snapshot_clean_df", training_snapshot_clean)
+con.execute("CREATE OR REPLACE TABLE training_snapshot_clean AS SELECT * FROM training_snapshot_clean_df")
+print("training_snapshot_clean 저장(속도봇 제외, 원본 training_snapshot은 보존), 행 수:", len(training_snapshot_clean))
 
 
 def events_union_sql(start, end, tables=("product_buy", "add_to_cart", "remove_from_cart",
@@ -267,7 +271,7 @@ for d in TRAINING_DATES:
     w30_start, w14_start, w7_start = shift(d, -30), shift(d, -14), shift(d, -7)
     prior46_start, prior46_end = shift(d, -60), shift(d, -14)
 
-    pop = con.execute(f"SELECT client_id FROM training_snapshot WHERE reference_date = '{d}'").fetchdf()
+    pop = con.execute(f"SELECT client_id FROM training_snapshot_clean WHERE reference_date = '{d}'").fetchdf()
     con.register("cur_pop_df", pop)
     con.execute("CREATE OR REPLACE TEMP TABLE cur_pop AS SELECT * FROM cur_pop_df")
     feat = pop.set_index("client_id")
@@ -293,19 +297,21 @@ for d in TRAINING_DATES:
     feat["h3_purchase_count"] = feat["h3_purchase_count"].fillna(0)
 
     pending_union = f"""
-        SELECT client_id, sku, timestamp, 0 AS kind_priority, 'add' AS kind
+        SELECT client_id, sku, timestamp, 'add' AS kind
           FROM clean_add_to_cart WHERE timestamp >= '{w60_start}' AND timestamp < '{w60_end}'
         UNION ALL
-        SELECT client_id, sku, timestamp, 1 AS kind_priority, 'remove' AS kind
+        SELECT client_id, sku, timestamp, 'remove' AS kind
           FROM clean_remove_from_cart WHERE timestamp >= '{w60_start}' AND timestamp < '{w60_end}'
         UNION ALL
-        SELECT client_id, sku, timestamp, 2 AS kind_priority, 'buy' AS kind
+        SELECT client_id, sku, timestamp, 'buy' AS kind
           FROM clean_product_buy WHERE timestamp >= '{w60_start}' AND timestamp < '{w60_end}'
     """
+    # 상품별 마지막 행동이 담기면 보류. 같은 시각이면 구매 > 제거 > 담기 순으로 마지막으로 봄
     pending = con.execute(
         f"""WITH ev AS ({pending_union}),
              ranked AS (SELECT *, row_number() OVER (
-                 PARTITION BY client_id, sku ORDER BY timestamp DESC, kind_priority ASC) AS rn FROM ev)
+                 PARTITION BY client_id, sku ORDER BY timestamp DESC,
+                          CASE kind WHEN 'buy' THEN 1 WHEN 'remove' THEN 2 ELSE 3 END) AS rn FROM ev)
              SELECT client_id, sku FROM ranked WHERE rn = 1 AND kind = 'add'"""
     ).fetchdf()
     pending_count = pending.groupby("client_id").size().rename("h2_pending_items")
@@ -357,11 +363,11 @@ for d in TRAINING_DATES:
     print(d, "핵심 변수 재생성 완료, 행 수:", len(feat))
 
 features_all = pd.concat(all_feature_frames, ignore_index=True)
-outcome = con.execute("SELECT client_id, reference_date, outcome FROM training_snapshot").fetchdf()
+outcome = con.execute("SELECT client_id, reference_date, outcome FROM training_snapshot_clean").fetchdf()
 features_all = features_all.merge(outcome, on=["client_id", "reference_date"], how="left")
 con.register("features_all_df", features_all)
-con.execute("CREATE OR REPLACE TABLE training_features AS SELECT * FROM features_all_df")
-print("training_features 덮어씀(속도봇 제외), 크기:", features_all.shape)
+con.execute("CREATE OR REPLACE TABLE training_features_clean AS SELECT * FROM features_all_df")
+print("training_features_clean 저장(속도봇 제외, 원본 training_features는 보존), 크기:", features_all.shape)
 
 
 # ---------- 핵심 변수 IV/판정 재계산 (3단계와 동일 방식, 간략판: 핵심 변수만) ----------
@@ -503,18 +509,18 @@ for d in TRAINING_DATES:
     """)
     con.execute(f"""
         CREATE OR REPLACE TEMP TABLE visit_only AS
-        SELECT p.client_id FROM pop_{tag} p
+        SELECT p.client_id FROM pop_{tag}_clean p
         JOIN (SELECT DISTINCT client_id FROM clean_page_visit
               WHERE timestamp >= '{w60_start}' AND timestamp < '{w60_end}') v ON p.client_id = v.client_id
         WHERE p.client_id NOT IN (SELECT client_id FROM has_other)
     """)
-    n_pop = con.execute(f"SELECT count(*) FROM pop_{tag}").fetchone()[0]
+    n_pop = con.execute(f"SELECT count(*) FROM pop_{tag}_clean").fetchone()[0]
     n_visit_only = con.execute("SELECT count(*) FROM visit_only").fetchone()[0]
     n_visit_only_purchasers = con.execute(
         f"""SELECT count(*) FROM visit_only v
-            JOIN outcome_{tag} o ON v.client_id = o.client_id WHERE o.outcome = 1"""
+            JOIN outcome_{tag}_clean o ON v.client_id = o.client_id WHERE o.outcome = 1"""
     ).fetchone()[0]
-    n_total_purchasers = con.execute(f"SELECT count(*) FROM outcome_{tag} WHERE outcome = 1").fetchone()[0]
+    n_total_purchasers = con.execute(f"SELECT count(*) FROM outcome_{tag}_clean WHERE outcome = 1").fetchone()[0]
 
     share_pop = n_visit_only / n_pop
     purchase_rate_vo = n_visit_only_purchasers / n_visit_only
@@ -549,7 +555,7 @@ add_remove_frames = []
 for d in TRAINING_DATES:
     tag = d.replace("-", "")
     w60_start, w60_end = shift(d, -60), shift(d, 0)
-    pop_ids = con.execute(f"SELECT client_id FROM training_snapshot WHERE reference_date = '{d}'").fetchdf()
+    pop_ids = con.execute(f"SELECT client_id FROM training_snapshot_clean WHERE reference_date = '{d}'").fetchdf()
     con.register("cur_pop_df", pop_ids)
     con.execute("CREATE OR REPLACE TEMP TABLE cur_pop AS SELECT * FROM cur_pop_df")
     add_cnt = con.execute(
@@ -563,7 +569,7 @@ for d in TRAINING_DATES:
               AND timestamp >= '{w60_start}' AND timestamp < '{w60_end}' GROUP BY client_id"""
     ).fetchdf()
     outcome_d = con.execute(
-        f"SELECT client_id, outcome FROM training_snapshot WHERE reference_date = '{d}'"
+        f"SELECT client_id, outcome FROM training_snapshot_clean WHERE reference_date = '{d}'"
     ).fetchdf()
     merged = add_cnt.merge(remove_cnt, on="client_id", how="left").merge(outcome_d, on="client_id", how="inner")
     merged["n_remove"] = merged["n_remove"].fillna(0)
@@ -635,7 +641,7 @@ for d in TRAINING_DATES:
     con.execute(f"""
         CREATE OR REPLACE TEMP TABLE removes_{tag} AS
         SELECT r.client_id, r.timestamp AS remove_ts, row_number() OVER () AS rid
-        FROM clean_remove_from_cart r JOIN pop_{tag} p ON r.client_id = p.client_id
+        FROM clean_remove_from_cart r JOIN pop_{tag}_clean p ON r.client_id = p.client_id
         WHERE r.timestamp >= '{w60_start}' AND r.timestamp < '{w60_end}'
     """)
     n_removes = con.execute(f"SELECT count(*) FROM removes_{tag}").fetchone()[0]

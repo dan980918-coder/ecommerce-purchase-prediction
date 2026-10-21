@@ -268,7 +268,7 @@ print("\n### B-3. 무작위 5명 원본 대조 ==========")
 sample_date = TRAINING_DATES[0]
 sample_rows = con2.execute(
     f"SELECT client_id, outcome FROM training_snapshot WHERE reference_date = '{sample_date}' "
-    f"ORDER BY random() LIMIT 5"
+    f"ORDER BY client_id LIMIT 5"
 ).fetchdf()
 w60_start_s = (pd.Timestamp(sample_date) - pd.Timedelta(days=60)).strftime("%Y-%m-%d %H:%M:%S")
 w60_end_s = sample_date + " 00:00:00"

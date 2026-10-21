@@ -41,7 +41,7 @@ train_frames = []
 sampling_log = {}
 for d in TRAINING_DATES:
     tag = d.replace("-", "")
-    df = con.execute(f"SELECT client_id, outcome FROM outcome_{tag}").fetchdf()
+    df = con.execute(f"SELECT client_id, outcome FROM outcome_{tag}_clean ORDER BY client_id").fetchdf()
     pos = df[df["outcome"] == 1]
     neg_pool = df[df["outcome"] == 0]
     n_neg_target = min(len(neg_pool), len(pos) * 20)
@@ -134,13 +134,15 @@ def evaluate_ranking(score, outcome, tiebreak, fractions=(0.05, 0.10, 0.20)):
 # ========== 2-3. 검증 기준일(11-07) 모집단 변수·결과 생성 ==========
 # 00_analysis_rules.md 7번(4단계 데이터 사용 순서): 모델·설정 선택은 검증 기준일로 한다.
 print("\n## 검증 기준일(2022-11-07) 전체 모집단 변수·결과 생성 (모델 선택용)")
-val_pop = con.execute(f"SELECT client_id FROM pop_{VALIDATION_DATE.replace('-', '')}").fetchdf()
+val_pop = con.execute(
+    f"SELECT client_id FROM pop_{VALIDATION_DATE.replace('-', '')}_clean ORDER BY client_id"
+).fetchdf()
 print("검증 모집단 인원:", len(val_pop))
 val_feat = build_features(con, val_pop, VALIDATION_DATE)
 val_out_start, val_out_end = shift(VALIDATION_DATE, 0), shift(VALIDATION_DATE, 14)
 val_outcome = con.execute(
     f"""SELECT p.client_id, CASE WHEN b.client_id IS NOT NULL THEN 1 ELSE 0 END AS outcome
-        FROM pop_{VALIDATION_DATE.replace('-', '')} p
+        FROM pop_{VALIDATION_DATE.replace('-', '')}_clean p
         LEFT JOIN (SELECT DISTINCT client_id FROM clean_product_buy
                     WHERE timestamp >= '{val_out_start}' AND timestamp < '{val_out_end}') b
         ON p.client_id = b.client_id"""
@@ -216,6 +218,7 @@ for num_leaves in [15, 31, 63]:
                 "objective": "binary", "metric": "binary_logloss",
                 "num_leaves": num_leaves, "learning_rate": lr, "min_child_samples": min_child,
                 "verbose": -1, "seed": SEED,
+                "deterministic": True, "num_threads": 1,
             }
             booster = lgb.train(
                 params, lgb_train_set, num_boost_round=500, valid_sets=[lgb_val_set],

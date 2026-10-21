@@ -8,21 +8,21 @@
     "무작위": {
       "0.05": {
         "n_sent": 307234,
-        "n_captured": 2858,
-        "capture_rate": 0.05092,
-        "per_10k": 93.02
+        "n_captured": 2822,
+        "capture_rate": 0.05028,
+        "per_10k": 91.85
       },
       "0.1": {
         "n_sent": 614467,
-        "n_captured": 5708,
-        "capture_rate": 0.10171,
-        "per_10k": 92.89
+        "n_captured": 5671,
+        "capture_rate": 0.10105,
+        "per_10k": 92.29
       },
       "0.2": {
         "n_sent": 1228934,
-        "n_captured": 11316,
-        "capture_rate": 0.20163,
-        "per_10k": 92.08
+        "n_captured": 11225,
+        "capture_rate": 0.20001,
+        "per_10k": 91.34
       }
     },
     "최근활동순(현행기준)": {
@@ -68,118 +68,118 @@
     "LightGBM(최종모델)": {
       "0.05": {
         "n_sent": 307234,
-        "n_captured": 35711,
-        "capture_rate": 0.63631,
-        "per_10k": 1162.34
+        "n_captured": 35706,
+        "capture_rate": 0.63622,
+        "per_10k": 1162.18
       },
       "0.1": {
         "n_sent": 614467,
-        "n_captured": 42482,
-        "capture_rate": 0.75696,
-        "per_10k": 691.36
+        "n_captured": 42510,
+        "capture_rate": 0.75746,
+        "per_10k": 691.82
       },
       "0.2": {
         "n_sent": 1228934,
-        "n_captured": 47023,
-        "capture_rate": 0.83787,
-        "per_10k": 382.63
+        "n_captured": 47022,
+        "capture_rate": 0.83785,
+        "per_10k": 382.62
       }
     }
   },
   "h7_main": {
     "0.05": {
       "n_sent": 307234,
-      "captured_model": 35711,
+      "captured_model": 35706,
       "captured_recency": 11906,
-      "diff": 23805,
-      "ci95_low": 23500.85,
-      "ci95_high": 24110.1
+      "diff": 23800,
+      "ci95_low": 23460.95,
+      "ci95_high": 24127.125
     },
     "0.1": {
       "n_sent": 614467,
-      "captured_model": 42482,
+      "captured_model": 42510,
       "captured_recency": 19675,
-      "diff": 22807,
-      "ci95_low": 22502.85,
-      "ci95_high": 23124.05
+      "diff": 22835,
+      "ci95_low": 22526.975,
+      "ci95_high": 23116.1
     },
     "0.2": {
       "n_sent": 1228934,
-      "captured_model": 47023,
+      "captured_model": 47022,
       "captured_recency": 29625,
-      "diff": 17398,
-      "ci95_low": 17115.95,
-      "ci95_high": 17682.15
+      "diff": 17397,
+      "ci95_low": 17134.0,
+      "ci95_high": 17666.2
     }
   },
   "h7_verdict": "채택",
   "h7_vs_simple_rule": {
     "0.05": {
       "n_sent": 307234,
-      "captured_model": 35711,
+      "captured_model": 35706,
       "captured_simple_rule": 25218,
-      "diff": 10493,
-      "ci95_low": 10251.975,
-      "ci95_high": 10723.025
+      "diff": 10488,
+      "ci95_low": 10240.0,
+      "ci95_high": 10726.075
     },
     "0.1": {
       "n_sent": 614467,
-      "captured_model": 42482,
+      "captured_model": 42510,
       "captured_simple_rule": 35701,
-      "diff": 6781,
-      "ci95_low": 6604.925,
-      "ci95_high": 6971.0
+      "diff": 6809,
+      "ci95_low": 6618.975,
+      "ci95_high": 6985.075
     },
     "0.2": {
       "n_sent": 1228934,
-      "captured_model": 47023,
+      "captured_model": 47022,
       "captured_simple_rule": 44545,
-      "diff": 2478,
-      "ci95_low": 2349.875,
-      "ci95_high": 2621.05
+      "diff": 2477,
+      "ci95_low": 2336.95,
+      "ci95_high": 2622.05
     }
   },
   "send_volume_reduction": {
     "target_captured_by_recency_top10pct": 19675,
     "model_needed_pct": 1.381,
-    "model_needed_n": 84833,
+    "model_needed_n": 84859,
     "reduction_pct_vs_recency_top10pct_volume": 86.19
   },
   "h8_operational_segments": {
     "0~5%": {
       "n": 307234,
-      "captured": 35711,
-      "per_1000": 116.234
+      "captured": 35706,
+      "per_1000": 116.218
     },
     "5~10%": {
       "n": 307233,
-      "captured": 6771,
-      "per_1000": 22.039
+      "captured": 6804,
+      "per_1000": 22.146
     },
     "10~15%": {
       "n": 307233,
-      "captured": 2684,
-      "per_1000": 8.736
+      "captured": 2700,
+      "per_1000": 8.788
     },
     "15~20%": {
       "n": 307234,
-      "captured": 1857,
-      "per_1000": 6.044
+      "captured": 1812,
+      "per_1000": 5.898
     },
     "20~30%": {
       "n": 614467,
-      "captured": 2572,
-      "per_1000": 4.186
+      "captured": 2576,
+      "per_1000": 4.192
     },
     "30~50%": {
       "n": 1228934,
-      "captured": 2871,
-      "per_1000": 2.336
+      "captured": 2861,
+      "per_1000": 2.328
     },
     "50~100%": {
       "n": 3072335,
-      "captured": 3656,
-      "per_1000": 1.19
+      "captured": 3663,
+      "per_1000": 1.192
     }
   },
   "h8_recency_segments": {
@@ -227,8 +227,8 @@
     "share_pct": 23.572,
     "by_method_top10pct_capture_of_vo": {
       "무작위": {
-        "captured": 1345,
-        "rate_pct": 10.167
+        "captured": 1324,
+        "rate_pct": 10.008
       },
       "최근활동순(현행기준)": {
         "captured": 2822,
@@ -239,8 +239,8 @@
         "rate_pct": 1.217
       },
       "LightGBM(최종모델)": {
-        "captured": 2065,
-        "rate_pct": 15.61
+        "captured": 2074,
+        "rate_pct": 15.678
       }
     }
   },
@@ -248,23 +248,23 @@
     "a_no_speedbot_exclusion": {
       "n_added": 80,
       "n_population": 6144750,
-      "model_capture10_rate": 0.75699,
+      "model_capture10_rate": 0.75749,
       "simple_capture10_rate": 0.63615,
-      "model_capture10_n": 42492,
+      "model_capture10_n": 42520,
       "simple_capture10_n": 35709
     },
     "b_exclude_1204": {
       "n_purchasers_no1204": 51854,
-      "model_capture10_rate": 0.75871,
+      "model_capture10_rate": 0.75909,
       "simple_capture10_rate": 0.63845,
-      "model_capture10_n": 39342,
+      "model_capture10_n": 39362,
       "simple_capture10_n": 33106
     },
     "c_opposite_default_search_flag": {
       "original_decision": "유지",
       "opposite_decision": "제거",
-      "model_capture10_rate_opposite": 0.73611,
-      "model_capture10_rate_original": 0.7569580556644453,
+      "model_capture10_rate_opposite": 0.73615,
+      "model_capture10_rate_original": 0.757456968746659,
       "simple_capture10_rate_unaffected": 0.6361319981468943
     }
   }
