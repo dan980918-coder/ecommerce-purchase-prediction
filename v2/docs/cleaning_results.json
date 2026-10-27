@@ -33,5 +33,15 @@
     "default_rows": 2809642,
     "real_rows": 9796984,
     "total_clean": 12606626
+  },
+  "product_buy_customer_level": {
+    "raw_customers": 909210,
+    "clean_customers": 909210,
+    "raw_avg_per_customer": 2.55,
+    "clean_avg_per_customer": 2.1311,
+    "customers_with_decrease": 253392,
+    "customers_with_decrease_pct": 27.869,
+    "decrease_median": 1.0,
+    "decrease_max": 114
   }
 }
